@@ -1,0 +1,406 @@
+/* App.css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .header,
+  .articles-body,
+  .categories,
+  .article-list,
+  .health-care-section,
+  .ad-section,
+  .poster {
+    flex-direction: column;
+  }
+  .category,
+  .healthArticles,
+  .articlesDiscovery {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* General styles */
+.App {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8d7da;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.search-bar {
+  display: flex;
+}
+
+.search-bar input {
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Articles body */
+.articles-body {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Featured post */
+.featured-post {
+  display: flex;
+  justify-content: center;
+  background-color: #ecdec1;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.featured-post img {
+  max-width: 100%;
+  margin-right: 20px;
+}
+
+#splide-demo {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+}
+
+.post-content {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-content h2,
+h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.post-content p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.post-content-left {
+  width: 30%;
+  max-height: auto;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.post-content-right {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-button {
+  width: 20%;
+  color: #1d1c19;
+}
+
+/* Categories */
+.categories {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  margin: 0 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  height: 150px;
+}
+
+.category:nth-child(1) {
+  background-image: url(./image/duong-da.webp);
+}
+
+.category:nth-child(2) {
+  background-image: url(./image/duong-da.webp);
+}
+
+.category:nth-child(3) {
+  background-image: url(./image/duong-da.webp);
+}
+
+.category:nth-child(4) {
+  background-image: url(./image/duong-da.webp);
+}
+
+/* Article list */
+.article-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.articlesDiscovery {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #ecdec1;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.articlesDiscovery .article-image {
+  width: 30%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.article-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.date {
+  color: #888888;
+  font-size: 14px;
+  margin: 0 10px;
+}
+
+h2 {
+  margin: 10px 10px;
+  font-size: 24px;
+}
+
+h3 {
+  margin: 5px 10px;
+  font-size: 18px;
+}
+
+p {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.read-more {
+  color: #1d1c19;
+  cursor: pointer;
+}
+
+.views {
+  color: #888888;
+}
+
+/* Health care section */
+.health-care-section {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.health-care-section h1 {
+  margin: 0 auto 20px;
+}
+
+.articles {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.healthArticles {
+  text-align: left;
+  width: 30%;
+  background-color: #ecdec1;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.healthArticles .article-image {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.article-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.article-content h2 {
+  margin: 10px 10px;
+  font-size: 24px;
+}
+
+.article-content p {
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.article-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.date,
+.views {
+  color: #888888;
+}
+
+.see-more {
+  display: inline-block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  color: #1d1c19;
+  border: none;
+  cursor: pointer;
+}
+
+/* Ad section */
+.ad-section {
+  display: flex;
+  text-align: left;
+  padding: 20px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ecdec1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.ad-image {
+  width: 30%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+
+.ad-content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ad-content h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.ad-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.ad-content p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.ad-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.ad-content ul li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.ad-section-see-more {
+  width: 20%;
+  color: #1d1c19;
+}
+
+/* Poster */
+.poster {
+  text-align: center;
+  background-color: #ecdec1;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.poster h1 {
+  font-size: 1.8rem;
+  color: #d22d79;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.poster-image {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 8px;
+}
+
+.poster p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 10px;
+  font-style: italic;
+}
