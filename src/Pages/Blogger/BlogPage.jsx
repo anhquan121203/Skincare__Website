@@ -1,5 +1,9 @@
 function BlogPage() {
-  <h1>Blogger</h1>;
+  return (
+    <div>
+      <h1 style={{ marginTop: 100 }}>Blogger</h1>
+    </div>
+  );
 }
 
 export default BlogPage;

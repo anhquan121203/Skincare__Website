@@ -39,7 +39,7 @@ function Header() {
             <Link>Khuyến mãi</Link>
           </li>
           <li>
-            <Link>Blooger</Link>
+            <Link to="/blogger">Blogger</Link>
           </li>
           <li>
             <Link>Hỗ trợ khách hàng</Link>
@@ -85,7 +85,7 @@ function Header() {
           </ul>
 
           <li>
-            <Link to ="/login">
+            <Link to="/login">
               <button className="btn-button">Đăng nhập</button>
             </Link>
           </li>

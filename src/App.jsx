@@ -13,9 +13,8 @@ function App() {
         <Route path="/" element={<CustomerLayout />}>
           <Route index element={<HomePage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
-
-          <Route index element={<HomePage />}></Route>
-          <Route path="/blogger" index element={<BlogPage />}></Route>
+          <Route path="/blogger" element={<BlogPage />}></Route>
+          {/* Đúng tên */}
         </Route>
         {/****************************************************************************/}
       </Routes>
