@@ -10,17 +10,14 @@ import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 
 function Header() {
-
-
-
-// Seach category
-    const categoriesMenu = (
-        <Menu>
-          <Menu.Item key="1">Da dầu</Menu.Item>
-          <Menu.Item key="2">Da khô</Menu.Item>
-          <Menu.Item key="3">Da nhờn</Menu.Item>
-        </Menu>
-      );
+  // Seach category
+  const categoriesMenu = (
+    <Menu>
+      <Menu.Item key="1">Da dầu</Menu.Item>
+      <Menu.Item key="2">Da khô</Menu.Item>
+      <Menu.Item key="3">Da nhờn</Menu.Item>
+    </Menu>
+  );
 
   return (
     <header className="header">
