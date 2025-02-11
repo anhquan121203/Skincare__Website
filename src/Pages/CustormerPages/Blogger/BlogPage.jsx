@@ -1,6 +1,6 @@
 //
 import { useState } from "react";
-import adImage from "./image/duong-da.webp";
+import adImage from "../../../assets/imageBlogger/duong-da.webp";
 import "./BlogPage.css";
 import { articlesDiscovery, healthArticles } from "./data/articles";
 import { Pagination } from "antd";
