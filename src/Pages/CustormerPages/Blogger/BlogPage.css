@@ -25,19 +25,19 @@
 }
 
 .category:nth-child(1) {
-  background-image: url(./image/duong-da.webp);
+  background-image: url(../../../assets/imageBlogger/duong-da.webp);
 }
 
 .category:nth-child(2) {
-  background-image: url(./image/duong-da.webp);
+  background-image: url(../../../assets/imageBlogger/duong-da.webp);
 }
 
 .category:nth-child(3) {
-  background-image: url(./image/duong-da.webp);
+  background-image: url(../../../assets/imageBlogger/duong-da.webp);
 }
 
 .category:nth-child(4) {
-  background-image: url(./image/duong-da.webp);
+  background-image: url(../../../assets/imageBlogger/duong-da.webp);
 }
 
 /* Article list --------------------------------------------------------------------------------------------*/

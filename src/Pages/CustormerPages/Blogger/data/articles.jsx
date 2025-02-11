@@ -1,7 +1,7 @@
-import articleImage1 from "../image/article1.jpg";
-import articleImage2 from "../image/article2.jpg";
-import articleImage3 from "../image/article3.jpg";
-import skincareImage from "../image/skincare.jpg";
+import articleImage1 from "../../../../assets/imageBlogger/article1.jpg";
+import articleImage2 from "../../../../assets/imageBlogger/article2.jpg";
+import articleImage3 from "../../../../assets/imageBlogger/article3.jpg";
+import skincareImage from "../../../../assets/imageBlogger/skincare.jpg";
 
 export const articlePost = [
   {
