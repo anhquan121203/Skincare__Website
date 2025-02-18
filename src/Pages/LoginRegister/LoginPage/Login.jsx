@@ -1,11 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Login.css";
 import logo from "../../../assets/images/logo.png"
 import iconGG from "../../../assets/login/iconGG.png"
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from "yup";
+import { loginUser } from '../../../Api/authApi';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../Features/user/authSlice';
+import { toast } from 'react-toastify';
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const [showPassword] = useState(false);
+  const dispatch = useDispatch();
+
+  // Schema Yup cho form validation
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+  });
+
+  // Sử dụng Formik để quản lý form
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await loginUser(values);
+        if (response.status === 200) {
+          const { accessToken, refreshToken } = response.data;
+
+          // Save token and user in localStorage, then dispatch login action
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          toast.success("Login successful");
+          navigate("/");
+          dispatch(login({ accessToken, refreshToken }));
+        } else {
+          toast.error(response.data.message || "Login failed");
+        }
+      } catch (error) {
+        toast.error("Email or password is incorrect", error);
+      }
+    },
+  });
+
   return (
     <div className='login-container'>
 
@@ -26,12 +75,15 @@ function LoginPage() {
       {/* LOGIN RIGHT***************** */}
       <div className='login-right'>
         <h2>Đăng nhập</h2>
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <div className='form-group'>
             <label>Email</label>
             <input
               type="email"
               name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               placeholder='Enter your email...'
               required
             />
@@ -42,6 +94,9 @@ function LoginPage() {
             <input
               type="password"
               name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               placeholder='**********'
               required
             />
@@ -57,7 +112,7 @@ function LoginPage() {
           <button
             type='submit'
             className='login-button'
-
+            disabled={formik.isSubmitting}
           />
         </form>
 

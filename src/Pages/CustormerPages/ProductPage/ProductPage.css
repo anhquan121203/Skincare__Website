@@ -1,60 +1,106 @@
+.product-page .background-animation {
+  background: url("https://img.freepik.com/free-vector/acid-cosmetics-aha-bha-fruit-peeling-bottles-set_33099-1524.jpg?t=st=1739858930~exp=1739862530~hmac=26f3c02aec2deff7bea26b4c0c13e2846d7ceb6cde084476498152088b76757d&w=1480");
+  background-size: 100%;
+  background-size: cover;
+  background-position: 150%;
+  z-index: 1;
+  overflow: hidden;
+  max-height: 200px;
+  height: 200px;
+  margin-top: 100;
+}
+
+.product-page .product-content {
+  /* display: flex; */
+  border: none;
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100%;
+
+  border: 1px solid black;
+
+}
+
+.filter{
+  margin-right: 100px;
+}
 
 
-.productPage .background-animation {
-    background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url("https://png.pngtree.com/thumb_back/fw800/background/20241217/pngtree-a-serene-display-of-skincare-products-on-wooden-table-image_16822834.jpg"), no-repeat;
-    background-size: 100%;
-    background-size: cover;
-    background-position: 150%;
-    z-index: 1;
-    overflow: hidden;
-    max-height: 200px;
-    height: 200px;
-    margin-top: 100;
-  }
+.main-content {
+  display: flex;
+}
 
-  
-  .productPage .overlay-content-background {
-    position: absolute;
-    left: 10%;
-    color: #fff;
-    z-index: 2;  
-  }
-  
-  .productPage .title-background {
-    font-size: 40px;
-    font-family: "Poppins", sans-serif;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #161439;
-  }
-  
-  
-  .productPage .breadcrumb {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #5751e1;
-    margin-bottom: 1rem;
-  }
-  
-  .productPage .breadcrumb-item {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .productPage .breadcrumb-link {
-    text-decoration: none;
-    color: #1c1a4a;
-    font-size: 16px;
-  }
-  
-  .productPage .breadcrumb-link-active {
-    text-decoration: none;
-    color: #5751e1;
-  }
-  
-  .productPage .breadcrumb-separator {
-    margin: 0 5px;
-    color: #aaa;
-  }
+
+.products {
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product-card p {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.product-card .stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.product-card .stars i {
+  color: #ffcc00;
+}
+
+.product-card .stars i.inactive {
+  color: #ccc;
+}
+
+.product-card .price-buy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.product-card .price-buy span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.product-card .price-buy button {
+  padding: 10px 20px;
+  background-color: #007700;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.product-card .old-price {
+  color: #999;
+  font-size: 0.875rem;
+}
