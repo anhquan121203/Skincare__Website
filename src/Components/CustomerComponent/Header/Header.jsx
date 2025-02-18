@@ -33,7 +33,7 @@ function Header() {
             <Link to="/">Trang chủ</Link>
           </li>
           <li>
-            <Link>Sản phẩm</Link>
+            <Link to="/product">Sản phẩm</Link>
           </li>
           <li>
             <Link>Khuyến mãi</Link>

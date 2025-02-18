@@ -1,0 +1,60 @@
+
+
+.productPage .background-animation {
+    background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url("https://png.pngtree.com/thumb_back/fw800/background/20241217/pngtree-a-serene-display-of-skincare-products-on-wooden-table-image_16822834.jpg"), no-repeat;
+    background-size: 100%;
+    background-size: cover;
+    background-position: 150%;
+    z-index: 1;
+    overflow: hidden;
+    max-height: 200px;
+    height: 200px;
+    margin-top: 100;
+  }
+
+  
+  .productPage .overlay-content-background {
+    position: absolute;
+    left: 10%;
+    color: #fff;
+    z-index: 2;  
+  }
+  
+  .productPage .title-background {
+    font-size: 40px;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #161439;
+  }
+  
+  
+  .productPage .breadcrumb {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #5751e1;
+    margin-bottom: 1rem;
+  }
+  
+  .productPage .breadcrumb-item {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .productPage .breadcrumb-link {
+    text-decoration: none;
+    color: #1c1a4a;
+    font-size: 16px;
+  }
+  
+  .productPage .breadcrumb-link-active {
+    text-decoration: none;
+    color: #5751e1;
+  }
+  
+  .productPage .breadcrumb-separator {
+    margin: 0 5px;
+    color: #aaa;
+  }
