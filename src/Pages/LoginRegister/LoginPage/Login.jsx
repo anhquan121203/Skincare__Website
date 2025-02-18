@@ -3,10 +3,6 @@ import "./Login.css";
 import logo from "../../../assets/images/logo.png";
 import iconGG from "../../../assets/login/iconGG.png";
 import { Button } from "antd";
-import { Link } from "react-router-dom";
-import logo from "../../../assets/images/logo.png"
-import iconGG from "../../../assets/login/iconGG.png"
-import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
@@ -116,7 +112,7 @@ function LoginPage() {
             type='submit'
             className='login-button'
             disabled={formik.isSubmitting}
-          />
+          >Đăng nhập </button>
         </form>
 
         <p style={{ marginBottom: "-5px" }}>Hoặc đăng nhập với Google</p>
