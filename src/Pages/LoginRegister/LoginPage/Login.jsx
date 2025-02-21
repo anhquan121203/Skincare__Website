@@ -36,23 +36,30 @@ function LoginPage() {
     onSubmit: async (values) => {
       try {
         const response = await loginUser(values);
-        if (response.status === 200) {
-          const { accessToken, refreshToken } = response.data;
 
-          // Save token and user in localStorage, then dispatch login action
+        // Make sure we receive the correct tokens
+        if (response?.accessToken && response?.refreshToken) {
+          const { accessToken, refreshToken } = response;
+
+          // Save token in localStorage
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
-          toast.success("Login successful");
-          navigate("/");
+          // Dispatch login action
           dispatch(login({ accessToken, refreshToken }));
+
+          toast.success("Login successful", 1000);
+
+          // Navigate to home page AFTER dispatching login action
+          navigate("/");
         } else {
-          toast.error(response.data.message || "Login failed");
+          toast.error("Login failed. Please try again.");
         }
       } catch (error) {
-        toast.error("Email or password is incorrect", error);
+        toast.error("Email or password is incorrect");
       }
     },
+
   });
 
   return (
@@ -112,7 +119,7 @@ function LoginPage() {
             type='submit'
             className='login-button'
             disabled={formik.isSubmitting}
-          >Đăng nhập </button>
+          >{formik.isSubmitting ? "Đăng nhập..." : "Đăng nhập"} </button>
         </form>
 
         <p style={{ marginBottom: "-5px" }}>Hoặc đăng nhập với Google</p>

@@ -6,7 +6,7 @@ const initialState = {
   isLoggedIn: localStorage.getItem("accessToken") || null, // Check if accessToken exists in localStorage
   accessToken: localStorage.getItem("accessToken") || null,
   refreshToken: localStorage.getItem("refreshToken") || null,
-  authToken: localStorage.getItem("authToken") || null,
+  // authToken: localStorage.getItem("authToken") || null,
   avatar: null,
   user: null,
 };
@@ -29,12 +29,12 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.accessToken = null;
       state.refreshToken = null;
-      state.authToken = null;
+      // state.authToken = null;
 
       // Clear tokens and user from localStorage
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      localStorage.removeItem("authToken");
+      // localStorage.removeItem("authToken");
     },
 
     setUser(state, action) {
