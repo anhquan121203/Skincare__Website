@@ -1,10 +1,67 @@
+import React, { useState } from 'react'
 import "./Login.css";
 import logo from "../../../assets/images/logo.png";
 import iconGG from "../../../assets/login/iconGG.png";
 import { Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from "yup";
+import { loginUser } from '../../../Api/authApi';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../Features/user/authSlice';
+import { toast } from 'react-toastify';
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const [showPassword] = useState(false);
+  const dispatch = useDispatch();
+
+  // Schema Yup cho form validation
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+  });
+
+  // Sử dụng Formik để quản lý form
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await loginUser(values);
+
+        // Make sure we receive the correct tokens
+        if (response?.accessToken && response?.refreshToken) {
+          const { accessToken, refreshToken } = response;
+
+          // Save token in localStorage
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          // Dispatch login action
+          dispatch(login({ accessToken, refreshToken }));
+
+          toast.success("Login successful", 1000);
+
+          // Navigate to home page AFTER dispatching login action
+          navigate("/");
+        } else {
+          toast.error("Login failed. Please try again.");
+        }
+      } catch (error) {
+        toast.error("Email or password is incorrect");
+      }
+    },
+
+  });
+
   return (
     <div className="login-container">
       <div className="login-left">
@@ -24,13 +81,16 @@ function LoginPage() {
       {/* LOGIN RIGHT***************** */}
       <div className="login-right">
         <h2>Đăng nhập</h2>
-        <form>
-          <div className="form-group">
+        <form onSubmit={formik.handleSubmit}>
+          <div className='form-group'>
             <label>Email</label>
             <input
               type="email"
               name="email"
-              placeholder="Nhập email của bạn..."
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder='Enter your email...'
               required
             />
           </div>
@@ -40,7 +100,10 @@ function LoginPage() {
             <input
               type="password"
               name="password"
-              placeholder="**********"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder='**********'
               required
             />
           </div>
@@ -52,9 +115,11 @@ function LoginPage() {
             </label>
             <Link>Quên mật khẩu</Link>
           </div>
-          <button type="submit" className="login-button">
-            Đăng nhập
-          </button>
+          <button
+            type='submit'
+            className='login-button'
+            disabled={formik.isSubmitting}
+          >{formik.isSubmitting ? "Đăng nhập..." : "Đăng nhập"} </button>
         </form>
 
         <p style={{ marginBottom: "-5px" }}>Hoặc đăng nhập với Google</p>

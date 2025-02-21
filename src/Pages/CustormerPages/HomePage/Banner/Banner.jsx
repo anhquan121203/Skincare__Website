@@ -6,7 +6,6 @@ function Banner() {
   return (
     <div className="banner animate">
         <div className="banner-content">
-          <h3 className="category animate">Beauty City</h3>
           <h1 className="title animate">Welcome to Beauty city</h1>
           <p className="description animate">
             Aenean laoreet praesent in nunc vel urna consequat mattis eget vel

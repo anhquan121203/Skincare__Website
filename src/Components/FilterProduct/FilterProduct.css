@@ -1,0 +1,22 @@
+.filter-product{
+    /* display: flex; */
+    max-height: 900px;
+    height: 500px;
+    /* width: 400px; */
+    }
+  
+  .filter-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .filter-sidebar ul li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* gap: 20px; */
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+
