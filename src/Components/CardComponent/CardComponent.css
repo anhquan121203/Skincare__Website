@@ -1,0 +1,155 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    width: 90%;
+    /* max-width: 1200px; */
+  }
+
+.card-product {
+    max-width: 400px;
+    max-height: 880px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: transform 0.5s ease-in-out;
+    cursor: pointer;
+  }
+
+.card-product:hover{
+    transform: scale(1.05);
+}
+  
+  .card-image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .card-location {
+    display: flex;
+    align-items: center;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .card-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-left: 3px;
+  }
+
+  .card-title:hover{
+    text-decoration: underline;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  
+  .star-icon {
+    color: gold;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  
+  .card-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .tags {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  
+  .tag-category {
+    background-color: orange;
+    color: white;
+  }
+  
+  .tag-wildlife {
+    background-color: blue;
+    color: white;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .card-price {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .addToCard{
+    border-radius: 15px;
+    background-color: #124841;
+    height: 40px;
+    width: 150px;
+    font-size: 18px;
+    color: white;
+    border: none;
+  }
+
+  .addToCard:hover{
+    background-color: #047c91;
+  }
+  
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+  

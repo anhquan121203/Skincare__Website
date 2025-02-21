@@ -105,3 +105,13 @@ export const registerUser = async (userData) => {
     );
   }
 };
+
+export const signOut = async () => {
+  try {
+      localStorage.removeItem('accessToken'); 
+      localStorage.removeItem('refreshToken'); 
+      window.location.href = '/login';
+  } catch (error) {
+      console.error('Error logging out:', error);
+  }
+}

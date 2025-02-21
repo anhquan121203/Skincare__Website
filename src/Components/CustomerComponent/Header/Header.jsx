@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../../assets/images/logo.png";
 import { Dropdown, Input, Menu } from "antd";
@@ -8,8 +8,26 @@ import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../../Api/authApi";
+import { logout } from "../../../Features/user/authSlice";
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  const [isOpen, setIsOpen] = useState();
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    dispatch(logout());
+  };
+
   // Seach category
   const categoriesMenu = (
     <Menu>
@@ -84,11 +102,26 @@ function Header() {
             </li>
           </ul>
 
-          <li>
-            <Link to="/login">
-              <button className="btn-button">Đăng nhập</button>
-            </Link>
-          </li>
+          {/* LOGOUT Fearture */}
+          {isLoggedIn ? (
+            <div className="dropdown-login">
+              <button onClick={toggleDropdown} className="dropdown-button">
+                Khách hàng
+              </button>
+              {isOpen && (
+                <div className="dropdown-content">
+                  <a href="#">Thông tin</a>
+                  <a onClick={handleLogout}>Thoát</a>
+                </div>
+              )}
+            </div>
+          ) : (
+            <li>
+              <Link to="/login">
+                <button className="btn-button">Đăng nhập</button>
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
