@@ -5,6 +5,7 @@ import LoginPage from "./Pages/LoginRegister/LoginPage/Login";
 import BlogPage from "./Pages/CustormerPages/Blogger/BlogPage";
 import Register from "./Pages/LoginRegister/RegisterPage/Register";
 import ProductPage from "./Pages/CustormerPages/ProductPage/ProductPage";
+import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/blogger" element={<BlogPage />}></Route>
           <Route path="/product" element={<ProductPage />}></Route>
+          <Route path="/wishlist" element={<WishlistPage />}></Route>
           {/* Đúng tên */}
         </Route>
         {/****************************************************************************/}
