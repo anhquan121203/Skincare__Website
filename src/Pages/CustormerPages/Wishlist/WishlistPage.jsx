@@ -111,7 +111,7 @@ const WishlistPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const pageSize = 8;
+  const pageSize = 4;
 
   // Xóa sản phẩm khỏi danh sách yêu thích
   const removeFromWishlist = (index) => {
@@ -175,7 +175,7 @@ const WishlistPage = () => {
 
       {/* Danh sách sản phẩm */}
       <div className="wishlist-items">
-        <Row gutter={[16, 16]}>
+        <Row gutter={[30, 30]}>
           {paginatedItems.map((item, index) => (
             <Col key={index} xs={24} sm={12} md={8} lg={6}>
               <Card
