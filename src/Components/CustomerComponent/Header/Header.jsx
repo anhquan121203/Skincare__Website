@@ -90,7 +90,7 @@ function Header() {
           {/* Wishkist and cart */}
           <ul className="icon">
             <li>
-              <Link to="#">
+              <Link to="/wishlist">
                 <CiHeart />
               </Link>
             </li>
