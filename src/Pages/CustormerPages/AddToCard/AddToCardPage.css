@@ -1,0 +1,61 @@
+.cart-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-card {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.summary-card {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.total {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.total-price {
+  color: #ff4d4f;
+  font-size: 16px;
+}
+
+.remove-selected {
+  margin-top: 10px;
+}
+
+/* Căn chỉnh nút +/- trong phần số lượng */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+}

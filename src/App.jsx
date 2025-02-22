@@ -6,6 +6,7 @@ import BlogPage from "./Pages/CustormerPages/Blogger/BlogPage";
 import Register from "./Pages/LoginRegister/RegisterPage/Register";
 import ProductPage from "./Pages/CustormerPages/ProductPage/ProductPage";
 import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
+import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/blogger" element={<BlogPage />}></Route>
           <Route path="/product" element={<ProductPage />}></Route>
           <Route path="/wishlist" element={<WishlistPage />}></Route>
+          <Route path="/addtocard" element={<AddToCardPage />}></Route>
           {/* Đúng tên */}
         </Route>
         {/****************************************************************************/}
