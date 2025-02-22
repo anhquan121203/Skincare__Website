@@ -21,8 +21,8 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/blogger" element={<BlogPage />}></Route>
           <Route path="/product" element={<ProductPage />}></Route>
-          <Route path="/wishlist" element={<WishlistPage />}></Route>
           <Route path="/product-details/:id" element={<ProductDetail />}></Route>
+          <Route path="/wishlist" element={<WishlistPage />}></Route>
           {/* Đúng tên */}
         </Route>
         {/****************************************************************************/}

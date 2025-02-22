@@ -258,7 +258,7 @@
 }
 
 /* AVATAR LOGIN SUCCESS **************************************************** */
-.dropdown {
+.dropdown-login {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -275,6 +275,7 @@
   transition: background-color 0.3s ease;
   display: inline-block;
   position: relative;
+  margin-top: 20px;
 }
 
 .dropdown-button:hover {
@@ -287,14 +288,13 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border-radius: 15px;
-  /* margin-right: -150px; */
-  margin-left: -50px;
+  border-radius: 5px;
+  margin-left: -15px;
   display: none;
   align-items: center;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-login:hover .dropdown-content {
   display: block;
 }
 
