@@ -1,11 +1,11 @@
 .product-page .background-animation {
-  background: url("https://img.freepik.com/free-vector/acid-cosmetics-aha-bha-fruit-peeling-bottles-set_33099-1524.jpg?t=st=1739858930~exp=1739862530~hmac=26f3c02aec2deff7bea26b4c0c13e2846d7ceb6cde084476498152088b76757d&w=1480");
+  background: url("../../../assets/banners/bannerProduct.png");
   background-size: 100%;
   background-size: cover;
   background-position: 150%;
   z-index: 1;
   overflow: hidden;
-  max-height: 200px;
+  max-height: 230px;
   height: 200px;
   margin-top: 100;
 }
