@@ -1,13 +1,13 @@
 .product-page .background-animation {
-  background: url("../../../assets/banners/bannerProduct.png");
-  background-size: 100%;
+  background: url("../../../assets/banners/bannerProduct.png"), repeat;
+  background-size: 110%;
   background-size: cover;
-  background-position: 150%;
+  /* background-position: 100%; */
   z-index: 1;
   overflow: hidden;
-  max-height: 230px;
-  height: 200px;
-  margin-top: 100;
+  /* max-height: 230px; */
+  height: 480px;
+  margin-top: -10px;
 }
 
 .product-page .product-content {

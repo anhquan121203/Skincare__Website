@@ -3,9 +3,11 @@ import "./CardComponent.css";
 import { FaClock, FaStar } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CardComponent() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9; // 3 rows * 3 columns
 
@@ -27,20 +29,26 @@ function CardComponent() {
   // Calculate pagination
   const totalPages = Math.ceil(products.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const selectedProducts = products.slice(startIndex, startIndex + itemsPerPage);
+  const selectedProducts = products.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <div className="card-container">
       <div className="card-grid">
         {selectedProducts.map((item, index) => (
-          <div key={index} className="card-product">
+          <div
+            key={index}
+            className="card-product"
+            onClick={() => navigate(`/product-details/${item.id}`)}
+          >
             <img className="card-image" src={item.image} alt={item.name} />
             <div className="card-content">
-              {/* <div className="card-location">
-                <FaLocationDot className="card-icon" />
-                <span>{item.name}</span>
-              </div> */}
-              <h2 className="card-title">{item.description}</h2>
+              {/* <FaLocationDot className="card-icon" /> */}
+              <span className="card-name">{item.name}</span>
+
+              <h2 className="card-description">{item.description}</h2>
               <div className="card-rating">
                 <FaStar className="star-icon" />
                 <span>{item.rating}</span>
