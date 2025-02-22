@@ -195,6 +195,7 @@ function FilterProduct() {
               options={categoryOptions}
               value={selectedCategories}
               onChange={handleCategoryChange}
+              style={{fontSize: "30px"}}
             />
           )}
         </div>

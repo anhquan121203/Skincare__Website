@@ -5,10 +5,12 @@ import LoginPage from "./Pages/LoginRegister/LoginPage/Login";
 import BlogPage from "./Pages/CustormerPages/Blogger/BlogPage";
 import Register from "./Pages/LoginRegister/RegisterPage/Register";
 import ProductPage from "./Pages/CustormerPages/ProductPage/ProductPage";
+import ScrollToTop from "./Components/CustomerComponent/ScrollPage/ScrollPage";
 
 function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop/>
       <Routes>
         {/*Student route*/}
         <Route path="/" element={<CustomerLayout />}>

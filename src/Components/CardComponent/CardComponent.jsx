@@ -51,7 +51,7 @@ function CardComponent() {
               </div>
               <div className="card-footer">
                 <span>
-                  From <span className="card-price">${item.price}</span>
+                  <span className="card-price">{item.price}0 </span>VND
                 </span>
                 <div className="btn-addToCard">
                   <button className="addToCard">Add to card</button>

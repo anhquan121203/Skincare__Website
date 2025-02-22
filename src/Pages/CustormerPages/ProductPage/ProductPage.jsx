@@ -61,16 +61,6 @@ function ProductPage() {
       <div className="product-content">
         {/* Header */}
 
-        <div className="applied-filters">
-          <span>Selected Filtre</span>
-          <span>Selected Filtre</span>
-        </div>
-        <div className="view-options">
-          <button>Grid view</button>
-          <button>List view</button>
-          <span>428 Products</span>
-        </div>
-
         <div className="main-content">
           {/* filter */}
           <div className="filter">
