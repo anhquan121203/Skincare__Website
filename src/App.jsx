@@ -1,4 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import ScrollToTop from "./Components/CustomerComponent/ScrollPage/ScrollPage";
+
+// Custormer***************************************************************************
 import CustomerLayout from "./Layout/CustomerLayout";
 import HomePage from "./Pages/CustormerPages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginRegister/LoginPage/Login";
@@ -7,13 +11,16 @@ import Register from "./Pages/LoginRegister/RegisterPage/Register";
 import ProductPage from "./Pages/CustormerPages/ProductPage/ProductPage";
 import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
 import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
-import ScrollToTop from "./Components/CustomerComponent/ScrollPage/ScrollPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 
-// Manager
+// Staff************************************************************************************
+
+
+// Manager*******************************************************************************
 import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
+
 
 function App() {
   return (
@@ -36,16 +43,24 @@ function App() {
           {/* Đúng tên */}
         </Route>
 
+        {/* Staff router */}
+        {/* <Route path="/manager" element={<StaffLayout />}>
+          <Route index element={<ManagerOrder />}></Route>
+          <Route
+            path="dashboard-manager"
+            element={<DashboardManager />}
+          ></Route>
+          <Route path="manager-product" element={<ManagerProduct />}></Route>
+        </Route> */}
+
+        {/* Manager router */}
         <Route path="/manager" element={<ManagerLayout />}>
           <Route index element={<DashboardManager />}></Route>
           <Route
             path="dashboard-manager"
             element={<DashboardManager />}
           ></Route>
-          <Route
-            path="manager-product"
-            element={<ManagerProduct />}
-          ></Route>
+          <Route path="manager-product" element={<ManagerProduct />}></Route>
         </Route>
 
         {/****************************************************************************/}

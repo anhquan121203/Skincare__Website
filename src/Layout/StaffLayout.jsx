@@ -1,6 +1,6 @@
 import React from 'react'
 
-function HeaderManager() {
+function StaffLayout() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function HeaderManager() {
   )
 }
 
-export default HeaderManager
+export default StaffLayout
