@@ -96,7 +96,7 @@ function Header() {
             </li>
 
             <li>
-              <Link to="#">
+              <Link to="/addtocard">
                 <FaShoppingCart />
               </Link>
             </li>

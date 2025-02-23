@@ -6,6 +6,7 @@ import BlogPage from "./Pages/CustormerPages/Blogger/BlogPage";
 import Register from "./Pages/LoginRegister/RegisterPage/Register";
 import ProductPage from "./Pages/CustormerPages/ProductPage/ProductPage";
 import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
+import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 import ScrollToTop from "./Components/CustomerComponent/ScrollPage/ScrollPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 
@@ -31,6 +32,7 @@ function App() {
             element={<ProductDetail />}
           ></Route>
           <Route path="/wishlist" element={<WishlistPage />}></Route>
+          <Route path="/addtocard" element={<AddToCardPage />}></Route>
           {/* Đúng tên */}
         </Route>
 
