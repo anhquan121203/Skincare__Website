@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./CardComponent.css";
-import { FaClock, FaStar } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BsCart4 } from "react-icons/bs";
 
-function CardComponent() {
+function CardComponent({ sortProduct, searchTerm }) {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // 3 rows * 3 columns
+  const itemsPerPage = 9;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,13 +26,31 @@ function CardComponent() {
     fetchProducts();
   }, []);
 
-  // Calculate pagination
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const selectedProducts = products.slice(
-    startIndex,
-    startIndex + itemsPerPage
+  // Filter products based on search term
+  const filteredItems = products.filter((item) =>
+    item.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Sort products based on selected option
+  const sortedProducts = [...filteredItems].sort((a, b) => {
+    switch (sortProduct) {
+      case "low-to-high":
+        return a.price - b.price;
+      case "high-to-low":
+        return b.price - a.price;
+      case "a-to-z":
+        return a.name.localeCompare(b.name);
+      case "z-to-a":
+        return b.name.localeCompare(a.name);
+      default:
+        return 0;
+    }
+  });
+
+  // Pagination logic
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const selectedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="card-container">
@@ -45,24 +63,18 @@ function CardComponent() {
           >
             <img className="card-image" src={item.image} alt={item.name} />
             <div className="card-content">
-              {/* <FaLocationDot className="card-icon" /> */}
               <span className="card-name">{item.name}</span>
-
               <h2 className="card-description">{item.description}</h2>
               <div className="card-rating">
                 <FaStar className="star-icon" />
                 <span>{item.rating}</span>
-              </div>
-              <div className="card-tags">
-                <span className="tags tag-category">Category</span>
-                <span className="tags tag-wildlife">Wildlife</span>
               </div>
               <div className="card-footer">
                 <span>
                   <span className="card-price">{item.price}0 </span>VND
                 </span>
                 <div className="btn-addToCard">
-                  <button className="addToCard">Add to card</button>
+                  <button className="addToCard">Thêm giỏ hàng <BsCart4 /></button>
                 </div>
               </div>
             </div>
@@ -72,19 +84,13 @@ function CardComponent() {
 
       {/* Pagination Controls */}
       <div className="pagination">
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
+        <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
           Previous
         </button>
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
+        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
           Next
         </button>
       </div>

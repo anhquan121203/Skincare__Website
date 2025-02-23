@@ -1,11 +1,12 @@
 import React from 'react'
+import "./Dashboard.css"
 
-function Dashboard() {
+function DashboardManager() {
   return (
-    <div>
-      
+    <div className='dashboard-container'>
+      <h1>helooo dashboard</h1>
     </div>
   )
 }
 
-export default Dashboard
+export default DashboardManager;

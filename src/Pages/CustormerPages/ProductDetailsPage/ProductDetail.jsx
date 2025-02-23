@@ -68,9 +68,9 @@ function ProductDetail() {
             <p className="details-description">{product.description}</p>
 
             <div className="add-to-card-details">
-              <input className="details-quantity" type="number" defaultValue={1} />
+              <input className="details-quantity" min={1} max={100} type="number" defaultValue={1} />
               <button className="btn-details" type="submit">
-                Add to card <TiShoppingCart />
+                Thêm giỏ hàng <TiShoppingCart />
               </button>
             </div>
 
@@ -107,7 +107,7 @@ function ProductDetail() {
 
       <div className="details-product-more">
         <h1 style={{ marginBottom: "50px" }}>Các sản phẩm khác</h1>
-        <CardComponent />
+        {/* <CardComponent /> */}
       </div>
     </div>
   );

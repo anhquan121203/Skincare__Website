@@ -9,10 +9,15 @@ import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
 import ScrollToTop from "./Components/CustomerComponent/ScrollPage/ScrollPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 
+// Manager
+import ManagerLayout from "./Layout/ManagerLayout";
+import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
+import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
+
 function App() {
   return (
     <BrowserRouter>
-    <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
         {/*Student route*/}
         <Route path="/" element={<CustomerLayout />}>
@@ -21,10 +26,26 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/blogger" element={<BlogPage />}></Route>
           <Route path="/product" element={<ProductPage />}></Route>
-          <Route path="/product-details/:id" element={<ProductDetail />}></Route>
+          <Route
+            path="/product-details/:id"
+            element={<ProductDetail />}
+          ></Route>
           <Route path="/wishlist" element={<WishlistPage />}></Route>
           {/* Đúng tên */}
         </Route>
+
+        <Route path="/manager" element={<ManagerLayout />}>
+          <Route index element={<DashboardManager />}></Route>
+          <Route
+            path="dashboard-manager"
+            element={<DashboardManager />}
+          ></Route>
+          <Route
+            path="manager-product"
+            element={<ManagerProduct />}
+          ></Route>
+        </Route>
+
         {/****************************************************************************/}
       </Routes>
     </BrowserRouter>

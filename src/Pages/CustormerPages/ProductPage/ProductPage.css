@@ -23,9 +23,18 @@
 
 }
 
+.sort-product{
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  margin-right: 100px;
+}
+
+
+/* filter sidebar */
 .filter{
   /* margin-right: 100px; */
-  margin-left: 40px;
+  margin-left: 80px;
   margin-top: 20px;
 }
 

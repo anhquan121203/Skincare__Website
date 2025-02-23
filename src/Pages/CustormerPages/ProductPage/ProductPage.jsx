@@ -1,74 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProductPage.css";
-import banner from "../../../assets/images/footer.jpg";
-import { Card, Col, Rate, Row, Typography } from "antd";
-import Meta from "antd/es/card/Meta";
+import { Select, Input } from "antd";
 import FilterProduct from "../../../Components/FilterProduct/FilterProduct";
 import CardComponent from "../../../Components/CardComponent/CardComponent";
 
-function ProductPage() {
-  const products = [
-    {
-      name: "Detangling Hair Spray",
-      rating: 4,
-      price: "$5.00 - $10.00",
-      image:
-        "https://wdtlilac.wpengine.com/wp-content/uploads/2023/06/shop-2.1.webp",
-    },
-    {
-      name: "Anti-Aging Face Cream",
-      rating: 4,
-      price: "$5.00 - $10.00",
-      image:
-        "https://wdtlilac.wpengine.com/wp-content/uploads/2023/06/shop-16.1.webp",
-    },
-    {
-      name: "Moisturizing Curl Activator Cream",
-      rating: 5,
-      price: "$11.00",
-      image:
-        "https://wdtlilac.wpengine.com/wp-content/uploads/2023/01/shop-5.1.webp",
-    },
+const { Option } = Select;
 
-    {
-      name: "Detangling Hair Spray",
-      rating: 4,
-      price: "$5.00 - $10.00",
-      image:
-        "https://wdtlilac.wpengine.com/wp-content/uploads/2023/06/shop-2.1.webp",
-    },
-    {
-      name: "Anti-Aging Face Cream",
-      rating: 4,
-      price: "$5.00 - $10.00",
-      image:
-        "https://wdtlilac.wpengine.com/wp-content/uploads/2023/06/shop-16.1.webp",
-    },
-    {
-      name: "Moisturizing Curl Activator Cream",
-      rating: 5,
-      price: "$11.00",
-      image:
-        "https://wdtlilac.wpengine.com/wp-content/uploads/2023/01/shop-5.1.webp",
-    },
-  ];
+function ProductPage() {
+  const [sortProduct, setSortProduct] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div className="product-page">
       <div className="background-animation"></div>
 
-      {/* ALL PRODUCT */}
       <div className="product-content">
         {/* Header */}
+        <div className="sort-product">
+          <Select
+            defaultValue="all"
+            className="sort-select"
+            onChange={setSortProduct}
+          >
+            <Option value="all">Tất cả</Option>
+            <Option value="low-to-high">Giá: từ thấp đến cao</Option>
+            <Option value="high-to-low">Giá: từ cao đến thấp</Option>
+            <Option value="a-to-z">Tên: A - Z</Option>
+            <Option value="z-to-a">Tên: Z - A</Option>
+          </Select>
+
+          <Input.Search
+            placeholder="Tìm kiếm sản phẩm..."
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: 200 }}
+          />
+        </div>
 
         <div className="main-content">
-          {/* filter */}
           <div className="filter">
             <FilterProduct />
           </div>
 
-          {/* Product */}
-          <CardComponent />
+          
+          <CardComponent sortProduct={sortProduct} searchTerm={searchTerm} />
         </div>
       </div>
     </div>

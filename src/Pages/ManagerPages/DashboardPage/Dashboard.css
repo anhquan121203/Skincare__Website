@@ -1,0 +1,5 @@
+.dashboard-container{
+    display: flex;
+    /* margin-left: 20px; */
+    margin-top: 100px;
+}
