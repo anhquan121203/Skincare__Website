@@ -15,12 +15,13 @@ import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDeta
 
 // Staff************************************************************************************
 
-
 // Manager*******************************************************************************
 import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
-
+import StaffLayout from "./Layout/StaffLayout";
+import ManagerReview from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
+import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
 
 function App() {
   return (
@@ -44,14 +45,11 @@ function App() {
         </Route>
 
         {/* Staff router */}
-        {/* <Route path="/manager" element={<StaffLayout />}>
-          <Route index element={<ManagerOrder />}></Route>
-          <Route
-            path="dashboard-manager"
-            element={<DashboardManager />}
-          ></Route>
-          <Route path="manager-product" element={<ManagerProduct />}></Route>
-        </Route> */}
+        <Route path="/staff" element={<StaffLayout />}>
+          <Route index element={<DashboardManager />}></Route>
+          <Route path="manage-order" element={<ManagerOrder />}></Route>
+          <Route path="manage-review" element={<ManagerReview />}></Route>
+        </Route>
 
         {/* Manager router */}
         <Route path="/manager" element={<ManagerLayout />}>
