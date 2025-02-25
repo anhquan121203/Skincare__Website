@@ -46,10 +46,6 @@ function Register() {
         console.log(response.data);
 
         if (response.status === 200) {
-          toast.success(
-            "Đăng kí thành công!!!",
-            setTimeout(() => {}, 1000)
-          );
           console.log("đăng ký thành công!!!!");
 
           const { accessToken, refreshToken } = response.data;
@@ -59,6 +55,7 @@ function Register() {
 
           dispatch(login({ accessToken, refreshToken }));
           navigate("/login");
+          toast.success("Đăng kí thành công!!!", { autoClose: 1000 });
         } else {
           toast.error(response.data.message || "Đăng kí thất bại!!!");
           console.log("đăng ký thất bại");
