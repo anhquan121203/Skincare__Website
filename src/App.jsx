@@ -14,14 +14,14 @@ import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 
 // Staff************************************************************************************
+import StaffLayout from "./Layout/StaffLayout";
+import ManagerReview from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
+import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
 
 // Manager*******************************************************************************
 import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
-import StaffLayout from "./Layout/StaffLayout";
-import ManagerReview from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
-import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
 
 function App() {
   return (
