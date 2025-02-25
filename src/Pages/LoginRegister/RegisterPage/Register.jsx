@@ -43,8 +43,15 @@ function Register() {
     onSubmit: async (values) => {
       try {
         const response = await registerUser(values);
+        console.log(response.data);
+
         if (response.status === 200) {
-          toast.success("Đăng kí thành công!!!");
+          toast.success(
+            "Đăng kí thành công!!!",
+            setTimeout(() => {}, 1000)
+          );
+          console.log("đăng ký thành công!!!!");
+
           const { accessToken, refreshToken } = response.data;
 
           localStorage.setItem("accessToken", accessToken);
@@ -54,6 +61,7 @@ function Register() {
           navigate("/login");
         } else {
           toast.error(response.data.message || "Đăng kí thất bại!!!");
+          console.log("đăng ký thất bại");
         }
       } catch (error) {
         toast.error("An error occurred during registration");
@@ -63,7 +71,6 @@ function Register() {
 
   return (
     <div className="register-container">
-
       <div className="register-left">
         <div className="register-logo">
           <img src={Logo} alt="Logo" />

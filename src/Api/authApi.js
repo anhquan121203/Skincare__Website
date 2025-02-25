@@ -90,13 +90,13 @@ export const loginUser = async (userData) => {
 export const registerUser = async (userData) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/register`,
+      `${API_BASE_URL}/api/account/register`,
       userData,
       {
         headers: { "Content-Type": "application/json" },
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     throw (
       error.response?.data?.Errors ||
@@ -108,10 +108,10 @@ export const registerUser = async (userData) => {
 
 export const signOut = async () => {
   try {
-      localStorage.removeItem('accessToken'); 
-      localStorage.removeItem('refreshToken'); 
-      window.location.href = '/login';
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    window.location.href = "/login";
   } catch (error) {
-      console.error('Error logging out:', error);
+    console.error("Error logging out:", error);
   }
-}
+};
