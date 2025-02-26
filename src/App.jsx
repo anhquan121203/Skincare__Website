@@ -22,6 +22,7 @@ import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
 import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
+import { Slide, ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
 
         {/****************************************************************************/}
       </Routes>
+      <ToastContainer
+        transition={Slide}
+        autoClose={1000}
+        newestOnTop={true}
+        pauseOnHover={true}
+        pauseOnFocusLoss={false}
+        limit={5}
+      />
     </BrowserRouter>
   );
 }
