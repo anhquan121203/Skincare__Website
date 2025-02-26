@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./CardComponent.css";
+import "./CardProduct.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 
-function CardComponent({ sortProduct, searchTerm }) {
+function CardProduct({ sortProduct, searchTerm }) {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,4 +98,4 @@ function CardComponent({ sortProduct, searchTerm }) {
   );
 }
 
-export default CardComponent;
+export default CardProduct;
