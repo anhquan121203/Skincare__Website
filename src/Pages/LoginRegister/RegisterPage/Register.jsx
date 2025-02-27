@@ -48,7 +48,6 @@ function Register() {
           console.log("đăng ký thành công!!!!");
 
           const { accessToken, refreshToken } = response.data;
-
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
@@ -222,7 +221,7 @@ function Register() {
                 onBlur={formik.handleBlur}
                 className={
                   formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
+                    formik.errors.confirmPassword
                     ? "error"
                     : ""
                 }

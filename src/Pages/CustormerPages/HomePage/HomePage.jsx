@@ -13,6 +13,7 @@ import brand2 from "../../../assets/brand/2.png";
 import brand3 from "../../../assets/brand/3.png";
 import brand4 from "../../../assets/brand/4.png";
 import brand5 from "../../../assets/brand/5.png";
+import TopProduct from "../../../Components/TopProductComponent/TopProduct";
 
 function HomePage() {
   const setting = {
@@ -98,6 +99,9 @@ function HomePage() {
           </Slider>
         </div>
 
+        <div className="top-product">
+          <TopProduct/>
+        </div>
       </div>
 
     </div>

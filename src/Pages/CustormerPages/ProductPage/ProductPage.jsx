@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ProductPage.css";
 import { Select, Input } from "antd";
 import FilterProduct from "../../../Components/FilterProduct/FilterProduct";
-import CardComponent from "../../../Components/CardComponent/CardComponent";
+import CardComponent from "../ProductPage/CardProduct/CardProduct";
 
 const { Option } = Select;
 

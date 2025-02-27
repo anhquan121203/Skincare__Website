@@ -6,7 +6,6 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import TabDetails from "./TabProductDetails/TabDetails";
 import { TiShoppingCart } from "react-icons/ti";
 import { MdPayment } from "react-icons/md";
-import CardComponent from "../../../Components/CardComponent/CardComponent";
 
 function ProductDetail() {
   const { id } = useParams();

@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "./CardComponent.css";
+import "./CardProduct.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
+import useProduct from "../../../../Hooks/useProduct";
 
-function CardComponent({ sortProduct, searchTerm }) {
-  const [products, setProducts] = useState([]);
+function CardProduct({ sortProduct, searchTerm }) {
+  const { products } = useProduct;
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "https://664dc6deede9a2b55654d26f.mockapi.io/project/QuanSE172057"
-        );
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   // Filter products based on search term
   const filteredItems = products.filter((item) =>
@@ -50,7 +36,10 @@ function CardComponent({ sortProduct, searchTerm }) {
   // Pagination logic
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const selectedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
+  const selectedProducts = sortedProducts.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <div className="card-container">
@@ -74,7 +63,9 @@ function CardComponent({ sortProduct, searchTerm }) {
                   <span className="card-price">{item.price}0 </span>VND
                 </span>
                 <div className="btn-addToCard">
-                  <button className="addToCard">Thêm giỏ hàng <BsCart4 /></button>
+                  <button className="addToCard">
+                    Thêm giỏ hàng <BsCart4 />
+                  </button>
                 </div>
               </div>
             </div>
@@ -84,13 +75,19 @@ function CardComponent({ sortProduct, searchTerm }) {
 
       {/* Pagination Controls */}
       <div className="pagination">
-        <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           Previous
         </button>
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>
@@ -98,4 +95,4 @@ function CardComponent({ sortProduct, searchTerm }) {
   );
 }
 
-export default CardComponent;
+export default CardProduct;
