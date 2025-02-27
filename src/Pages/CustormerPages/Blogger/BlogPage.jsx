@@ -1,41 +1,47 @@
-//
 import { useState } from "react";
+import { Button, Pagination, Card, Typography } from "antd";
 import adImage from "../../../assets/imageBlogger/duong-da.webp";
 import "./BlogPage.css";
 import { articlesDiscovery, healthArticles } from "./data/articles";
-import { Pagination } from "antd";
+
+const { Title, Paragraph } = Typography;
+
+const categoryData = [
+  { name: "CHĂM SÓC DA", image: "duong-da.webp" },
+  { name: "CHĂM SÓC SỨC KHỎE", image: "suc-khoe.webp" },
+  { name: "XU HƯỚNG", image: "xu-huong.webp" },
+  { name: "REVIEW SẢN PHẨM", image: "review.webp" },
+];
 
 function BlogPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // Số bài viết trên mỗi trang
+  const itemsPerPage = 3;
 
-  // Tính toán bài viết hiển thị
   const indexOfLastArticle = currentPage * itemsPerPage;
   const indexOfFirstArticle = indexOfLastArticle - itemsPerPage;
   const currentArticles = articlesDiscovery.slice(
     indexOfFirstArticle,
     indexOfLastArticle
   );
-
-  // Tổng số trang
   const totalArticles = articlesDiscovery.length;
 
-  // Hàm đổi trang
   const changePage = (page) => {
     setCurrentPage(page);
   };
+
   return (
-    <div style={{ marginTop: 100 }}>
-      <h1>Blogger</h1>
+    <div className="blog-page" style={{ marginTop: 100 }}>
+      <Title level={1}>Blogger</Title>
       <div className="categories">
-        <div className="category">CHĂM SÓC DA</div>
-        <div className="category">CHĂM SÓC SỨC KHỎE</div>
-        <div className="category">XU HƯỚNG</div>
-        <div className="category">REVIEW SẢN PHẨM</div>
+        {categoryData.map((category, index) => (
+          <div key={index} className="category">
+            {category.name}
+          </div>
+        ))}
       </div>
-      {/* .............................................. */}
+
       <div className="article-list">
-        <h1>Khám phá</h1>
+        <Title level={2}>Khám phá</Title>
         {currentArticles.map((article, index) => (
           <div key={index} className="articlesDiscovery">
             <img
@@ -44,74 +50,69 @@ function BlogPage() {
               className="article-image"
             />
             <div className="article-content">
-              <div className="date">{article.date}</div>
-              <h2>{article.title}</h2>
-              <h3>{article.description}</h3>
-              <p>{article.content}</p>
+              <Paragraph className="date">{article.date}</Paragraph>
+              <Title level={3}>{article.title}</Title>
+              <Paragraph>{article.description}</Paragraph>
+              <Paragraph>{article.content}</Paragraph>
               <div className="info">
-                <button className="read-more">Xem thêm</button>
+                <Button>Xem thêm</Button>
                 <span className="views">{article.views} Lượt xem</span>
               </div>
             </div>
           </div>
         ))}
-        {/* Phân trang bằng Ant Design */}
+
         <Pagination
           current={currentPage}
           pageSize={itemsPerPage}
           total={totalArticles}
           onChange={changePage}
-          showSizeChanger={false} // Không cho thay đổi số item trên trang
+          showSizeChanger={false}
           className="pagination"
         />
       </div>
 
-      {/* ----------------------------------------------------------------------------- */}
       <div className="health-care-section">
-        <h1>Chăm sóc sức khoẻ</h1>
+        <Title level={2}>Chăm sóc sức khoẻ</Title>
         <div className="articles">
           {healthArticles.map((article, index) => (
-            <div key={index} className="healthArticles">
+            <Card key={index} className="healthArticles" hoverable>
               <img
                 src={article.image}
                 alt={article.title}
                 className="article-image"
               />
               <div className="article-content">
-                <h2>{article.title}</h2>
-                <p>{article.description}</p>
+                <Title level={3}>{article.title}</Title>
+                <Paragraph>{article.description}</Paragraph>
                 <div className="article-info">
                   <span className="date">{article.date}</span>
                   <span className="views">{article.views} Lượt xem</span>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-        <button className="see-more">Xem thêm</button>
+
+        <Button type="primary">Xem thêm</Button>
       </div>
 
       <div className="ad-section">
         <img src={adImage} alt="Advertisement" className="ad-image" />
         <div className="ad-content">
-          <h1>MỸ PHẨM ĐẾN TỪ NHẬT BẢN</h1>
-          <h2>Top 10 Thương Hiệu Mỹ Phẩm Đến Từ Nhật Bản</h2>
-          <p>
+          <Title level={2}>MỸ PHẨM ĐẾN TỪ NHẬT BẢN</Title>
+          <Title level={3}>Top 10 Thương Hiệu Mỹ Phẩm Đến Từ Nhật Bản</Title>
+          <Paragraph>
             Mỹ phẩm đến từ Nhật Bản rất được ưa chuộng tại Việt Nam một phần bởi
-            chất lượng tốt và mẫu mã đa dạng. Và mức chi phí cho mỗi sản phẩm
-            cũng khá là phù hợp với thu nhập của phần đa người dùng mỹ phẩm. Hầu
-            hết các mỹ phẩm đến từ Nhật Bản luôn được nhắc đến là những sản phẩm
-            lành tính với da, chiết xuất từ thiên nhiên, rất tốt cho da. Vậy chỉ
-            em nên dùng thương hiệu mỹ phẩm làm đẹp nào của Nhật, trong bài viết
-            hôm nay ....
-          </p>
+            chất lượng tốt và mẫu mã đa dạng...
+          </Paragraph>
           <ul>
             <li>Naris Cosmetics</li>
             <li>Sunplay</li>
             <li>DHC</li>
             <li>Hatomugi</li>
           </ul>
-          <button className="ad-section-see-more">Xem thêm</button>
+          <Button type="primary">Xem thêm</Button>
         </div>
       </div>
     </div>
