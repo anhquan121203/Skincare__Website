@@ -43,7 +43,6 @@ function Register() {
     onSubmit: async (values) => {
       try {
         const response = await registerUser(values);
-        console.log(response.data);
 
         if (response.status === 200) {
           console.log("đăng ký thành công!!!!");

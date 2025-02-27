@@ -3,6 +3,14 @@
   margin: 0 auto; /* Căn giữa */
 }
 
+.title-blogger {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b46c1;
+  margin-bottom: 20px;
+}
+
 /* Categories -----------------------------------------------------------------------------------------------*/
 .categories {
   display: flex;
@@ -124,15 +132,18 @@
   object-fit: cover;
   border-radius: 5px;
 }
+.article-info {
+  display: flex;
+  justify-content: space-between;
+}
 
 /* Ad Section */
 .ad-section {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: #fcf7ee;
   padding: 30px;
-  margin: 40px auto;
-  max-width: 1000px;
+  margin-top: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }

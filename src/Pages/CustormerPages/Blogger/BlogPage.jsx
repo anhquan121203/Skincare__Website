@@ -31,7 +31,7 @@ function BlogPage() {
 
   return (
     <div className="blog-page" style={{ marginTop: 100 }}>
-      <Title level={1}>Blogger</Title>
+      <h1 className="title-blogger">Blogger</h1>
       <div className="categories">
         {categoryData.map((category, index) => (
           <div key={index} className="category">
@@ -94,7 +94,9 @@ function BlogPage() {
           ))}
         </div>
 
-        <Button type="primary">Xem thêm</Button>
+        <Button type="primary" style={{ marginTop: 20 }}>
+          Xem thêm
+        </Button>
       </div>
 
       <div className="ad-section">
