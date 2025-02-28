@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { PRODUCT_API_URL, PRODUCT } from '../../Constants/productConstant';
+import { COMMENT_API_URL, COMMENT } from '../../Constants/commentConstant';
 
 
-export const fetchProducts = createAsyncThunk('product/fetchProducts', async (_, { rejectWithValue }) => {
+export const fetchComments = createAsyncThunk('commnet/fetchCommnet', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${PRODUCT_API_URL}/listProduct`);
+    const response = await axios.get(COMMENT_API_URL);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);
@@ -39,8 +39,8 @@ export const removeProduct = createAsyncThunk('product/removeProduct', async (id
   }
 });
 
-const productSlice = createSlice({
-  name: PRODUCT,
+const commentSlice = createSlice({
+  name: COMMENT,
   initialState: {
     products: [],
     loading: false,
@@ -49,15 +49,15 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchComments.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(fetchComments.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchComments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -76,4 +76,4 @@ const productSlice = createSlice({
   },
 });
 
-export default productSlice;
+export default commentSlice;
