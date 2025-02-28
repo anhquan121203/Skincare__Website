@@ -29,7 +29,7 @@ const StaffLayout = () => {
           style={{
             margin: "0px",
             padding: "20px",
-            background: colorBgContainer,
+            background: "blue",
             borderRadius: "8px",
             overflowY: "auto",
             height: "100vh",
