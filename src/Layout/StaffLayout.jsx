@@ -29,8 +29,8 @@ const StaffLayout = () => {
           style={{
             margin: "0px",
             padding: "20px",
-            background: colorBgContainer,
-            borderRadius: "8px",
+            background: "#FCF7EE",
+
             overflowY: "auto",
             height: "100vh",
           }}

@@ -62,9 +62,11 @@ const SidebarStaff = ({ collapsed, setCollapsed }) => {
 
       <div style={{ flexGrow: 1 }}></div>
 
-      <Divider style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }} />
-
-      <Menu theme="dark" mode="inline" style={{ width: "100%" }}>
+      <Menu
+        theme="dark"
+        mode="inline"
+        style={{ width: "100%", marginTop: "400px" }}
+      >
         <Menu.Item key="settings" icon={<IoSettingsOutline />}>
           <Link to="#">Settings</Link>
         </Menu.Item>
