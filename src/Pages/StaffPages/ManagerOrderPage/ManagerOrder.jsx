@@ -1,93 +1,58 @@
 import { Button, Popconfirm, Table, Tag, Input } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
+import useOrder from "../../../Hooks/useOrder";
 
 function ManageOrder() {
-  const mockOrders = [
-    {
-      orderId: "1001",
-      orderDate: 1708885200,
-      tatolPrice: 99.99,
-      userId: "userId 1",
-      status: "Pending",
-    },
-    {
-      orderId: "1002",
-      orderDate: 1708971600,
-      tatolPrice: 49.99,
-      userId: "userId 2",
-      status: "Shipped",
-    },
-    {
-      orderId: "1003",
-      orderDate: 1709058000,
-      tatolPrice: 199.99,
-      userId: "userId 3",
-      status: "Delivered",
-    },
-    //ramdom ra nhiều order hơn để show ra table.............................
-    ...Array.from({ length: 15 }, (_, i) => ({
-      orderId: `${1004 + i}`,
-      orderDate: 1709144400 + i * 86400,
-      tatolPrice: (Math.random() * 200).toFixed(2),
-      userId: `userId ${Math.floor(Math.random() * 3) + 1}`,
-      status: ["Pending", "Shipped", "Delivered", "Cancelled"][
-        Math.floor(Math.random() * 4)
-      ],
-    })),
-  ];
-
-  const mockUsers = [
-    { userID: "1", fullName: "Alice Johnson" },
-    { userID: "2", fullName: "Bob Smith" },
-    { userID: "3", fullName: "Charlie Brown" },
-  ];
-
-  const [filteredOrder, setFilteredOrder] = useState(mockOrders);
+  const { orders, loading, error } = useOrder();
+  const [filteredOrder, setFilteredOrder] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  const handleDelete = (orderId) => {
-    setFilteredOrder(
-      filteredOrder.filter((order) => order.orderId !== orderId)
-    );
+  useEffect(() => {
+    if (orders) {
+      setFilteredOrder(orders);
+    }
+  }, [orders]);
+
+  const handleDelete = (id) => {
+    setFilteredOrder(filteredOrder.filter((order) => order.id !== id));
   };
 
   const columns = [
     {
       title: "Order ID",
-      dataIndex: "orderId",
-      key: "orderId",
-      sorter: (a, b) => a.orderId - b.orderId,
+      dataIndex: "id",
+      key: "id",
+      sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Order Date",
       dataIndex: "orderDate",
       key: "orderDate",
-      render: (timestamp) => new Date(timestamp * 1000).toLocaleString(),
-      sorter: (a, b) => a.orderDate - b.orderDate,
+      render: (date) => new Date(date).toLocaleString(),
+      sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
     },
     {
       title: "Total Price",
-      dataIndex: "tatolPrice",
-      key: "tatolPrice",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
       render: (price) => `$${price}`,
-      sorter: (a, b) => a.tatolPrice - b.tatolPrice,
+      sorter: (a, b) => a.totalPrice - b.totalPrice,
     },
     {
-      title: "User",
-      dataIndex: "userId",
-      key: "userId",
-      render: (userId) => {
-        const user = mockUsers.find(
-          (user) => String(user.userID) === userId.replace("userId ", "")
-        );
-        return user ? user.fullName : "Unknown";
-      },
+      title: "Customer ID",
+      dataIndex: "customerId",
+      key: "customerId",
+    },
+    {
+      title: "Staff ID",
+      dataIndex: "staffId",
+      key: "staffId",
     },
     {
       title: "Status",
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "orderStatus",
+      key: "orderStatus",
       render: (status) => {
         const statusColors = {
           Pending: "orange",
@@ -99,19 +64,18 @@ function ManageOrder() {
         };
         return <Tag color={statusColors[status]}>{status}</Tag>;
       },
-      sorter: (a, b) => a.status.localeCompare(b.status),
+      sorter: (a, b) => a.orderStatus.localeCompare(b.orderStatus),
     },
     {
       title: "Action",
-      dataIndex: "id",
-      key: "id",
+      key: "action",
       render: (_, record) => (
         <>
           <Button type="primary">Edit</Button>{" "}
           <Popconfirm
             title="Delete Order"
             description="Are you sure to delete this order?"
-            onConfirm={() => handleDelete(record.orderId)}
+            onConfirm={() => handleDelete(record.id)}
           >
             <Button danger type="primary">
               Delete
@@ -125,13 +89,16 @@ function ManageOrder() {
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchText(value);
-    const filteredData = mockOrders.filter(
+    const filteredData = orders.filter(
       (item) =>
-        item.orderId.toLowerCase().includes(value) ||
-        item.status.toLowerCase().includes(value)
+        item.id.toString().includes(value) ||
+        item.orderStatus.toLowerCase().includes(value)
     );
     setFilteredOrder(filteredData);
   };
+
+  if (loading) return <p>Loading orders...</p>;
+  if (error) return <p>Error loading orders: {error}</p>;
 
   return (
     <div>
@@ -152,10 +119,7 @@ function ManageOrder() {
         />
       </div>
       <Table
-        dataSource={filteredOrder.map((item) => ({
-          ...item,
-          key: item.orderId,
-        }))}
+        dataSource={filteredOrder.map((item) => ({ ...item, key: item.id }))}
         columns={columns}
       />
     </div>
