@@ -15,6 +15,7 @@ const useProduct = () => {
   const deleteProduct = (id) => dispatch(removeProduct(id));
 
   return { products, loading, error, addProduct, editProduct, deleteProduct };
+  
 };
 
 export default useProduct;

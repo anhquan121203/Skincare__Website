@@ -15,7 +15,7 @@ function ProductDetail() {
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
-          `https://664dc6deede9a2b55654d26f.mockapi.io/project/QuanSE172057/${id}`
+          `https://localhost:7088/api/product/getProductById/${id}`
         );
         setProduct(response.data);
       } catch (error) {
@@ -45,24 +45,10 @@ function ProductDetail() {
 
           {/* Details Form right */}
           <div className="details-form-right">
-            <h2 className="details-title">{product.name}</h2>
+            <h2 className="details-title">{product.productName}</h2>
             <p className="details-price">{product.price} VNĐ</p>
             <p className="details-rating">
-              {[...Array(5)].map((_, i) => {
-                const ratingValue = i + 1;
-                return (
-                  <span key={i}>
-                    {product.rating >= ratingValue ? (
-                      <FaStar color="gold" />
-                    ) : product.rating >= ratingValue - 0.5 ? (
-                      <FaStarHalfAlt color="gold" />
-                    ) : (
-                      <FaStar color="lightgray" />
-                    )}
-                  </span>
-                );
-              })}{" "}
-              (1 Review)
+              
             </p>
             <p className="details-description">{product.description}</p>
 

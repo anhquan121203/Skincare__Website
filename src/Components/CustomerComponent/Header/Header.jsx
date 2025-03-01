@@ -107,7 +107,7 @@ function Header() {
             <div className="dropdown-login">
               <button onClick={toggleDropdown} className="dropdown-button">
                 Khách hàng
-              </button> Nguyen Van Quan
+              </button>
               {isOpen && (
                 <div className="dropdown-content">
                   <a href="#">Thông tin</a>

@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./TabDetails.css";
 import TextArea from "antd/es/input/TextArea";
+import useComment from "../../../../Hooks/useComment";
 
 function TabDetails() {
   const [activeTab, setActiveTab] = useState("additional");
+  const { comments, loading, error } = useComment();
+
+  if (loading) return <p>Loading products...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="tabs-container">
@@ -66,13 +71,13 @@ function TabDetails() {
 
         {activeTab === "reviews" && (
           <div className="tab-review">
-            
+
             {/* ADD REVIEW */}
             <div className="add-review">
               <h1>Thêm đánh giá</h1>
               <h6>Đánh giá</h6>
               <TextArea
-              className="review-area"
+                className="review-area"
                 // value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder="Viết đánh giá của bạn..."
@@ -85,9 +90,13 @@ function TabDetails() {
             </div>
 
             <div className="area-user-review">
-
+              {comments?.map((item, index) => (
+                <div key={index}>
+                  <span>{item.content}</span>
+                </div>
+              ))}
             </div>
-            
+
           </div>
         )}
       </div>
