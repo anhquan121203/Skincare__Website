@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ManagerProduct.css";
-import { Input } from "antd";
+import { Input, Pagination } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { ImTelegram } from "react-icons/im";
 
 function ManagerProduct() {
   const { products, loading, error } = useProduct();
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
 
   return (
     <div className="managerProduct-container">
@@ -33,27 +44,28 @@ function ManagerProduct() {
         </div>
 
         <div className="table-product-container">
-          {products.map((item, index) => (
-            <table className="table-product" key={index}>
-              <thead>
+
+          <table className="table-product">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th style={{ width: "200px" }}>Tên sản phẩm</th>
+                <th style={{ width: "200px" }}>Mô tả</th>
+                <th>Giá tiền (VND)</th>
+                <th>Số lượng</th>
+                <th style={{ width: "200px" }}>Hình ảnh</th>
+                <th>Loại sản phẩm</th>
+                <th>Loại Skin</th>
+                <th>Trạng thái</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {paginatedProducts.map((item, index) => (
+              <tbody key={index}>
                 <tr>
-                  <th>STT</th>
-                  <th>Tên sản phẩm</th>
-                  <th>Mô tả</th>
-                  <th>Giá tiền (VND)</th>
-                  <th>Số lượng</th>
-                  <th>Hình ảnh</th>
-                  <th>Loại sản phẩm</th>
-                  <th>Loại Skin</th>
-                  <th>Trạng thái</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
+                  <td>{item.id}</td>
                   <td>{item.productName}</td>
-                  <td style={{ width: "200px" }}>{item.description}</td>
+                  <td>{item.description}</td>
                   <td>{item.price}</td>
                   <td>{item.quantity}</td>
                   <td>
@@ -78,9 +90,19 @@ function ManagerProduct() {
                   </td>
                 </tr>
               </tbody>
-            </table>
-          ))}
+            ))}
+          </table>
+
+          
+
         </div>
+        <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={products.length}
+            onChange={(page) => setCurrentPage(page)}
+            style={{ marginTop: "16px", textAlign: "center" }}
+          />
       </div>
     </div>
   );
