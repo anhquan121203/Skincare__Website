@@ -7,6 +7,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import "./FilterProduct.css";
+import useCategory from "../../Hooks/useCategory";
 
 const discountOptions = [
   "0 - 10%",
@@ -17,22 +18,15 @@ const discountOptions = [
   "50% - 60%",
 ];
 
-const categoryOptions = [
-  "Tẩy trang",
-  "Sữa rửa mặt",
-  "Serum/Ampoule",
-  "Kem dưỡng ẩm",
-  "Kem mắt",
-  "Kem chống nắng",
-  "Mặt nạ",
-  "Tẩy tế bào chết",
-  "Xịt khoáng",
-];
-
 function FilterProduct() {
   const [isDiscountOpen, setIsDiscountOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
+
+  const { categories } = useCategory();
+  console.log(categories);
+
+  const categoryOptions = categories.map((category) => category.categoryName);
 
   const [priceRange, setPriceRange] = useState([0, 3000000]);
   const [selectedDiscounts, setSelectedDiscounts] = useState([]);
@@ -51,18 +45,19 @@ function FilterProduct() {
 
   const handleClearFilters = () => {
     setSelectedFilters([]);
+    setSelectedDiscounts([]);
+    setSelectedCategories([]);
+    setPriceRange([0, 3000000]);
   };
 
   const applyPriceFilter = () => {
     const minPrice = priceRange[0].toLocaleString();
     const maxPrice = priceRange[1].toLocaleString();
 
-    // Nếu giá min >= max thì không cập nhật
     if (priceRange[0] >= priceRange[1]) return;
 
     const newPriceFilter = `${minPrice}đ - ${maxPrice}đ`;
 
-    // Xóa bộ lọc giá tiền cũ trước khi thêm bộ lọc mới
     const updatedFilters = selectedFilters.filter(
       (filter) => !filter.match(/^\d{1,3}(\.\d{3})*đ - \d{1,3}(\.\d{3})*đ$/)
     );
@@ -72,35 +67,26 @@ function FilterProduct() {
 
   const handleDiscountChange = (checkedValues) => {
     setSelectedDiscounts(checkedValues);
-
-    // Lọc bỏ các mục cũ liên quan đến khuyến mãi
     const updatedFilters = selectedFilters.filter(
       (filter) => !discountOptions.includes(filter)
     );
-
-    // Thêm các khuyến mãi mới vào bộ lọc
     setSelectedFilters([...updatedFilters, ...checkedValues]);
   };
 
   const handleCategoryChange = (checkedValues) => {
     setSelectedCategories(checkedValues);
-
-    // Lọc bỏ các loại sản phẩm cũ
     const updatedFilters = selectedFilters.filter(
       (filter) => !categoryOptions.includes(filter)
     );
-
-    // Thêm các loại sản phẩm mới vào bộ lọc
     setSelectedFilters([...updatedFilters, ...checkedValues]);
   };
 
   return (
     <div className="filter-product">
       <div className="filter-container">
-        {/* Lọc theo */}
         <div className="selected-filters">
           <div className="filter-header">
-            <h2 className="filter-title">LỌC THEO</h2>
+            <h5 className="filter-title">LỌC THEO</h5>
             <DeleteOutlined
               className="clear-icon"
               onClick={handleClearFilters}
@@ -195,7 +181,6 @@ function FilterProduct() {
               options={categoryOptions}
               value={selectedCategories}
               onChange={handleCategoryChange}
-              style={{fontSize: "30px"}}
             />
           )}
         </div>

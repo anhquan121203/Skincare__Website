@@ -8,14 +8,14 @@ function ManageOrder() {
   const [filteredOrder, setFilteredOrder] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    if (orders) {
-      setFilteredOrder(orders);
-    }
-  }, [orders]);
+  // useEffect(() => {
+  //   if (orders) {
+  //     setFilteredOrder(orders);
+  //   }
+  // }, [orders]);
 
   const handleDelete = (id) => {
-    setFilteredOrder(filteredOrder.filter((order) => order.id !== id));
+    setFilteredOrder(orders.filter((order) => order.id !== id));
   };
 
   const columns = [
@@ -119,7 +119,7 @@ function ManageOrder() {
         />
       </div>
       <Table
-        dataSource={filteredOrder.map((item) => ({ ...item, key: item.id }))}
+        dataSource={orders.map((item) => ({ ...item, key: item.id }))}
         columns={columns}
       />
     </div>
