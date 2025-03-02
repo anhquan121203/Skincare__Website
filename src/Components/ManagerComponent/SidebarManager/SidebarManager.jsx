@@ -6,11 +6,19 @@ import { FaDropbox, FaRegUser } from "react-icons/fa";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
+import { logout } from "../../../Features/user/authSlice";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../../Api/authApi";
 
 function SidebarManager() {
   const location = useLocation(); // Get current route
-
   const isActive = (path) => location.pathname === path;
+  const dispatch = useDispatch();
+
+    const handleLogout = async () => {
+      await signOut();
+      dispatch(logout());
+    };
 
   return (
     <div className="sidebar-manager">
@@ -53,7 +61,7 @@ function SidebarManager() {
             <Link to="#">Settings <IoSettingsOutline /></Link>
           </li>
           <li>
-            <Link to="/">Logout <FiLogOut /></Link>
+            <Link onClick={handleLogout}>Logout <FiLogOut /></Link>
           </li>
         </ul>
       </div>

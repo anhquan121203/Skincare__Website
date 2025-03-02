@@ -4,16 +4,25 @@ import { Input, Pagination } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { ImTelegram } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
+import ModalProduct from "./ModalNewProduct/ModalProduct";
 
 function ManagerProduct() {
-  const { products, loading, error } = useProduct();
+  const { products, loading, error, addProduct } = useProduct();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const navigate = useNavigate();
 
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const handleOk = (newProduct) => {
+    setIsModalOpen(false);
+    addProduct(newProduct);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   if (loading) return <p>Loading products...</p>;
@@ -28,8 +37,7 @@ function ManagerProduct() {
 
       <div className="content-manager-product">
         <div className="header-manager-product">
-          <button className="btn-addProduct">
-            {" "}
+          <button className="btn-addProduct" onClick={showModal}>
             <FaPlus style={{ marginRight: "8px" }} />
             Add new products
           </button>
@@ -44,7 +52,6 @@ function ManagerProduct() {
         </div>
 
         <div className="table-product-container">
-
           <table className="table-product">
             <thead>
               <tr>
@@ -92,18 +99,21 @@ function ManagerProduct() {
               </tbody>
             ))}
           </table>
-
-          
-
         </div>
         <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={products.length}
-            onChange={(page) => setCurrentPage(page)}
-            style={{ marginTop: "16px", textAlign: "center" }}
-          />
+          current={currentPage}
+          pageSize={pageSize}
+          total={products.length}
+          onChange={(page) => setCurrentPage(page)}
+          style={{ marginTop: "16px", textAlign: "center" }}
+        />
       </div>
+
+      <ModalProduct
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
+        handleOk={handleOk}
+      />
     </div>
   );
 }

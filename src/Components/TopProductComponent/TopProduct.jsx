@@ -15,7 +15,7 @@ function TopProduct() {
   return (
     <div className="card-container">
       <div className="card-grid">
-        {products.slice(0, 4).map((item, index) => (
+        {products.slice(0, 3).map((item, index) => (
           <div
             key={index}
             className="card-product"

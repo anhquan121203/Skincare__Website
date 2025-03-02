@@ -21,7 +21,7 @@ export const createProduct = createAsyncThunk('product/createProduct', async (pr
   }
 });
 
-export const updateProduct = createAsyncThunk('product/updateProduct', async ({ id, product }, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk('product/updateProduct', async ({ product }, { rejectWithValue }) => {
   try {
     const response = await axios.put(`${PRODUCT_API_URL}/updateProduct`, product);
     return response.data;

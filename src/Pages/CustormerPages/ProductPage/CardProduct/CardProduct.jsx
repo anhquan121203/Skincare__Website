@@ -4,20 +4,28 @@ import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import useProduct from "../../../../Hooks/useProduct";
+import { Pagination } from "antd";
 
 function CardProduct({ sortProduct, searchTerm }) {
   const { products, loading, error } = useProduct();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const [pageSize, setPageSize] = useState(9);
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
   return (
     <div className="card-container">
       <div className="card-grid">
-        {products.map((item, index) => (
+        {paginatedProducts.map((item, index) => (
           <div
             key={index}
             className="card-product"
@@ -30,7 +38,7 @@ function CardProduct({ sortProduct, searchTerm }) {
             />
             <div className="card-content">
               <span className="card-name">{item.productName}</span>
-              <h2 className="card-description">{item.description}</h2>
+              {/* <h2 className="card-description">{item.description}</h2> */}
               <div className="card-rating">
                 <FaStar className="star-icon" />
               </div>
@@ -52,6 +60,15 @@ function CardProduct({ sortProduct, searchTerm }) {
           </div>
         ))}
       </div>
+
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={products.length}
+        onChange={handlePageChange}
+        showSizeChanger
+        onShowSizeChange={handlePageChange}
+      />
     </div>
   );
 }

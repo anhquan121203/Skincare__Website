@@ -38,6 +38,7 @@ function ProductDetail() {
           <div className="details-form-left">
             <img
               className="details-image"
+              style={{}}
               src={product.image}
               alt={product.name}
             />
@@ -48,12 +49,21 @@ function ProductDetail() {
             <h2 className="details-title">{product.productName}</h2>
             <p className="details-price">{product.price} VNĐ</p>
             <p className="details-rating">
-              
+              <div className="category-details">
+                <div className="details-cateName">{product.categoryName}</div>
+                <div className="details-skinType">{product.skinTypeName}</div>
+              </div>
             </p>
             <p className="details-description">{product.description}</p>
 
             <div className="add-to-card-details">
-              <input className="details-quantity" min={1} max={100} type="number" defaultValue={1} />
+              <input
+                className="details-quantity"
+                min={1}
+                max={100}
+                type="number"
+                defaultValue={1}
+              />
               <button className="btn-details" type="submit">
                 Thêm giỏ hàng <TiShoppingCart />
               </button>

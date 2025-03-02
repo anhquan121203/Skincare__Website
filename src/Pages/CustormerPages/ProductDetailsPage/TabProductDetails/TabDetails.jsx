@@ -90,10 +90,13 @@ function TabDetails() {
             </div>
 
             <div className="area-user-review">
-              {comments?.map((item, index) => (
+              {comments.slice(0, 7).map((item, index) => (
                 <div key={index}>
+                  <span>{item.firstName}</span>
                   <span>{item.content}</span>
+                  <hr />
                 </div>
+              
               ))}
             </div>
 
