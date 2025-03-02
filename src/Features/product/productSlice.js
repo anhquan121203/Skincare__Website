@@ -14,7 +14,7 @@ export const fetchProducts = createAsyncThunk('product/fetchProducts', async (_,
 
 export const createProduct = createAsyncThunk('product/createProduct', async (product, { rejectWithValue }) => {
   try {
-    const response = await axios.post(PRODUCT_API_URL, product);
+    const response = await axios.post(`${PRODUCT_API_URL}/createProduct`, product);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);
@@ -23,7 +23,7 @@ export const createProduct = createAsyncThunk('product/createProduct', async (pr
 
 export const updateProduct = createAsyncThunk('product/updateProduct', async ({ id, product }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${PRODUCT_API_URL}/${id}`, product);
+    const response = await axios.put(`${PRODUCT_API_URL}/updateProduct`, product);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);
@@ -32,7 +32,7 @@ export const updateProduct = createAsyncThunk('product/updateProduct', async ({ 
 
 export const removeProduct = createAsyncThunk('product/removeProduct', async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`${PRODUCT_API_URL}/${id}`);
+    await axios.delete(`${PRODUCT_API_URL}/deleteProduct/${id}`);
     return id;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);

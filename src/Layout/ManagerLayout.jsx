@@ -13,12 +13,18 @@ function ManagerLayout() {
         <Col flex={5}>
           <div
             style={{
-              marginLeft: "50px",
-              border: "1px solid",
-              height: "120vh",
-              marginTop: "-100px",
-              marginRight: "100px",
-              overflowY: "auto"
+              position: "fixed", 
+              left: "300px", 
+              top: "0", 
+              // border: "1px solid",
+              width: "84vw", 
+              maxWidth: "100%",
+              height: "100vh", 
+              marginTop: "0", 
+              overflowY: "auto",
+              overflowX: "hidden",
+              // backgroundColor: "aliceblue", 
+              // zIndex: 1000, 
             }}
           >
             <Outlet />

@@ -27,9 +27,15 @@ function SidebarManager() {
         <li className={isActive("/manager") ? "active" : ""}>
           <Link to="/manager">Dashboard <LuLayoutDashboard style={{fontSize: "15px"}}/></Link>
         </li>
+        <hr />
+        <h3 style={{alignItems: "center"}}>Manager</h3>
         <li className={isActive("/manager/manager-product") ? "active" : ""}>
-          <Link to="/manager/manager-product">Manage Products <FaDropbox /></Link>
+          <Link to="/manager/manager-product">Products <FaDropbox /></Link>
         </li>
+        <li className={isActive("/manager/manager-category") ? "active" : ""}>
+          <Link to="/manager/manager-category">Category <FaDropbox /></Link>
+        </li>
+        <hr />
         <li className={isActive("") ? "active" : ""}>
           <Link to="">Manage Account <MdOutlineManageAccounts /></Link>
         </li>

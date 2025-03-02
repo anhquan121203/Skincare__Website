@@ -6,7 +6,7 @@ import { BsCart4 } from "react-icons/bs";
 import useProduct from "../../../../Hooks/useProduct";
 
 function CardProduct({ sortProduct, searchTerm }) {
-  const { products, loading, error } = useProduct(); 
+  const { products, loading, error } = useProduct();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
@@ -23,7 +23,11 @@ function CardProduct({ sortProduct, searchTerm }) {
             className="card-product"
             onClick={() => navigate(`/product-details/${item.id}`)}
           >
-            <img className="card-image" src={item.image} alt={item.productName} />
+            <img
+              className="card-image"
+              src={item.image}
+              alt={item.productName}
+            />
             <div className="card-content">
               <span className="card-name">{item.productName}</span>
               <h2 className="card-description">{item.description}</h2>
@@ -31,8 +35,8 @@ function CardProduct({ sortProduct, searchTerm }) {
                 <FaStar className="star-icon" />
               </div>
               <div className="tag-category">
-                <span>{item.categoryName}</span>
-                <span>{item.skinTypeName}</span>
+                <div className="tag-cateName">{item.categoryName}</div>
+                <div className="tag-skinType">{item.skinTypeName}</div>
               </div>
               <div className="card-footer">
                 <span>

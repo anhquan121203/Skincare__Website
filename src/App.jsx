@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import ScrollToTop from "./Components/CustomerComponent/ScrollPage/ScrollPage";
+import { Slide, ToastContainer } from "react-toastify";
 
 // Custormer***************************************************************************
 import CustomerLayout from "./Layout/CustomerLayout";
@@ -22,7 +23,8 @@ import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
 import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
-import { Slide, ToastContainer } from "react-toastify";
+import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategory";
+
 
 function App() {
   return (
@@ -60,6 +62,7 @@ function App() {
             element={<DashboardManager />}
           ></Route>
           <Route path="manager-product" element={<ManagerProduct />}></Route>
+          <Route path="manager-category" element={<ManagerCategory />}></Route>
         </Route>
 
         {/****************************************************************************/}

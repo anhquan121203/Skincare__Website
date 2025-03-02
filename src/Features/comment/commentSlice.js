@@ -3,7 +3,7 @@ import axios from 'axios';
 import { COMMENT_API_URL, COMMENT } from '../../Constants/commentConstant';
 
 
-export const fetchComments = createAsyncThunk('commnet/fetchCommnet', async (_, { rejectWithValue }) => {
+export const fetchComments = createAsyncThunk('comment/fetchCommnet', async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get(COMMENT_API_URL);
     return response.data;
@@ -12,27 +12,27 @@ export const fetchComments = createAsyncThunk('commnet/fetchCommnet', async (_, 
   }
 });
 
-export const createProduct = createAsyncThunk('product/createProduct', async (product, { rejectWithValue }) => {
+export const createComment = createAsyncThunk('comment/createComment', async (comment, { rejectWithValue }) => {
   try {
-    const response = await axios.post(PRODUCT_API_URL, product);
+    const response = await axios.post(COMMENT_API_URL, comment);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);
   }
 });
 
-export const updateProduct = createAsyncThunk('product/updateProduct', async ({ id, product }, { rejectWithValue }) => {
+export const updateComment = createAsyncThunk('comment/updateComment', async ({ id, comment }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${PRODUCT_API_URL}/${id}`, product);
+    const response = await axios.put(`${COMMENT_API_URL}/${id}`, comment);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);
   }
 });
 
-export const removeProduct = createAsyncThunk('product/removeProduct', async (id, { rejectWithValue }) => {
+export const removeComment = createAsyncThunk('comment/removeComment', async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`${PRODUCT_API_URL}/${id}`);
+    await axios.delete(`${COMMENT_API_URL}/${id}`);
     return id;
   } catch (error) {
     return rejectWithValue(error.response?.data || error.message);
@@ -42,7 +42,7 @@ export const removeProduct = createAsyncThunk('product/removeProduct', async (id
 const commentSlice = createSlice({
   name: COMMENT,
   initialState: {
-    products: [],
+    comments: [],
     loading: false,
     error: null,
   },
@@ -55,23 +55,23 @@ const commentSlice = createSlice({
       })
       .addCase(fetchComments.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.comments = action.payload;
       })
       .addCase(fetchComments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(createProduct.fulfilled, (state, action) => {
-        state.products.push(action.payload);
+      .addCase(createComment.fulfilled, (state, action) => {
+        state.comments.push(action.payload);
       })
-      .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(p => p.id === action.payload.id);
+      .addCase(updateComment.fulfilled, (state, action) => {
+        const index = state.comments.findIndex(p => p.id === action.payload.id);
         if (index !== -1) {
-          state.products[index] = action.payload;
+          state.comments[index] = action.payload;
         }
       })
-      .addCase(removeProduct.fulfilled, (state, action) => {
-        state.products = state.products.filter(p => p.id !== action.payload);
+      .addCase(removeComment.fulfilled, (state, action) => {
+        state.comments = state.comments.filter(p => p.id !== action.payload);
       });
   },
 });
