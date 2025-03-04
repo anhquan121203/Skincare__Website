@@ -18,17 +18,22 @@ const discountOptions = [
   "50% - 60%",
 ];
 
-function FilterProduct() {
+function FilterProduct({ setFilters }) {
   const [isDiscountOpen, setIsDiscountOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
 
-  const { categories } = useCategory();
-  console.log(categories);
+  const updateFilters = (newFilters) => {
+    setFilters((prev) => ({ ...prev, ...newFilters }));
+  };
 
+  // call api category và map để lay danh sách category
+  // chèn vào option trong chackbox ở phần loại sản phẩm
+  const { categories } = useCategory();
   const categoryOptions = categories.map((category) => category.categoryName);
 
   const [priceRange, setPriceRange] = useState([0, 3000000]);
+  const [tempPriceRange, setTempPriceRange] = useState([0, 3000000]);
   const [selectedDiscounts, setSelectedDiscounts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -37,12 +42,12 @@ function FilterProduct() {
   const toggleCategorySection = () => setIsCategoryOpen(!isCategoryOpen);
   const togglePriceSection = () => setIsPriceOpen(!isPriceOpen);
 
-  const handlePriceChange = (value) => setPriceRange(value);
-
+  // xóa filter
   const handleRemoveFilter = (filter) => {
     setSelectedFilters(selectedFilters.filter((item) => item !== filter));
   };
 
+  // sử lý reset filter
   const handleClearFilters = () => {
     setSelectedFilters([]);
     setSelectedDiscounts([]);
@@ -50,11 +55,12 @@ function FilterProduct() {
     setPriceRange([0, 3000000]);
   };
 
+  // sử lý thanh price
   const applyPriceFilter = () => {
-    const minPrice = priceRange[0].toLocaleString();
-    const maxPrice = priceRange[1].toLocaleString();
+    const minPrice = tempPriceRange[0].toLocaleString();
+    const maxPrice = tempPriceRange[1].toLocaleString();
 
-    if (priceRange[0] >= priceRange[1]) return;
+    if (tempPriceRange[0] >= tempPriceRange[1]) return;
 
     const newPriceFilter = `${minPrice}đ - ${maxPrice}đ`;
 
@@ -63,22 +69,43 @@ function FilterProduct() {
     );
 
     setSelectedFilters([...updatedFilters, newPriceFilter]);
+    setPriceRange(tempPriceRange); // Cập nhật priceRange khi nhấn nút
+
+    updateFilters({ priceRange: tempPriceRange }); // Chỉ cập nhật setFilters tại đây
+  };
+
+  // các hàm sử lý với filter
+  const handlePriceChange = (value) => {
+    setTempPriceRange(value); // Chỉ cập nhật giá trị tạm thời
   };
 
   const handleDiscountChange = (checkedValues) => {
     setSelectedDiscounts(checkedValues);
-    const updatedFilters = selectedFilters.filter(
-      (filter) => !discountOptions.includes(filter)
+
+    updateFilters({ selectedDiscounts: checkedValues });
+    // Cập nhật bộ lọc hiển thị
+    const discountFilters = checkedValues.map(
+      (discount) => `Giảm giá: ${discount}`
     );
-    setSelectedFilters([...updatedFilters, ...checkedValues]);
+    setSelectedFilters((prev) => {
+      // Xóa các bộ lọc giảm giá cũ trước khi thêm mới
+      const filtered = prev.filter((filter) => !filter.startsWith("Giảm giá:"));
+      return [...filtered, ...discountFilters];
+    });
   };
 
   const handleCategoryChange = (checkedValues) => {
     setSelectedCategories(checkedValues);
-    const updatedFilters = selectedFilters.filter(
-      (filter) => !categoryOptions.includes(filter)
+    updateFilters({ selectedCategories: checkedValues });
+    // Cập nhật bộ lọc hiển thị
+    const categoryFilters = checkedValues.map(
+      (category) => `Loại: ${category}`
     );
-    setSelectedFilters([...updatedFilters, ...checkedValues]);
+    setSelectedFilters((prev) => {
+      // Xóa các bộ lọc loại sản phẩm cũ trước khi thêm mới
+      const filtered = prev.filter((filter) => !filter.startsWith("Loại:"));
+      return [...filtered, ...categoryFilters];
+    });
   };
 
   return (
@@ -118,7 +145,7 @@ function FilterProduct() {
                 min={0}
                 max={3000000}
                 step={10000}
-                value={priceRange}
+                value={tempPriceRange}
                 onChange={handlePriceChange}
               />
               <div className="price-inputs">
@@ -126,9 +153,9 @@ function FilterProduct() {
                   min={0}
                   max={3000000}
                   step={10000}
-                  value={priceRange[0]}
+                  value={tempPriceRange[0]}
                   onChange={(value) =>
-                    handlePriceChange([value, priceRange[1]])
+                    handlePriceChange([value, tempPriceRange[1]])
                   }
                 />
                 <span className="mx-2">-</span>
@@ -136,12 +163,13 @@ function FilterProduct() {
                   min={0}
                   max={3000000}
                   step={10000}
-                  value={priceRange[1]}
+                  value={tempPriceRange[1]}
                   onChange={(value) =>
-                    handlePriceChange([priceRange[0], value])
+                    handlePriceChange([tempPriceRange[0], value])
                   }
                 />
               </div>
+
               <Button
                 type="primary"
                 className="apply-btn"

@@ -10,6 +10,12 @@ function ProductPage() {
   const [sortProduct, setSortProduct] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [filters, setFilters] = useState({
+    priceRange: [0, 3000000],
+    selectedDiscounts: [],
+    selectedCategories: [],
+  });
+
   return (
     <div className="product-page">
       <div className="background-animation"></div>
@@ -38,11 +44,14 @@ function ProductPage() {
 
         <div className="main-content">
           <div className="filter">
-            <FilterProduct />
+            <FilterProduct setFilters={setFilters} />
           </div>
 
-          
-          <CardComponent sortProduct={sortProduct} searchTerm={searchTerm} />
+          <CardComponent
+            sortProduct={sortProduct}
+            searchTerm={searchTerm}
+            filters={filters}
+          />
         </div>
       </div>
     </div>
