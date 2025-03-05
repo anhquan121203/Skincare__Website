@@ -1,6 +1,7 @@
 import { Button, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
 import { FiPlus } from "react-icons/fi";
 import useProduct from "../../../../Hooks/useProduct";
+import useCategory from "../../../../Hooks/useCategory";
 
 const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
   const [form] = Form.useForm();
@@ -16,6 +17,10 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
         console.log("Validation Failed:", info);
       });
   };
+
+  const {categories, loading, error} = useCategory();
+
+  
 
   return (
     <Modal
@@ -94,7 +99,7 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
 
         <Form.Item
           label="Loại sản phẩm"
-          name="categoryName"
+          name="categories"
           rules={[
             {
               required: true,
@@ -102,11 +107,11 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
             },
           ]}
         >
-          <Select>
-            <Select.Option value="Sữa rửa mặt">Sữa rửa mặt</Select.Option>
-            <Select.Option value="Toner">Toner</Select.Option>
-            <Select.Option value="Serum/Ampoule">Serum/Ampoule</Select.Option>
-            <Select.Option value="Kem dưỡng ẩm">Kem dưỡng ẩm</Select.Option>
+          <Select >
+            {categories.map((category) => (
+              <Select.Option key={category.id} value={category.categoryName}>{category.categoryName}</Select.Option>
+            ))}
+            
           </Select>
         </Form.Item>
 
@@ -120,7 +125,7 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
             },
           ]}
         >
-          <Select>
+          <Select >
             <Select.Option value="Da dầu">Da dầu</Select.Option>
             <Select.Option value="Da khô">Da khô</Select.Option>
             <Select.Option value="Da hỗn hợp">Da hỗn hợp</Select.Option>

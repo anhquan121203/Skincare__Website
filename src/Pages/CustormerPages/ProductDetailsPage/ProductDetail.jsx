@@ -10,6 +10,7 @@ import { MdPayment } from "react-icons/md";
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  // const {cart} =
 
   useEffect(() => {
     const fetchProductDetails = async () => {

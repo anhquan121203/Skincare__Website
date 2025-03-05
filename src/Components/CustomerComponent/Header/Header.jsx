@@ -11,11 +11,15 @@ import { CiHeart } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../../Api/authApi";
 import { logout } from "../../../Features/user/authSlice";
+import useAuth from "../../../Hooks/useAuth";
 
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { roleName, avatar, firstName, lastName } = useAuth();
+
+  console.log(roleName)
 
   const [isOpen, setIsOpen] = useState();
 
@@ -105,12 +109,39 @@ function Header() {
           {/* LOGOUT Fearture */}
           {isLoggedIn ? (
             <div className="dropdown-login">
-              <button onClick={toggleDropdown} className="dropdown-button">
-                Khách hàng
-              </button>
+              <div className="header-avavtar">
+              <img
+                style={{
+                  width: "50px",
+                  marginRight: "20px",
+                  height: "50px",
+                  border: "2px solid  #22a8e7",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+                onClick={toggleDropdown}
+                className="dropdown-button"
+                src={avatar || "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"} 
+                alt=""
+              />
+              {/* <p>{firstName} {lastName}</p> */}
+              </div>
+              
               {isOpen && (
                 <div className="dropdown-content">
-                  <a href="#">Thông tin</a>
+                  {roleName === "Customer" ? (
+                    <>
+                      <Link>Profile</Link>
+                    </>
+                  ) : roleName === "Staff" ? (
+                    <>
+                      <Link>Manager Order</Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/manager/dashboard-manager">Dashboard</Link>
+                    </>
+                  )}
                   <a onClick={handleLogout}>Thoát</a>
                 </div>
               )}

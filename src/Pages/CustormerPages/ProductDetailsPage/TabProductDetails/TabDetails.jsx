@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./TabDetails.css";
 import TextArea from "antd/es/input/TextArea";
 import useComment from "../../../../Hooks/useComment";
+import { useParams } from "react-router-dom";
 
 function TabDetails() {
   const [activeTab, setActiveTab] = useState("additional");
-  const { comments, loading, error } = useComment();
+  const { productId } = useParams();
+  const { comments, loading, error } = useComment(productId);
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;

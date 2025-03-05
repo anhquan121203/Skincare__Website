@@ -1,18 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchComments } from '../Features/comment/commentSlice';
 import { useEffect } from 'react';
+import { fetchComments, fetchCommentByProductId } from '../Features/comment/commentSlice';
 
-const useComment = () => {
+const useComment = (productId) => {
   const dispatch = useDispatch();
   const { comments, loading, error } = useSelector((state) => state.comment);
 
   useEffect(() => {
-    dispatch(fetchComments());
-  }, [dispatch]);
+    if (productId) {
+      dispatch(fetchCommentByProductId(productId));
+    } else {
+      dispatch(fetchComments());
+    }
+  }, [dispatch, productId]);
 
-  return { comments, loading, error};
-  
+  return { comments, loading, error };
 };
 
 export default useComment;
-
