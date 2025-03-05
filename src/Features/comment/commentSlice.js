@@ -12,32 +12,14 @@ export const fetchComments = createAsyncThunk('comment/fetchCommnet', async (_, 
   }
 });
 
-export const createComment = createAsyncThunk('comment/createComment', async (comment, { rejectWithValue }) => {
+export const fetchCommentByProductId = createAsyncThunk('commnet/fetchCommentByProductId', async (productId, {rejectWithValue }) => {
   try {
-    const response = await axios.post(COMMENT_API_URL, comment);
+    const response = await axios.get(`${COMMENT_API_URL}//getCommentsByProductId/${productId}`);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.response?.data || error.message);
+    console.error("Fetch api comment by product id FAILEDDDD!!!", error)
   }
-});
-
-export const updateComment = createAsyncThunk('comment/updateComment', async ({ id, comment }, { rejectWithValue }) => {
-  try {
-    const response = await axios.put(`${COMMENT_API_URL}/${id}`, comment);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data || error.message);
-  }
-});
-
-export const removeComment = createAsyncThunk('comment/removeComment', async (id, { rejectWithValue }) => {
-  try {
-    await axios.delete(`${COMMENT_API_URL}/${id}`);
-    return id;
-  } catch (error) {
-    return rejectWithValue(error.response?.data || error.message);
-  }
-});
+})
 
 const commentSlice = createSlice({
   name: COMMENT,
@@ -61,18 +43,20 @@ const commentSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(createComment.fulfilled, (state, action) => {
-        state.comments.push(action.payload);
+      // Fetch comment by product id
+      .addCase(fetchCommentByProductId.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(updateComment.fulfilled, (state, action) => {
-        const index = state.comments.findIndex(p => p.id === action.payload.id);
-        if (index !== -1) {
-          state.comments[index] = action.payload;
-        }
+      .addCase(fetchCommentByProductId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.comments = action.payload;
       })
-      .addCase(removeComment.fulfilled, (state, action) => {
-        state.comments = state.comments.filter(p => p.id !== action.payload);
-      });
+      .addCase(fetchCommentByProductId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
   },
 });
 
