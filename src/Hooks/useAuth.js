@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {updateAvatar as updateAvatarAction} from "../Features/user/authSlice"
+import { FETCH_PROFILE_API_URL } from "../Constants/userContant";
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -51,6 +52,10 @@ const useAuth = () => {
     avatar: avatar,
     firstName: user?.firstName,
     lastName: user?.lastName,
+    address: user?.address,
+    birthday: user?.birthday,
+    phoneNumber: user?.phoneNumber,
+    roleName: user?.roleName,
     email: user?.email,
     updateAvatar,
     user,
