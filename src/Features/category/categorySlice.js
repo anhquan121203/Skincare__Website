@@ -5,9 +5,55 @@ import { CATEGORY, CATEGORY_API_URL } from "../../Constants/categoryConstant";
 // Async thunks
 export const fetchCategory = createAsyncThunk(
   "category/fetchCategory",
-  async () => {
-    const response = await axios.get(`${CATEGORY_API_URL}/Category`);
-    return response.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${CATEGORY_API_URL}/Category`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const createCategory = createAsyncThunk(
+  "category/createCategory",
+  async ({ category }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${CATEGORY_API_URL}/Category`,
+        category
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const updateCategory = createAsyncThunk(
+  "category/updateCategory",
+  async ({ id, category }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${CATEGORY_API_URL}/Category/${id}`,
+        category
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const removeCategory = createAsyncThunk(
+  "category/removeCategory",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${CATEGORY_API_URL}/Category/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
   }
 );
 
@@ -31,6 +77,22 @@ const categorySlice = createSlice({
       .addCase(fetchCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.categories.push(action.payload);
+      })
+      .addCase(updateCategory.fulfilled, (state, action) => {
+        const index = state.categories.findIndex(
+          (p) => p.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.categories[index] = action.payload;
+        }
+      })
+      .addCase(removeCategory.fulfilled, (state, action) => {
+        state.categories = state.categories.filter(
+          (p) => p.id !== action.payload
+        );
       });
   },
 });

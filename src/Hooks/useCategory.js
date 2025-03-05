@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchCategory } from "../Features/category/categorySlice";
+import {
+  createCategory,
+  fetchCategory,
+  removeCategory,
+  updateCategory,
+} from "../Features/category/categorySlice";
 
 const useCategory = () => {
   const dispatch = useDispatch();
@@ -10,7 +15,21 @@ const useCategory = () => {
     dispatch(fetchCategory());
   }, [dispatch]);
 
-  return { categories, loading, error };
+  const addCategory = (category) => {
+    dispatch(createCategory({ category }));
+  };
+  const editCategory = (id, category) =>
+    dispatch(updateCategory({ id, category }));
+  const deleteCategory = (id) => dispatch(removeCategory(id));
+
+  return {
+    categories,
+    loading,
+    error,
+    addCategory,
+    editCategory,
+    deleteCategory,
+  };
 };
 
 export default useCategory;
