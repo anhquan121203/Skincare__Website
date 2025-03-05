@@ -7,7 +7,7 @@ export const fetchCategory = createAsyncThunk(
   "category/fetchCategory",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${CATEGORY_API_URL}/Category`);
+      const response = await axios.get(`${CATEGORY_API_URL}/listCategory`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -20,7 +20,7 @@ export const createCategory = createAsyncThunk(
   async ({ category }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${CATEGORY_API_URL}/Category`,
+        `${CATEGORY_API_URL}/createCategory`,
         category
       );
       return response.data;
@@ -32,10 +32,10 @@ export const createCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   "category/updateCategory",
-  async ({ id, category }, { rejectWithValue }) => {
+  async ({ category }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${CATEGORY_API_URL}/Category/${id}`,
+        `${CATEGORY_API_URL}/updateCategory`,
         category
       );
       return response.data;
@@ -49,7 +49,7 @@ export const removeCategory = createAsyncThunk(
   "category/removeCategory",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${CATEGORY_API_URL}/Category/${id}`);
+      await axios.delete(`${CATEGORY_API_URL}/deleteCategory/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

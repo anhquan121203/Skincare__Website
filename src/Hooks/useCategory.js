@@ -18,8 +18,7 @@ const useCategory = () => {
   const addCategory = (category) => {
     dispatch(createCategory({ category }));
   };
-  const editCategory = (id, category) =>
-    dispatch(updateCategory({ id, category }));
+  const editCategory = (category) => dispatch(updateCategory({ category }));
   const deleteCategory = (id) => dispatch(removeCategory(id));
 
   return {

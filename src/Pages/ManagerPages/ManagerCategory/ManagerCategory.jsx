@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Spin, Alert, Popconfirm } from "antd";
 import useCategory from "../../../Hooks/useCategory";
 import "./ManagerCategory.css";
 import ModalCategory from "./modalNewProduct/ModalCategory";
 import { toast } from "react-toastify";
+import { use } from "react";
 
 function ManagerCategory() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,7 +82,7 @@ function ManagerCategory() {
     setIsModalOpen(false);
 
     if (editingCategory) {
-      editCategory(editingCategory.id, newCategory);
+      editCategory(newCategory);
       toast.success("Cập nhật danh mục thành công");
     } else {
       addCategory(newCategory);
