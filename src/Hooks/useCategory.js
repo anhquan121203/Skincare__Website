@@ -18,7 +18,11 @@ const useCategory = () => {
   const addCategory = (category) => {
     dispatch(createCategory({ category }));
   };
-  const editCategory = (category) => dispatch(updateCategory({ category }));
+  const editCategory = async (category) => {
+    await dispatch(updateCategory({ category }));
+    dispatch(fetchCategory()); // Fetch lại danh sách danh mục sau khi cập nhật
+  };
+
   const deleteCategory = (id) => dispatch(removeCategory(id));
 
   return {
