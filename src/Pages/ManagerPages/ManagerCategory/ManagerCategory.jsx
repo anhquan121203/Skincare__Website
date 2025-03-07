@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Table, Button, Spin, Alert, Popconfirm } from "antd";
 import useCategory from "../../../Hooks/useCategory";
 import "./ManagerCategory.css";
 import ModalCategory from "./modalNewProduct/ModalCategory";
 import { toast } from "react-toastify";
-import { use } from "react";
 
 function ManagerCategory() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,14 +39,18 @@ function ManagerCategory() {
       title: "Trạng thái",
       dataIndex: "categoryStatus",
       key: "categoryStatus",
+      render: (text) => (
+        <span className={text === "Active" ? "status-active" : ""}>{text}</span>
+      ),
     },
+
     {
       title: "Action",
       key: "id",
       render: (id, record) => (
         <div className="action-buttons">
           <Button
-            type="primary"
+            type="danger"
             className="btn-edit"
             onClick={() => {
               setEditingCategory(record);
