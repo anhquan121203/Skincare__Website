@@ -1,4 +1,5 @@
 import "./checkoutPage.css";
+import duongDa from "../../../assets/imageBlogger/duong-da.webp";
 
 const CheckoutPage = () => {
   return (
@@ -65,7 +66,7 @@ const CheckoutPage = () => {
             <div className="cart-items">
               <div className="cart-item">
                 <img
-                  src="https://example.com/serum.jpg"
+                  src={duongDa}
                   alt="Serum dưỡng trắng"
                   className="product-image"
                 />
@@ -77,7 +78,7 @@ const CheckoutPage = () => {
               </div>
               <div className="cart-item">
                 <img
-                  src="https://example.com/kem-duong-am.jpg"
+                  src={duongDa}
                   alt="Kem dưỡng ẩm"
                   className="product-image"
                 />
@@ -89,7 +90,7 @@ const CheckoutPage = () => {
               </div>
               <div className="cart-item">
                 <img
-                  src="https://example.com/sua-rua-mat.jpg"
+                  src={duongDa}
                   alt="Sữa rửa mặt dịu nhẹ"
                   className="product-image"
                 />
