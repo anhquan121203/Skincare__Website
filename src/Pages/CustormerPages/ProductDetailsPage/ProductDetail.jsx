@@ -98,7 +98,7 @@ function ProductDetail() {
 
       {/* Details element wrap */}
       <div className="details-element-wrap">
-        <TabDetails />
+        <TabDetails productId={id} />
       </div>
 
       <div className="details-product-more">

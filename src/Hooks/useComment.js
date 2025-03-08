@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchComments, fetchCommentByProductId } from '../Features/comment/commentSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchCommentByProductId } from "../Features/comment/commentSlice";
 
 const useComment = (productId) => {
   const dispatch = useDispatch();
@@ -9,8 +9,6 @@ const useComment = (productId) => {
   useEffect(() => {
     if (productId) {
       dispatch(fetchCommentByProductId(productId));
-    } else {
-      dispatch(fetchComments());
     }
   }, [dispatch, productId]);
 

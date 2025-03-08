@@ -4,16 +4,17 @@ import TextArea from "antd/es/input/TextArea";
 import useComment from "../../../../Hooks/useComment";
 import { useParams } from "react-router-dom";
 
-function TabDetails() {
+function TabDetails({productId}) {
   const [activeTab, setActiveTab] = useState("additional");
-  const { productId } = useParams();
+  // const { productId } = useParams();
   const { comments, loading, error } = useComment(productId);
+  
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="tabs-container">
+   <div className="tabs-container">
       {/* Tab Headers */}
       <div className="tabs-details">
         <button
@@ -38,18 +39,7 @@ function TabDetails() {
             <p style={{ marginBottom: "30px" }}>
               Description Additional information Reviews Praesent vestibulum
               tellus a dolor consectetur, et condimentum tellus iaculis. In
-              finibus euismod lorem, vitae faucibus sem hendrerit id. Duis
-              porta, risus eu eleifend euismod, metus leo finibus ex, ut dictum
-              justo arcu sed mi. Nulla blandit purus vitae quam tincidunt, eu
-              ullamcorper velit laoreet. Morbi nec aliquam elit, vitae
-              vestibulum lacus. Vestibulum a dignissim nunc. Ut erat ante,
-              scelerisque non diam quis, posuere sodales felis. Sed consequat
-              aliquam felis eget tincidunt. Nunc dapibus, dui in hendrerit
-              ullamcorper, quam tortor convallis erat, vel volutpat nibh eros in
-              dolor. Ut id gravida ipsum. Nullam mollis neque ac lobortis
-              pretium. Vestibulum ante ipsum primis in faucibus orci luctus et
-              ultrices posuere cubilia curae; Ut dolor mi, tempor non fringilla
-              porttitor, pellentesque in nibh. Nulla non elit odio.
+              finibus euismod lorem, vitae faucibus sem hendrerit id.
             </p>
 
             <table className="info-table">
@@ -73,7 +63,6 @@ function TabDetails() {
 
         {activeTab === "reviews" && (
           <div className="tab-review">
-
             {/* ADD REVIEW */}
             <div className="add-review">
               <h1>Thêm đánh giá</h1>
@@ -92,16 +81,20 @@ function TabDetails() {
             </div>
 
             <div className="area-user-review">
-              {comments.slice(0, 7).map((item, index) => (
-                <div key={index}>
-                  <span>{item.firstName}</span>
-                  <span>{item.content}</span>
-                  <hr />
-                </div>
-              
-              ))}
+              {loading && <p>Loading comments...</p>}
+              {error && <p>Error: {error}</p>}
+              {comments?.length > 0 ? (
+                comments.slice(0, 7).map((item, index) => (
+                  <div key={index}>
+                    <span>{item.firstName}</span>
+                    <span>{item.content}</span>
+                    <hr />
+                  </div>
+                ))
+              ) : (
+                <p>No comments available.</p>
+              )}
             </div>
-
           </div>
         )}
       </div>
