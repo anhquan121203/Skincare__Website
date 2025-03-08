@@ -7,6 +7,7 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import "./AddToCardPage.css";
+import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 const { confirm } = Modal;
@@ -244,9 +245,15 @@ const AddToCardPage = () => {
             <Text>Tổng tiền thanh toán:</Text>
             <Text className="total-price">{totalPrice.toLocaleString()}₫</Text>
           </div>
-          <Button type="primary" block disabled={selectedProducts.length === 0}>
-            Mua Hàng ({selectedProducts.length})
-          </Button>
+          <Link to="/checkout">
+            <Button
+              type="primary"
+              block
+              disabled={selectedProducts.length === 0}
+            >
+              Mua Hàng ({selectedProducts.length})
+            </Button>
+          </Link>
         </Card>
       </div>
     </div>

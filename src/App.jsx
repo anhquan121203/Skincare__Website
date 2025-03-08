@@ -13,6 +13,7 @@ import ProductPage from "./Pages/CustormerPages/ProductPage/ProductPage";
 import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
 import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
+import CheckoutPage from "./Pages/CustormerPages/Checkout/CheckoutPage";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
@@ -24,7 +25,6 @@ import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
 import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategory";
-
 
 function App() {
   return (
@@ -44,6 +44,7 @@ function App() {
           ></Route>
           <Route path="/wishlist" element={<WishlistPage />}></Route>
           <Route path="/addtocard" element={<AddToCardPage />}></Route>
+          <Route path="/checkout" element={<CheckoutPage />}></Route>
           {/* Đúng tên */}
         </Route>
 
