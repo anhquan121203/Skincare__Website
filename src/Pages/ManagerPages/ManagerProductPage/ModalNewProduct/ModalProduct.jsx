@@ -1,26 +1,45 @@
 import { Button, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
 import { FiPlus } from "react-icons/fi";
-import useProduct from "../../../../Hooks/useProduct";
 import useCategory from "../../../../Hooks/useCategory";
+import useSkinType from "../../../../Hooks/useSkinType";
+import { toast } from "react-toastify";
 
 const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
   const [form] = Form.useForm();
+  const { categories } = useCategory();
+  const { skinTypes, loading, error } = useSkinType();
+
+  // const handleSubmit = () => {
+  //   form
+  //     .validateFields()
+  //     .then((values) => {
+  //       handleOk(values);
+  //       toast.success("Thêm sản phẩm mới thành công!!!")
+  //       form.resetFields();
+  //     })
+  //     .catch((info) => {
+  //       console.log("Validation Failed:", info);
+  //     });
+  // };
 
   const handleSubmit = () => {
     form
       .validateFields()
       .then((values) => {
-        handleOk(values); // Pass form values to parent
-        form.resetFields(); // Reset form after submission
+        const formattedValues = {
+          ...values,
+          CategoryId: values.CategoryId, // Ensure CategoryId stores ID
+          SkinTypeId: values.SkinTypeId, // Ensure SkinTypeId stores ID
+        };
+
+        handleOk(formattedValues);
+        toast.success("Thêm sản phẩm mới thành công!!!");
+        form.resetFields();
       })
       .catch((info) => {
         console.log("Validation Failed:", info);
       });
   };
-
-  const {categories, loading, error} = useCategory();
-
-  
 
   return (
     <Modal
@@ -99,37 +118,39 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
 
         <Form.Item
           label="Loại sản phẩm"
-          name="categories"
+          name="CategoryId"
           rules={[
             {
               required: true,
-              message: "Please input!",
+              message: "Please select a category!",
             },
           ]}
         >
-          <Select >
+          <Select>
             {categories.map((category) => (
-              <Select.Option key={category.id} value={category.categoryName}>{category.categoryName}</Select.Option>
+              <Select.Option key={category.id} value={category.id}>
+                {category.categoryName}
+              </Select.Option>
             ))}
-            
           </Select>
         </Form.Item>
 
         <Form.Item
           label="Loại da"
-          name="skinTypeName"
+          name="SkinTypeId"
           rules={[
             {
               required: true,
-              message: "Please input!",
+              message: "Please select a skin type!",
             },
           ]}
         >
-          <Select >
-            <Select.Option value="Da dầu">Da dầu</Select.Option>
-            <Select.Option value="Da khô">Da khô</Select.Option>
-            <Select.Option value="Da hỗn hợp">Da hỗn hợp</Select.Option>
-            <Select.Option value="Da nhạy cảm">Da nhạy cảm</Select.Option>
+          <Select>
+            {skinTypes.map((skinType) => (
+              <Select.Option key={skinType.id} value={skinType.id}>
+                {skinType.skinTypeName}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
 

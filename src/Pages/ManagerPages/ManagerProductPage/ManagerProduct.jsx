@@ -6,13 +6,16 @@ import useProduct from "../../../Hooks/useProduct";
 import { ImTelegram } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import ModalProduct from "./ModalNewProduct/ModalProduct";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 function ManagerProduct() {
-  const { products, loading, error, addProduct } = useProduct();
+  const { products, loading, error, addProduct, deleteProduct } = useProduct();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -23,6 +26,7 @@ function ManagerProduct() {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    toast.success("Xóa sản phẩm thành công!!!")
   };
 
   if (loading) return <p>Loading products...</p>;
@@ -30,6 +34,10 @@ function ManagerProduct() {
 
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
+
+  const hanleDeleteProduct = (id) => {
+    dispatch(deleteProduct(id));
+  };
 
   return (
     <div className="managerProduct-container">
@@ -93,7 +101,12 @@ function ManagerProduct() {
                   </td>
                   <td className="action-btnPro">
                     <button className="btn-updatePro">Cập nhật</button>
-                    <button className="btn-removePro">Xóa</button>
+                    <button
+                      className="btn-removePro"
+                      onClick={() => hanleDeleteProduct(item.id)}
+                    >
+                      Xóa
+                    </button>
                   </td>
                 </tr>
               </tbody>

@@ -30,6 +30,7 @@ function Header() {
   const handleLogout = async () => {
     await signOut();
     dispatch(logout());
+    navigate("/");
   };
 
   // Seach category

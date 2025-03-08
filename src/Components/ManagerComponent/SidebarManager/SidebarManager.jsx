@@ -43,6 +43,9 @@ function SidebarManager() {
         <li className={isActive("/manager/manager-category") ? "active" : ""}>
           <Link to="/manager/manager-category">Category <FaDropbox /></Link>
         </li>
+        <li className={isActive("/manager/manager-skinType") ? "active" : ""}>
+          <Link to="/manager/manager-skinType">SkinType <FaDropbox /></Link>
+        </li>
         <hr />
         <li className={isActive("") ? "active" : ""}>
           <Link to="">Manage Account <MdOutlineManageAccounts /></Link>

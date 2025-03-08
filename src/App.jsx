@@ -24,6 +24,7 @@ import ManagerLayout from "./Layout/ManagerLayout";
 import DashboardManager from "./Pages/ManagerPages/DashboardPage/Dashboard";
 import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProduct";
 import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategory";
+import ManagerSkinType from "./Pages/ManagerPages/ManagerSkinType/ManageSkinType";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           ></Route>
           <Route path="manager-product" element={<ManagerProduct />}></Route>
           <Route path="manager-category" element={<ManagerCategory />}></Route>
+          <Route path="manager-skinType" element={<ManagerSkinType />}></Route>
         </Route>
 
         {/****************************************************************************/}
