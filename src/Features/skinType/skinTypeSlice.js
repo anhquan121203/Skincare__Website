@@ -14,6 +14,21 @@ export const fetchSkinType = createAsyncThunk(
   }
 );
 
+export const createNewSkinType = createAsyncThunk(
+  "skinType/addNewSkinType",
+  async (skinType, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${SKINTYPE_API_URL}/createSkinType`,
+        skinType
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const skinTypeSlice = createSlice({
   name: SKINTYPE,
   initialState: {
@@ -34,6 +49,10 @@ const skinTypeSlice = createSlice({
       .addCase(fetchSkinType.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      .addCase(createNewSkinType.fulfilled, (state, action) => {
+        state.skinTypes.push(action.payload);
       });
   },
 });

@@ -3,7 +3,7 @@ import {
   fetchProducts,
   createProduct,
   updateProduct,
-  removeProduct,
+  deleteProduct as removeProduct,
 } from "../Features/product/productSlice";
 import { useEffect } from "react";
 
@@ -15,9 +15,15 @@ const useProduct = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const addProduct = (product) => {
-    dispatch(createProduct(product));
+  const addProduct = async (product) => {
+    try {
+      await dispatch(createProduct(product));
+      dispatch(fetchProducts());
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
   };
+
   const editProduct = (id, product) => dispatch(updateProduct({ id, product }));
   const deleteProduct = (id) => dispatch(removeProduct(id));
 

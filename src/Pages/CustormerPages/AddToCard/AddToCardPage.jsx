@@ -8,67 +8,17 @@ import {
 } from "@ant-design/icons";
 import "./AddToCardPage.css";
 import { Link } from "react-router-dom";
+import useCart from "../../../Hooks/useCart";
 
 const { Text, Title } = Typography;
 const { confirm } = Modal;
 
-const initialProducts = [
-  {
-    id: 1,
-    name: "A lightweight spray that helps detangle and smooth hair.",
-    image:
-      "https://storage.googleapis.com/a1aa/image/BTKcxQJDFnZdHELCkxZ3HFyCBq5ytvkpdc1mW-LokP4.jpg",
-    price: 10000,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    name: "Kem chống nắng",
-    image:
-      "https://storage.googleapis.com/a1aa/image/V0Onohk4KefUkPOZsCDoKmN5Wq8xxJZ8nQ-SxeOdtC4.jpg",
-    price: 15000,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    name: "Serum dưỡng ẩm",
-    image:
-      "https://storage.googleapis.com/a1aa/image/JgqXEXX4bdFY-ifpVelcAAYmNZjBm9sE4goRtoXbIiw.jpg",
-    price: 20000,
-    quantity: 1,
-  },
-  {
-    id: 4,
-    name: "A lightweight spray that helps detangle and smooth hair.",
-    image:
-      "https://storage.googleapis.com/a1aa/image/BTKcxQJDFnZdHELCkxZ3HFyCBq5ytvkpdc1mW-LokP4.jpg",
-    price: 10000,
-    quantity: 1,
-  },
-  {
-    id: 5,
-    name: "Kem chống nắng",
-    image:
-      "https://storage.googleapis.com/a1aa/image/V0Onohk4KefUkPOZsCDoKmN5Wq8xxJZ8nQ-SxeOdtC4.jpg",
-    price: 15000,
-    quantity: 1,
-  },
-  {
-    id: 6,
-    name: "Serum dưỡng ẩm",
-    image:
-      "https://storage.googleapis.com/a1aa/image/JgqXEXX4bdFY-ifpVelcAAYmNZjBm9sE4goRtoXbIiw.jpg",
-    price: 20000,
-    quantity: 1,
-  },
-];
-
 const AddToCardPage = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const { carts, loading, error } = useCart();
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   const selectAll =
-    selectedProducts.length === products.length && products.length > 0;
+    selectedProducts.length === carts?.length && carts?.length > 0;
 
   const toggleSelectProduct = (id) => {
     setSelectedProducts((prevSelected) =>
@@ -79,7 +29,7 @@ const AddToCardPage = () => {
   };
 
   const toggleSelectAll = () => {
-    setSelectedProducts(selectAll ? [] : products.map((product) => product.id));
+    setSelectedProducts(selectAll ? [] : carts.map((product) => product.id));
   };
 
   const updateQuantity = (id, delta) => {
@@ -137,8 +87,8 @@ const AddToCardPage = () => {
     setSelectedProducts([]);
   };
 
-  const totalPrice = products
-    .filter((product) => selectedProducts.includes(product.id))
+  const totalPrice = carts
+    ?.filter((product) => selectedProducts.includes(product.id))
     .reduce((sum, p) => sum + p.price * p.quantity, 0);
 
   const columns = [
@@ -221,7 +171,7 @@ const AddToCardPage = () => {
           <Title level={3}>GIỎ HÀNG</Title>
           <Table
             columns={columns}
-            dataSource={products}
+            dataSource={carts}
             rowKey="id"
             pagination={false}
           />
@@ -243,7 +193,7 @@ const AddToCardPage = () => {
           <Title level={4}>Tổng tiền hàng</Title>
           <div className="summary">
             <Text>Tổng tiền thanh toán:</Text>
-            <Text className="total-price">{totalPrice.toLocaleString()}₫</Text>
+            <Text className="total-price">{totalPrice}₫</Text>
           </div>
           <Link to="/checkout">
             <Button

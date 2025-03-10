@@ -24,6 +24,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
       if (product.price < minPrice || product.price > maxPrice) {
         return false;
       }
+
     }
 
     // Lọc theo loại sản phẩm
@@ -31,6 +32,10 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
       if (!selectedCategories.includes(product.categoryName)) {
         return false;
       }
+    }
+
+    if(product.productStatus === "Inactive") {
+      return false;
     }
 
     // Lọc theo từ khóa tìm kiếm
