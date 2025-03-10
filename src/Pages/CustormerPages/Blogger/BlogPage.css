@@ -1,81 +1,82 @@
+/* Tổng thể trang blog */
 .blog-page {
   max-width: 1200px;
-  margin: 0 auto; /* Căn giữa */
+  margin: 0 auto;
+  padding: 20px;
+  background: #fcf7ee;
+  font-family: "Arial", sans-serif;
 }
 
+/* Tiêu đề chính */
 .title-blogger {
   text-align: center;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
   color: #6b46c1;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-/* Categories -----------------------------------------------------------------------------------------------*/
+/* Categories */
 .categories {
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 20px 0;
-  width: 100%;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .category {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex: 1;
   text-align: center;
-  margin: 0 10px;
-  background-image: url("../../../assets/imageBlogger/duong-da.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   color: white;
-  height: 150px;
+  height: 160px;
   border-radius: 10px;
   font-size: 18px;
   font-weight: bold;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../../assets/imageBlogger/duong-da.webp");
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Hiệu ứng hover */
 .category:hover {
   transform: scale(1.05);
-  opacity: 0.9;
+  filter: brightness(90%);
 }
 
-/* Article List */
+/* Danh sách bài viết */
 .article-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
   width: 100%;
 }
 
 .articlesDiscovery {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: #fcf7ee;
+  background: white;
   padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  width: 100%;
   margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.articlesDiscovery:hover {
+  transform: translateY(-5px);
 }
 
 .article-image {
-  width: 300px;
-  height: 250px;
+  width: 280px;
+  height: 220px;
   object-fit: cover;
   border-radius: 8px;
-  margin-right: 20px;
 }
 
 .article-content {
   flex: 1;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -87,6 +88,17 @@
   margin-bottom: 8px;
 }
 
+.article-content h3 {
+  color: #333;
+  font-size: 20px;
+}
+
+.article-content p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .info {
   display: flex;
   justify-content: space-between;
@@ -95,26 +107,30 @@
 }
 
 .info button {
-  background-color: #f8e3b6;
-  color: #000;
+  background: #6b46c1;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  font-size: 16px;
+  transition: background 0.3s;
 }
 
-.views {
-  color: #555;
+.info button:hover {
+  background: #553c9a;
 }
 
-/* Health Care Section */
+/* Chăm sóc sức khoẻ */
 .health-care-section {
   text-align: center;
+  padding: 40px 0;
 }
 
 .articles {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -122,30 +138,38 @@
   width: 350px;
   background: white;
   padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.healthArticles:hover {
+  transform: translateY(-5px);
 }
 
 .healthArticles .article-image {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 8px;
 }
+
 .article-info {
   display: flex;
   justify-content: space-between;
+  font-size: 14px;
+  color: #777;
+  margin-top: 10px;
 }
 
-/* Ad Section */
+/* Quảng cáo */
 .ad-section {
   display: flex;
-  align-items: center;
   background: #fcf7ee;
-  padding: 30px;
-  margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  margin-top: 30px;
   border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .ad-image {
@@ -156,5 +180,44 @@
 
 .ad-content {
   flex: 1;
+  padding-left: 30px;
+}
+
+.ad-content h2 {
+  color: #6b46c1;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.ad-content ul {
+  margin-top: 10px;
+  list-style-type: disc;
   padding-left: 20px;
+}
+
+.ad-content ul li {
+  font-size: 16px;
+  color: #555;
+}
+
+.ad-content button {
+  background: #6b46c1;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  margin-top: 15px;
+}
+
+.ad-content button:hover {
+  background: #553c9a;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
 }
