@@ -6,11 +6,19 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import TabDetails from "./TabProductDetails/TabDetails";
 import { TiShoppingCart } from "react-icons/ti";
 import { MdPayment } from "react-icons/md";
+import useCart from "../../../Hooks/useCart";
+import { useDispatch } from "react-redux";
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  // const {cart} =
+  const dispatch = useDispatch();
+  const { addToCartfromProduct } = useCart();
+  const [quantity, setQuantity] = useState(1);
+
+  const addToCart = () => {
+    addToCartfromProduct(id, quantity);
+  };
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -64,8 +72,10 @@ function ProductDetail() {
                 max={100}
                 type="number"
                 defaultValue={1}
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
               />
-              <button className="btn-details" type="submit">
+              <button className="btn-details" type="submit" onClick={addToCart}>
                 Thêm giỏ hàng <TiShoppingCart />
               </button>
             </div>

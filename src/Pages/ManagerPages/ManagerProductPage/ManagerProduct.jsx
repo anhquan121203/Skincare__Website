@@ -3,10 +3,7 @@ import "./ManagerProduct.css";
 import { Input, Pagination } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
-import { ImTelegram } from "react-icons/im";
-import { useNavigate } from "react-router-dom";
 import ModalProduct from "./ModalNewProduct/ModalProduct";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 function ManagerProduct() {
@@ -14,8 +11,6 @@ function ManagerProduct() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -36,7 +31,8 @@ function ManagerProduct() {
   const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
 
   const hanleDeleteProduct = (id) => {
-    dispatch(deleteProduct(id));
+    deleteProduct(id);
+    toast.success("Xóa sản phẩm thành công!")
   };
 
   return (

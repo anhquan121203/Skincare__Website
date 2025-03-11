@@ -9,11 +9,13 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { logout } from "../../../Features/user/authSlice";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../../Api/authApi";
+import useAuth from "../../../Hooks/useAuth";
 
 function SidebarManager() {
   const location = useLocation(); // Get current route
   const isActive = (path) => location.pathname === path;
   const dispatch = useDispatch();
+  const {avatar, firstName, lastName, roleName}= useAuth();
 
     const handleLogout = async () => {
       await signOut();
@@ -24,38 +26,38 @@ function SidebarManager() {
     <div className="sidebar-manager">
       <div className="sidebar-header">
         <img
-          src="https://i.pinimg.com/736x/34/60/3c/34603ce8a80b1ce9a768cad7ebf63c56.jpg"
+          src={"https://dragonball.guru/wp-content/uploads/2021/01/goku-dragon-ball-guru.jpg"}
           alt=""
         />
-        <h2>Nguyen Van Quan</h2>
-        <p>Administrator</p>
+        <h2>{firstName} {lastName}</h2>
+        <p>{roleName}</p>
       </div>
 
       <ul className="sidebar-menu">
+        <hr />
+        <h3 style={{textAlign: "center"}}>Doanh số</h3>
         <li className={isActive("/manager") ? "active" : ""}>
-          <Link to="/manager">Dashboard <LuLayoutDashboard style={{fontSize: "15px"}}/></Link>
+          <Link to="/manager">Doanh thu <LuLayoutDashboard style={{fontSize: "15px"}}/></Link>
         </li>
         <hr />
-        <h3 style={{alignItems: "center"}}>Manager</h3>
+        <h3 style={{textAlign: "center"}}>Quản lý</h3>
         <li className={isActive("/manager/manager-product") ? "active" : ""}>
-          <Link to="/manager/manager-product">Products <FaDropbox /></Link>
+          <Link to="/manager/manager-product">Sản phẩm <FaDropbox /></Link>
         </li>
         <li className={isActive("/manager/manager-category") ? "active" : ""}>
-          <Link to="/manager/manager-category">Category <FaDropbox /></Link>
+          <Link to="/manager/manager-category">Loại sản phẩm <FaDropbox /></Link>
         </li>
         <li className={isActive("/manager/manager-skinType") ? "active" : ""}>
-          <Link to="/manager/manager-skinType">SkinType <FaDropbox /></Link>
+          <Link to="/manager/manager-skinType">Loại da <FaDropbox /></Link>
         </li>
         <hr />
         <li className={isActive("") ? "active" : ""}>
-          <Link to="">Manage Account <MdOutlineManageAccounts /></Link>
+          <Link to="">Quan lý tài khoản <MdOutlineManageAccounts /></Link>
         </li>
-        <li className={isActive("#") ? "active" : ""}>
-          <Link to="#">Profile <FaRegUser /></Link>
+        <li className={isActive("/manager/manager-profile") ? "active" : ""}>
+          <Link to="/manager/manager-profile">Hồ sơ <FaRegUser /></Link>
         </li>
-        <li className={isActive("#") ? "active" : ""}>
-          <Link to="#">About Us</Link>
-        </li>
+        <hr />
       </ul>
 
       <div className="sidebar-footer">

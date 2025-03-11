@@ -4,25 +4,25 @@ import { Input, Pagination } from "antd";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useSkinType from "../../../Hooks/useSkinType";
-// import ModalProduct from "./ModalNewProduct/ModalProduct";
+import ModalSkinTypes from "./ModalNewSkinType/ModalSkinType";
 
 function ManagerSkinType() {
   const { skinTypes, loading, error } = useSkinType();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
-//   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-//   const showModal = () => {
-//     setIsModalOpen(true);
-//   };
-//   const handleOk = (newProduct) => {
-//     setIsModalOpen(false);
-//     addProduct(newProduct);
-//   };
-//   const handleCancel = () => {
-//     setIsModalOpen(false);
-//   };
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    // addNewSkinType(newSkinType);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -36,7 +36,7 @@ function ManagerSkinType() {
 
       <div className="content-manager-product">
         <div className="header-manager-product">
-          <button className="btn-addProduct" >
+          <button className="btn-addProduct" onClick={showModal}>
             <FaPlus style={{ marginRight: "8px" }} />
             Add new products
           </button>
@@ -86,11 +86,11 @@ function ManagerSkinType() {
         />
       </div>
 
-      {/* <ModalProduct
+      <ModalSkinTypes
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         handleOk={handleOk}
-      /> */}
+      />
     </div>
   );
 }
