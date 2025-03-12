@@ -1,118 +1,135 @@
-.managerProduct-container{
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-    max-width: 100%;
-    /* height: 100%; */
-    padding: 20px;
-    overflow: auto;
-    scrollbar-width: none;
+/* Container chính */
+.managerSkinType-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  max-width: 100%;
+  padding: 20px;
+  overflow: auto;
+  scrollbar-width: none;
 }
 
-/* header-manager-product */
-.header-manager-product{
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    width: 100%;
-}
-.btn-addProduct{
-    width: 180px;
-    height: 50px;
-    padding: 5px;
-    margin-top: 20px;
-    border-radius: 5px;
-    font-size: 15px;
-    justify-content: start;
-    border: 1px solid green;
+/* Header Manager */
+.header-manager-skinType {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.search-product{
-    justify-content: end;
-
+/* Nút Thêm Mới */
+.btn-addSkinType {
+  width: 180px;
+  height: 50px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0ca678;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
-.table-product-container{
-    display: flex;
-    width: 100%;
-    /* margin-left: 120px; */
+.btn-addSkinType:hover {
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
-.table-product{
-    margin-top: 10px ;
-    width: 100%;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    text-align: left;
-    border: 1px solid #ddd;
+/* Ô tìm kiếm */
+.search-skinType input {
+  width: 200px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-.table-product th, .table-product td{
-    padding: 12px;
-    border-bottom: 1px solid;
+/* Bảng hiển thị danh sách */
+.table-skinType-container {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
 }
 
-.table-product th{
-    background-color: #f8f9fa;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
+.table-skinType {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
-.table-product th:after{
-    font-size: 12px;
-    color: #ccc;
-    margin-left: 5px;
+.table-skinType th,
+.table-skinType td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
 }
 
-.table-product tbody tr:hover{
-    background-color: #f1f1f1;
+.table-skinType th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
 }
 
+.table-skinType tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Trạng thái */
 .status-active {
-    background-color: #d4f8e8;
-    color: #0ca678;
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-weight: bold;
+  background-color: #d4f8e8;
+  color: #0ca678;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
-.action-btnPro {
-    /* display: flex; */
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-
+/* Nút thao tác */
+.btn-updateSkinType,
+.btn-removeSkinType {
+  border: none;
+  margin-right: 5px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
 }
 
-.btn-updatePro, .btn-removePro {
-    border: none;
-    margin-right: 5px;
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: ease-in-out;
+.btn-updateSkinType {
+  background-color: #0ca678;
+  color: white;
 }
 
-.btn-updatePro{
-    background-color: #0ca678;
-    color: white;
+.btn-updateSkinType:hover {
+  background-color: white !important;
+  color: #0ca678 !important;
+  transform: scale(1.05);
 }
 
-.btn-updatePro:hover {
-    background-color: #218838;
-    transform: scale(1);
+.btn-removeSkinType {
+  background-color: #dc3545;
+  color: white;
 }
 
-.btn-removePro{
-    background-color: #dc3545;
-    color: white;
+.btn-removeSkinType:hover {
+  background-color: white !important;
+  color: #dc3545 !important;
+  transform: scale(1.05);
 }
 
-.btn-removePro:hover {
-    background-color: #c82333;
-    transform: scale(1);
+/* Phân trang */
+.ant-pagination {
+  margin-top: 16px;
+  text-align: center;
 }

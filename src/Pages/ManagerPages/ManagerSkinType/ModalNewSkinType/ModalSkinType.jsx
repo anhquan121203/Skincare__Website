@@ -1,17 +1,27 @@
-import { Button, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
-import { toast } from "react-toastify";
-import useSkinType from "../../../../Hooks/useSkinType";
+import { Button, Form, Input, Modal, Select } from "antd";
+import { useEffect } from "react";
 
-const ModalSkinTypes = ({ isModalOpen, handleCancel, handleOk }) => {
+const ModalSkinTypes = ({
+  isModalOpen,
+  handleCancel,
+  handleOk,
+  editingSkintype,
+}) => {
   const [form] = Form.useForm();
-  const {skinTypes} = useSkinType();
+
+  useEffect(() => {
+    if (editingSkintype) {
+      form.setFieldsValue(editingSkintype);
+    } else {
+      form.resetFields();
+    }
+  }, [editingSkintype, form]);
 
   const handleSubmit = () => {
     form
       .validateFields()
       .then((values) => {
-        handleOk(values);
-        toast.success("Thêm sản phẩm mới thành công!!!");
+        handleOk({ ...editingSkintype, ...values }); // Tránh mất ID khi cập nhật
         form.resetFields();
       })
       .catch((info) => {
@@ -19,55 +29,51 @@ const ModalSkinTypes = ({ isModalOpen, handleCancel, handleOk }) => {
       });
   };
 
+  // Reset form khi đóng modal
+  const onClose = () => {
+    form.resetFields();
+    handleCancel();
+  };
+
   return (
     <Modal
-      title="Tạo tên loại da mới!!!"
+      title={editingSkintype ? "Cập nhật loại da" : "Tạo mới loại da"}
       open={isModalOpen}
-      onCancel={handleCancel}
+      onCancel={onClose}
       footer={[
-        <Button key="cancel" onClick={handleCancel}>
+        <Button key="cancel" onClick={onClose}>
           Hủy
         </Button>,
         <Button key="submit" type="primary" onClick={handleSubmit}>
-          Tên loại da mới
+          {editingSkintype ? "Cập nhật" : "Thêm mới"}
         </Button>,
       ]}
     >
       <Form form={form} layout="vertical">
+        {/* ID chỉ hiển thị khi chỉnh sửa */}
+        {editingSkintype && (
+          <Form.Item label="ID" name="id">
+            <Input disabled />
+          </Form.Item>
+        )}
+
         <Form.Item
           label="Tên loại da"
           name="skinTypeName"
-          rules={[
-            {
-              required: true,
-              message: "Hãy nhập tên loại da!",
-            },
-          ]}
+          rules={[{ required: true, message: "Vui lòng nhập tên loại da!" }]}
         >
           <Input />
         </Form.Item>
-        
 
         <Form.Item
-          label="Loại da"
+          label="Trạng thái"
           name="skinTypeStatus"
-          rules={[
-            {
-              required: true,
-              message: "Please select a skin type!",
-            },
-          ]}
+          rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
         >
           <Select>
-            {skinTypes.map((skinType) => (
-              <Select.Option key={skinType.id} value={skinType.id}>
-                {skinType.skinTypeStatus}
-              </Select.Option>
-            ))}
+            <Select.Option value="active">Active</Select.Option>
           </Select>
         </Form.Item>
-
-    
       </Form>
     </Modal>
   );

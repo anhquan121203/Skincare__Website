@@ -67,10 +67,8 @@ function ModalCategory({
           ]}
         >
           <Select>
-            <Select.Option value="Hoạt động">Hoạt động</Select.Option>
-            <Select.Option value="Không hoạt động">
-              Không hoạt động
-            </Select.Option>
+            <Select.Option value="active">Active</Select.Option>
+            <Select.Option value="inactive">Inactive</Select.Option>
           </Select>
         </Form.Item>
       </Form>

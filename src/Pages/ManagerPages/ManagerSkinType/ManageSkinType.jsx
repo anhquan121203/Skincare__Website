@@ -1,80 +1,120 @@
 import React, { useState } from "react";
 import "./ManagerSkinType.css";
-import { Input, Pagination } from "antd";
+import { Input, Pagination, Button, Popconfirm } from "antd";
 import { FaPlus } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import useSkinType from "../../../Hooks/useSkinType";
 import ModalSkinTypes from "./ModalNewSkinType/ModalSkinType";
+import { toast } from "react-toastify";
 
 function ManagerSkinType() {
-  const { skinTypes, loading, error } = useSkinType();
+  const {
+    skinTypes,
+    loading,
+    error,
+    addNewSkinType,
+    editSkinType,
+    deleteSkinTyle,
+  } = useSkinType();
+
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
+  const [editingSkintype, setEditingSkintype] = useState(null);
+  const pageSize = 5;
+
+  const handleOk = (newSkinType) => {
+    setIsModalOpen(false);
+
+    if (editingSkintype) {
+      console.log(editingSkintype);
+
+      editSkinType(newSkinType);
+      toast.success("Cập nhật loại da thành công.");
+    } else {
+      addNewSkinType(newSkinType);
+      toast.success("Tạo mới loại da thành công.");
+    }
+
+    setEditingSkintype(null);
+  };
 
   const showModal = () => {
+    setEditingSkintype(null); // Đặt về null để tránh dữ liệu cũ
     setIsModalOpen(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
-    // addNewSkinType(newSkinType);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+
+  const showEditModal = (skinType) => {
+    setEditingSkintype(skinType); // Set dữ liệu loại da cần sửa
+    setIsModalOpen(true);
   };
 
-  if (loading) return <p>Loading products...</p>;
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setEditingSkintype(null); // Xóa dữ liệu cũ khi đóng modal
+  };
+
+  if (loading) return <p>Loading skin types...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedSkinTypes = skinTypes.slice(startIndex, startIndex + pageSize);
 
+  const handleDeleteSkinType = (id) => {
+    deleteSkinTyle(id);
+    toast.success("Xóa loại da thành công");
+  };
+
   return (
-    <div className="managerProduct-container">
-      <h1>Manager Product</h1>
-
-      <div className="content-manager-product">
-        <div className="header-manager-product">
-          <button className="btn-addProduct" onClick={showModal}>
-            <FaPlus style={{ marginRight: "8px" }} />
-            Add new products
-          </button>
-
-          <div className="search-product">
+    <div className="managerSkinType-container">
+      <h1>Manage Skin Types</h1>
+      <div className="content-manager-skinType">
+        <div className="header-manager-skinType">
+          <Button className="btn-addSkinType" onClick={showModal}>
+            <FaPlus style={{ marginRight: "8px" }} /> Add New Skin Type
+          </Button>
+          <div className="search-skinType">
             <Input.Search
-              placeholder="Tìm kiếm sản phẩm..."
-              // onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search skin type..."
               style={{ width: 200 }}
             />
           </div>
         </div>
 
-        <div className="table-product-container">
-          <table className="table-product">
+        <div className="table-skinType-container">
+          <table className="table-skinType">
             <thead>
               <tr>
-                <th>STT</th>
-                <th style={{ width: "200px" }}>Tên loại da</th>
+                <th>ID</th>
+                <th>Tên loại da</th>
                 <th>Trạng thái</th>
-                <th>Action</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
-            {paginatedSkinTypes.map((item, index) => (
-              <tbody key={index}>
-                <tr>
-                  <td>{item.id}</td>
+            <tbody>
+              {paginatedSkinTypes.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{startIndex + index + 1}</td>
                   <td>{item.skinTypeName}</td>
                   <td>
-                    <span class="status-active">{item.skinTypeStatus}</span>
+                    <span className="status-active">{item.skinTypeStatus}</span>
                   </td>
-                  <td className="action-btnPro">
-                    <button className="btn-updatePro">Cập nhật</button>
-                    <button className="btn-removePro">Xóa</button>
+                  <td>
+                    <Button
+                      className="btn-updateSkinType"
+                      onClick={() => showEditModal(item)}
+                    >
+                      Cập nhật
+                    </Button>
+                    <Popconfirm
+                      title="Xóa loại da"
+                      description="Bạn muốn xóa loại da này?"
+                      onConfirm={() => handleDeleteSkinType(item.id)}
+                    >
+                      <Button className="btn-removeSkinType">Xóa</Button>
+                    </Popconfirm>
                   </td>
                 </tr>
-              </tbody>
-            ))}
+              ))}
+            </tbody>
           </table>
         </div>
         <Pagination
@@ -90,6 +130,7 @@ function ManagerSkinType() {
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         handleOk={handleOk}
+        editingSkintype={editingSkintype} // Truyền dữ liệu loại da cần sửa vào modal
       />
     </div>
   );
