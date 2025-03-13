@@ -13,19 +13,24 @@ function Register() {
   const dispatch = useDispatch();
 
   // Validate schema
+  // Validate schema
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Tên phải bắt buộc"),
     lastName: Yup.string().required("Họ phải bắt buộc"),
     birthday: Yup.date().required("Ngày sinh phải bắt buộc"),
     phoneNumber: Yup.string()
-      .matches(/^\d+$/, "Phone must be a valid number")
+      .matches(/^\d+$/, "Số điện thoại phải là số hợp lệ")
       .required("Số điện thoại bắt buộc nhập"),
     address: Yup.string().required("Địa chỉ bắt buộc nhập"),
-    email: Yup.string().required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    email: Yup.string()
+      .email("Email không hợp lệ")
+      .required("Email bắt buộc nhập"),
+    password: Yup.string()
+      .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
+      .required("Mật khẩu bắt buộc nhập"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password is required"),
+      .oneOf([Yup.ref("password"), null], "Mật khẩu không khớp")
+      .required("Nhập lại mật khẩu bắt buộc"),
   });
 
   const formik = useFormik({
@@ -56,10 +61,9 @@ function Register() {
           toast.success("Đăng kí thành công!!!", { autoClose: 1000 });
         } else {
           toast.error(response.data.message || "Đăng kí thất bại!!!");
-          console.log("đăng ký thất bại");
         }
       } catch (error) {
-        toast.error("An error occurred during registration");
+        toast.error("Đã xảy ra lỗi trong quá trình đăng ký");
       }
     },
   });
@@ -89,7 +93,7 @@ function Register() {
                 type="text"
                 name="firstName"
                 placeholder="Họ..."
-                value={formik.values.firstName}
+                value={formik.values.lastName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className={
@@ -97,8 +101,11 @@ function Register() {
                     ? "error"
                     : ""
                 }
-                required
+                {...formik.getFieldProps("firstName")}
               />
+              {formik.touched.firstName && formik.errors.firstName && (
+                <span className="error-text">*{formik.errors.firstName}</span>
+              )}
             </div>
 
             <div className="form-group-register">
@@ -115,9 +122,12 @@ function Register() {
                     ? "error"
                     : ""
                 }
+                {...formik.getFieldProps("lastName")}
                 style={{ width: "190px" }}
-                required
               />
+              {formik.touched.lastName && formik.errors.lastName && (
+                <span className="error-text">{formik.errors.lastName}</span>
+              )}
             </div>
           </div>
 
@@ -135,9 +145,12 @@ function Register() {
                     ? "error"
                     : ""
                 }
-                required
+                {...formik.getFieldProps("birthday")}
                 style={{ maxWidth: "400px" }}
               />
+              {formik.touched.birthday && formik.errors.birthday && (
+                <span className="error-text">{formik.errors.birthday}</span>
+              )}
             </div>
 
             <div className="form-group-register">
@@ -154,8 +167,11 @@ function Register() {
                     : ""
                 }
                 placeholder="Số điện thoại của bạn..."
-                required
+                {...formik.getFieldProps("phoneNumber")}
               />
+              {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                <span className="error-text">{formik.errors.phoneNumber}</span>
+              )}
             </div>
           </div>
 
@@ -171,8 +187,11 @@ function Register() {
               className={
                 formik.touched.address && formik.errors.address ? "error" : ""
               }
-              required
+              {...formik.getFieldProps("address")}
             />
+            {formik.touched.address && formik.errors.address && (
+              <span className="error-text">{formik.errors.address}</span>
+            )}
           </div>
 
           <div className="form-group-register">
@@ -187,8 +206,11 @@ function Register() {
               className={
                 formik.touched.email && formik.errors.email ? "error" : ""
               }
-              required
+              {...formik.getFieldProps("email")}
             />
+            {formik.touched.email && formik.errors.email && (
+              <span className="error-text">{formik.errors.email}</span>
+            )}
           </div>
 
           <div className="form-row-register">
@@ -206,8 +228,11 @@ function Register() {
                     ? "error"
                     : ""
                 }
-                required
+                {...formik.getFieldProps("password")}
               />
+              {formik.touched.password && formik.errors.password && (
+                <span className="error-text">{formik.errors.password}</span>
+              )}
             </div>
 
             <div className="form-group-register">
@@ -221,12 +246,18 @@ function Register() {
                 onBlur={formik.handleBlur}
                 className={
                   formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword
+                  formik.errors.confirmPassword
                     ? "error"
                     : ""
                 }
-                required
+                {...formik.getFieldProps("confirmPassword")}
               />
+              {formik.touched.confirmPassword &&
+                formik.errors.confirmPassword && (
+                  <span className="error-text">
+                    {formik.errors.confirmPassword}
+                  </span>
+                )}
             </div>
           </div>
 
@@ -235,7 +266,7 @@ function Register() {
             className="register-button"
             disabled={formik.isSubmitting}
           >
-            {formik.isSubmitting ? "Đăngkí..." : "Đăng kí"}
+            {formik.isSubmitting ? "Đang đăng ký..." : "Đăng ký"}
           </button>
         </form>
 
