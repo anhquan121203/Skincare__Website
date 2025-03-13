@@ -6,6 +6,7 @@ import productSlice from "../Features/product/productSlice";
 import commentSlice from "../Features/comment/commentSlice";
 import cartSlice from "../Features/cart/cartSlice";
 import skinTypeSlice from "../Features/skinType/skinTypeSlice";
+import orderDetailSlice from "../Features/OrderDetails/orderDetailSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     category: categorySlice.reducer,
     cart: cartSlice.reducer,
     skinType: skinTypeSlice.reducer,
+    oderDetails: orderDetailSlice.reducer,
   },
 });

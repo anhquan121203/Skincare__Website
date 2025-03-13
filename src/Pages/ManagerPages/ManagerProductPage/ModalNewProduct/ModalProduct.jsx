@@ -3,24 +3,32 @@ import { FiPlus } from "react-icons/fi";
 import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
-const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
+const ModalProduct = ({
+  isModalOpen,
+  handleCancel,
+  handleOk,
+  updateProduct,
+}) => {
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading, error } = useSkinType();
 
-  // const handleSubmit = () => {
-  //   form
-  //     .validateFields()
-  //     .then((values) => {
-  //       handleOk(values);
-  //       toast.success("Thêm sản phẩm mới thành công!!!")
-  //       form.resetFields();
-  //     })
-  //     .catch((info) => {
-  //       console.log("Validation Failed:", info);
-  //     });
-  // };
+  useEffect(() => {
+    if (updateProduct) {
+      if (categories.length > 0 && skinTypes.length > 0) {
+        form.setFieldsValue({
+          ...updateProduct,
+          CategoryId: updateProduct.CategoryId,
+          SkinTypeId: updateProduct.SkinTypeId,
+        });
+      }
+    } else {
+      form.resetFields(); // Reset form when adding a new product
+    }
+  }, [updateProduct, categories, skinTypes]);
+  
 
   const handleSubmit = () => {
     form
@@ -43,7 +51,7 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
 
   return (
     <Modal
-      title="Tạo sản phẩm mới!!!"
+      title={updateProduct ? "Cập nhật sản phẩm" : "Tạo sản phẩm mới"}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={[
@@ -119,14 +127,13 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
         <Form.Item
           label="Loại sản phẩm"
           name="CategoryId"
-          rules={[
-            {
-              required: true,
-              message: "Please select a category!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please select a category!" }]}
         >
-          <Select>
+          <Select
+            loading={loading}
+            placeholder="Chọn loại sản phẩm"
+            disabled={categories.length === 0}
+          >
             {categories.map((category) => (
               <Select.Option key={category.id} value={category.id}>
                 {category.categoryName}
@@ -138,14 +145,13 @@ const ModalProduct = ({ isModalOpen, handleCancel, handleOk }) => {
         <Form.Item
           label="Loại da"
           name="SkinTypeId"
-          rules={[
-            {
-              required: true,
-              message: "Please select a skin type!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please select a skin type!" }]}
         >
-          <Select>
+          <Select
+            loading={loading}
+            placeholder="Chọn loại da"
+            disabled={skinTypes.length === 0}
+          >
             {skinTypes.map((skinType) => (
               <Select.Option key={skinType.id} value={skinType.id}>
                 {skinType.skinTypeName}

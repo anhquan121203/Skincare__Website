@@ -132,7 +132,7 @@ function Header() {
                 <div className="dropdown-content">
                   {roleName === "Customer" ? (
                     <>
-                      <Link>Profile</Link>
+                      <Link to="/profile-user">Hồ sơ</Link>
                     </>
                   ) : roleName === "Staff" ? (
                     <>

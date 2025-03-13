@@ -14,7 +14,7 @@ const { Text, Title } = Typography;
 const { confirm } = Modal;
 
 const AddToCardPage = () => {
-  const { carts, loading, error } = useCart();
+  const { carts, loading, error, deleteCart } = useCart();
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   const selectAll =
@@ -105,7 +105,17 @@ const AddToCardPage = () => {
     },
     {
       title: "Sản phẩm",
-      dataIndex: "name",
+      dataIndex: "productName",
+      render: (text, record) => (
+        <div className="product-info">
+          {/* <Image width={50} height={50} src={record.image} alt={text} /> */}
+          <Text>{text}</Text>
+        </div>
+      ),
+    },
+    {
+      title: "Hình ảnh",
+      dataIndex: "image",
       render: (text, record) => (
         <div className="product-info">
           <Image width={50} height={50} src={record.image} alt={text} />

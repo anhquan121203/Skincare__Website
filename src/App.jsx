@@ -27,6 +27,7 @@ import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProdu
 import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategory";
 import ManagerSkinType from "./Pages/ManagerPages/ManagerSkinType/ManageSkinType";
 import ManagerProfile from "./Pages/ManagerPages/ManagerProfile/ManagerProfile.jsx";
+import ProfileUser from "./Pages/CustormerPages/ProfileUser/ProfileUser.jsx";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/wishlist" element={<WishlistPage />}></Route>
           <Route path="/addtocard" element={<AddToCardPage />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
+          <Route path="/profile-user" element={<ProfileUser/>}></Route>
           {/* Đúng tên */}
         </Route>
 
