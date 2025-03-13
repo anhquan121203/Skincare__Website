@@ -7,21 +7,34 @@ import ModalProduct from "./ModalNewProduct/ModalProduct";
 import { toast } from "react-toastify";
 
 function ManagerProduct() {
-  const { products, loading, error, addProduct, deleteProduct } = useProduct();
+  const { products, loading, error, addProduct, deleteProduct, editProduct } =
+    useProduct();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [updateProduct, setUpdateProduct] = useState("");
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = (newProduct) => {
+
+  const handleOk = (productData) => {
     setIsModalOpen(false);
-    addProduct(newProduct);
+  
+    if (updateProduct) {
+      editProduct(updateProduct.id, productData);
+      toast.success("Cập nhật sản phẩm thành công!!!");
+    } else {
+      addProduct(productData);
+      toast.success("Thêm sản phẩm mới thành công!!!");
+    }
+  
+    setUpdateProduct(null); 
   };
+  
   const handleCancel = () => {
     setIsModalOpen(false);
-    toast.success("Xóa sản phẩm thành công!!!")
+    toast.success("Xóa sản phẩm thành công!!!");
   };
 
   if (loading) return <p>Loading products...</p>;
@@ -31,9 +44,19 @@ function ManagerProduct() {
   const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
 
   const hanleDeleteProduct = (id) => {
-    deleteProduct(id);
-    toast.success("Xóa sản phẩm thành công!")
+    try {
+      deleteProduct(id);
+      toast.success("Xóa sản phẩm thành công!");
+    } catch (error) {
+      console.error("Thêm sản phẩm ko thành công!!!", error);
+    }
   };
+
+  const handleUpdateProduct = (product) => {
+    setUpdateProduct(product); // Store the product to update
+    setIsModalOpen(true); // Open the modal
+  };
+  
 
   return (
     <div className="managerProduct-container">
@@ -96,7 +119,15 @@ function ManagerProduct() {
                     <span class="status-active">{item.productStatus}</span>
                   </td>
                   <td className="action-btnPro">
-                    <button className="btn-updatePro">Cập nhật</button>
+                    <button
+                      className="btn-updatePro"
+                      isModalOpen={isModalOpen}
+                      handleCancel={handleCancel}
+                      handleOk={handleOk}
+                      onClick={() => handleUpdateProduct(item)}
+                    >
+                      Cập nhật
+                    </button>
                     <button
                       className="btn-removePro"
                       onClick={() => hanleDeleteProduct(item.id)}
@@ -122,6 +153,7 @@ function ManagerProduct() {
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         handleOk={handleOk}
+        updateProduct={updateProduct}
       />
     </div>
   );

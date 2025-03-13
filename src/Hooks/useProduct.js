@@ -24,7 +24,11 @@ const useProduct = () => {
     }
   };
 
-  const editProduct = (id, product) => dispatch(updateProduct({ id, product }));
+  const editProduct = async (product) => {
+    await dispatch(updateProduct( product));
+    dispatch(fetchProducts());
+  }
+
   const deleteProduct = (id) => dispatch(removeProduct(id));
 
   return { products, loading, error, addProduct, editProduct, deleteProduct };

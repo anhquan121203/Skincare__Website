@@ -8,6 +8,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { MdPayment } from "react-icons/md";
 import useCart from "../../../Hooks/useCart";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -15,10 +16,36 @@ function ProductDetail() {
   const dispatch = useDispatch();
   const { addToCartfromProduct } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
-  const addToCart = () => {
-    addToCartfromProduct(id, quantity);
+  // const addToCart = async () => {
+  //   if (quantity < 1) {
+  //     alert("Quantity must be at least 1!");
+  //     return;
+  //   }
+
+  //   await addToCartfromProduct(id, quantity);
+  //   // navigate("/addtocard");
+  //   toast.success("Thêm sản phẩm vào giỏ hàng thành công!!!")
+  // };
+
+  const addToCart = async () => {
+    if (quantity < 1) {
+      alert("Quantity must be at least 1!");
+      return;
+    }
+  
+    if (product.stock < quantity) {
+      toast.error(`Chỉ còn ${product.stock} sản phẩm trong kho!`);
+      return;
+    }
+  
+    const productId = parseInt(id, 10);
+    await addToCartfromProduct(productId, quantity);
+    // toast.success("Thêm sản phẩm vào giỏ hàng thành công!!!");
   };
+  
+  
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -27,6 +54,7 @@ function ProductDetail() {
           `https://localhost:7088/api/product/getProductById/${id}`
         );
         setProduct(response.data);
+        console.log("Product details:", response.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
@@ -69,12 +97,11 @@ function ProductDetail() {
               <input
                 className="details-quantity"
                 min={1}
-                max={100}
                 type="number"
-                defaultValue={1}
                 value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={(e) => setQuantity(Number(e.target.value))} // Ensure it's a number
               />
+
               <button className="btn-details" type="submit" onClick={addToCart}>
                 Thêm giỏ hàng <TiShoppingCart />
               </button>

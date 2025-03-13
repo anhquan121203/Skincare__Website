@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CardProduct.css";
 import { FaStar } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import useProduct from "../../../../Hooks/useProduct";
 import { Pagination } from "antd";
@@ -98,9 +98,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                   <span className="card-price">{item.price} VND</span>
                 </span>
                 <div className="btn-addToCard">
-                  <button className="addToCard">
-                    Thêm giỏ hàng <BsCart4 />
-                  </button>
+                  <Link>Chi tiet</Link>
                 </div>
               </div>
             </div>

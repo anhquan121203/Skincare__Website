@@ -1,24 +1,36 @@
-import useSelection from "antd/es/table/hooks/useSelection";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import {
   createProductIntoCart,
   fetchCartProduct,
+  removeProductFromCart,
 } from "../Features/cart/cartSlice";
 
 const useCart = () => {
   const dispatch = useDispatch();
-  const { carts, loading, error } = useSelection((state) => state.cart);
+  const { carts, loading, error } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(fetchCartProduct());
   }, [dispatch]);
 
-  const addToCartfromProduct = (productId, quantity) => {
-    dispatch(createProductIntoCart({ productId, quantity }));
+  const addToCartfromProduct = async (id, quantity) => {
+    try {
+      const productId = parseInt(id, 10);
+      console.log("Adding to cart:", { productId, quantity });
+
+      await dispatch(createProductIntoCart({ productId, quantity }));
+      dispatch(fetchCartProduct());
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
   };
 
-  return { carts, loading, error, addToCartfromProduct };
+  const deleteCart = (id) => {
+    dispatch(removeProductFromCart(id));
+  };
+
+  return { carts, loading, error, addToCartfromProduct, deleteCart };
 };
 
 export default useCart;
