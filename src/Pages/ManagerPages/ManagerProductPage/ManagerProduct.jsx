@@ -53,7 +53,7 @@ function ManagerProduct() {
   };
 
   const handleUpdateProduct = (product) => {
-    setUpdateProduct(product); // Store the product to update
+    setUpdateProduct(product); 
     setIsModalOpen(true); // Open the modal
   };
   

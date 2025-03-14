@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {
+  checkout,
   createProductIntoCart,
   fetchCartProduct,
   removeProductFromCart,
@@ -30,7 +31,11 @@ const useCart = () => {
     dispatch(removeProductFromCart(id));
   };
 
-  return { carts, loading, error, addToCartfromProduct, deleteCart };
+  const payment = () => {
+    dispatch(checkout())
+  }
+
+  return { carts, loading, error, addToCartfromProduct, deleteCart, payment };
 };
 
 export default useCart;

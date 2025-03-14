@@ -57,6 +57,7 @@ const useAuth = () => {
     phoneNumber: user?.phoneNumber,
     roleName: user?.roleName,
     email: user?.email,
+    wallet: user?.wallet,
     updateAvatar,
     user,
   };

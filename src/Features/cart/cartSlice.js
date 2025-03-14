@@ -85,12 +85,16 @@ export const checkout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await axios.put(`${CART_API_URL}/checkout`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.put(
+        `${CART_API_URL}/Checkout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

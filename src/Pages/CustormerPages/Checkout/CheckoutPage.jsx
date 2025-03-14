@@ -16,14 +16,21 @@ import duongDa from "../../../assets/imageBlogger/duong-da.webp";
 import useAuth from "../../../Hooks/useAuth";
 import "./checkoutPage.css";
 import useCart from "../../../Hooks/useCart";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import useWallet from "../../../Hooks/useWallet";
 
 const { Title, Text } = Typography;
 
 const CheckoutPage = () => {
   const { firstName, lastName, address, phoneNumber, email } = useAuth();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const [paymentMethod, setPaymentMethod] = useState(null);
 
-  const { carts, loading, error } = useCart();
+  const { carts, loading, error, payment } = useCart();
+
+  const {wallet} = useWallet();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -33,6 +40,11 @@ const CheckoutPage = () => {
   }
 
   console.log(carts);
+
+  const handleCheckout = () => {
+    payment();
+    navigate('/');
+  }
 
   return (
     <div className="checkout-container">
@@ -149,6 +161,7 @@ const CheckoutPage = () => {
               block
               size="large"
               className="pay-now-button"
+              onClick={handleCheckout}
             >
               Thanh toán ngay
             </Button>
