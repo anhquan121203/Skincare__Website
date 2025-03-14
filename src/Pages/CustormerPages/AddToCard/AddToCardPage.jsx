@@ -17,20 +17,20 @@ const AddToCardPage = () => {
   const { carts, loading, error, deleteCart } = useCart();
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  const selectAll =
-    selectedProducts.length === carts?.length && carts?.length > 0;
+  // const selectAll =
+  //   selectedProducts.length === carts?.length && carts?.length > 0;
 
-  const toggleSelectProduct = (id) => {
-    setSelectedProducts((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((productId) => productId !== id)
-        : [...prevSelected, id]
-    );
-  };
+  // const toggleSelectProduct = (id) => {
+  //   setSelectedProducts((prevSelected) =>
+  //     prevSelected.includes(id)
+  //       ? prevSelected.filter((productId) => productId !== id)
+  //       : [...prevSelected, id]
+  //   );
+  // };
 
-  const toggleSelectAll = () => {
-    setSelectedProducts(selectAll ? [] : carts.map((product) => product.id));
-  };
+  // const toggleSelectAll = () => {
+  //   setSelectedProducts(selectAll ? [] : carts.map((product) => product.id));
+  // };
 
   const updateQuantity = (id, delta) => {
     if (!selectedProducts.includes(id)) return;
@@ -57,6 +57,8 @@ const AddToCardPage = () => {
     });
   };
 
+  console.log(carts);
+
   const removeProduct = (id) => {
     setProducts((prevProducts) =>
       prevProducts.filter((product) => product.id !== id)
@@ -66,43 +68,20 @@ const AddToCardPage = () => {
     );
   };
 
-  const showDeleteSelectedConfirm = () => {
-    confirm({
-      title: "Xác nhận xóa sản phẩm đã chọn?",
-      icon: <ExclamationCircleOutlined />,
-      content: "Bạn có chắc chắn muốn xóa tất cả sản phẩm đã chọn?",
-      okText: "Xóa",
-      okType: "danger",
-      cancelText: "Hủy",
-      onOk() {
-        removeSelectedProducts();
-      },
-    });
-  };
-
-  const removeSelectedProducts = () => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => !selectedProducts.includes(product.id))
-    );
-    setSelectedProducts([]);
-  };
-
-  const totalPrice = carts
-    ?.filter((product) => selectedProducts.includes(product.id))
-    .reduce((sum, p) => sum + p.price * p.quantity, 0);
+  const totalPrice = carts.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
   const columns = [
-    {
-      title: <Checkbox checked={selectAll} onChange={toggleSelectAll} />,
-      dataIndex: "select",
-      render: (_, record) => (
-        <Checkbox
-          checked={selectedProducts.includes(record.id)}
-          onChange={() => toggleSelectProduct(record.id)}
-        />
-      ),
-      width: 50,
-    },
+    // {
+    //   title: <Checkbox checked={selectAll} onChange={toggleSelectAll} />,
+    //   dataIndex: "select",
+    //   render: (_, record) => (
+    //     <Checkbox
+    //       checked={selectedProducts.includes(record.id)}
+    //       onChange={() => toggleSelectProduct(record.id)}
+    //     />
+    //   ),
+    //   width: 50,
+    // },
     {
       title: "Sản phẩm",
       dataIndex: "productName",
@@ -185,7 +164,7 @@ const AddToCardPage = () => {
             rowKey="id"
             pagination={false}
           />
-          {selectedProducts.length > 0 && (
+          {/* {selectedProducts.length > 0 && (
             <Button
               type="link"
               danger
@@ -194,7 +173,7 @@ const AddToCardPage = () => {
             >
               Xóa Sản Phẩm Đã Chọn
             </Button>
-          )}
+          )} */}
         </Card>
       </div>
 
@@ -203,15 +182,16 @@ const AddToCardPage = () => {
           <Title level={4}>Tổng tiền hàng</Title>
           <div className="summary">
             <Text>Tổng tiền thanh toán:</Text>
-            <Text className="total-price">{totalPrice}₫</Text>
+            <Text className="total-price">{totalPrice.toLocaleString()}₫</Text>
           </div>
           <Link to="/checkout">
             <Button
               type="primary"
               block
-              disabled={selectedProducts.length === 0}
+              // disabled={selectedProducts.length === 0}
             >
-              Mua Hàng ({selectedProducts.length})
+              Mua Hàng
+              {/* ({selectedProducts.length}) */}
             </Button>
           </Link>
         </Card>
