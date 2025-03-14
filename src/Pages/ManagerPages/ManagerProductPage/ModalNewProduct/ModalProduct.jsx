@@ -64,6 +64,14 @@ const ModalProduct = ({
       ]}
     >
       <Form form={form} layout="vertical">
+      <Form.Item
+          label="ID"
+          name="id"
+          hidden
+         
+        >
+          <Input disabled/>
+        </Form.Item>
         <Form.Item
           label="Tên sản phẩm"
           name="productName"

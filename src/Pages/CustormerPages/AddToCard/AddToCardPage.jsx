@@ -58,34 +58,33 @@ const AddToCardPage = () => {
   };
 
   const removeProduct = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
-    setSelectedProducts((prevSelected) =>
-      prevSelected.filter((productId) => productId !== id)
-    );
+    deleteCart(id);
+    // setSelectedProducts((prevSelected) =>
+    //   prevSelected.filter((productId) => productId !== id)
+    // );
   };
 
-  const showDeleteSelectedConfirm = () => {
-    confirm({
-      title: "Xác nhận xóa sản phẩm đã chọn?",
-      icon: <ExclamationCircleOutlined />,
-      content: "Bạn có chắc chắn muốn xóa tất cả sản phẩm đã chọn?",
-      okText: "Xóa",
-      okType: "danger",
-      cancelText: "Hủy",
-      onOk() {
-        removeSelectedProducts();
-      },
-    });
-  };
+  // const showDeleteSelectedConfirm = () => {
+  //   confirm({
+  //     title: "Xác nhận xóa sản phẩm đã chọn?",
+  //     icon: <ExclamationCircleOutlined />,
+  //     content: "Bạn có chắc chắn muốn xóa tất cả sản phẩm đã chọn?",
+  //     okText: "Xóa",
+  //     okType: "danger",
+  //     cancelText: "Hủy",
+  //     onOk() {
+  //       removeProduct();
+  //     },
+  //   });
+  // };
 
-  const removeSelectedProducts = () => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => !selectedProducts.includes(product.id))
-    );
-    setSelectedProducts([]);
-  };
+  // const removeSelectedProducts = () => {
+  //   // setProducts((prevProducts) =>
+  //   //   prevProducts.filter((product) => !selectedProducts.includes(product.id))
+  //   // );
+  //   // setSelectedProducts([]);
+  //   deleteCart(id);
+  // };
 
   const totalPrice = carts
     ?.filter((product) => selectedProducts.includes(product.id))
@@ -108,7 +107,6 @@ const AddToCardPage = () => {
       dataIndex: "productName",
       render: (text, record) => (
         <div className="product-info">
-          {/* <Image width={50} height={50} src={record.image} alt={text} /> */}
           <Text>{text}</Text>
         </div>
       ),
@@ -118,7 +116,7 @@ const AddToCardPage = () => {
       dataIndex: "image",
       render: (text, record) => (
         <div className="product-info">
-          <Image width={50} height={50} src={record.image} alt={text} />
+          <Image width={50} height={50} src={"https://media.hasaki.vn/wysiwyg/HaNguyen/nuoc-tay-trang-l-oreal-3-in-1-1.jpg" || record.image} alt={text} />
           <Text>{text}</Text>
         </div>
       ),
@@ -189,7 +187,7 @@ const AddToCardPage = () => {
             <Button
               type="link"
               danger
-              onClick={showDeleteSelectedConfirm}
+              onClick={showDeleteConfirm}
               className="remove-selected"
             >
               Xóa Sản Phẩm Đã Chọn

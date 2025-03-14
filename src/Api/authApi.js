@@ -37,26 +37,31 @@ axiosInstance.interceptors.response.use(
       try {
         // Gọi API refresh token với phương thức GET, kèm theo token cũ trong header
         const refreshToken = localStorage.getItem("refreshToken");
-        const { data } = await axios.post(API_BASE_URL + "/refresh-token", {
-          headers: {
-            Authorization: "Bearer" + " " + refreshToken,
-          },
-        });
+        const { data } = await axios.post(
+          API_BASE_URL + "/refresh",
+          { refreshToken },
+          {
+            headers: {
+              Authorization: "Bearer" + " " + refreshToken,
+            },
+          }
+        );
         // Lưu access-token mới vào localStorage
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
         // Cập nhật lại token mới vào headers và gửi lại request ban đầu
 
-        error.config.headers["Authorization"] =
-          "Bearer" + " " + data.accessToken;
-        // Gọi lại API ban đầu này với axiosInstance để thực thi
-
+        // store.
         store.dispatch(
           login({
             accessToken: data.accessToken,
             refreshToken: data.refreshToken,
           })
         );
+
+        error.config.headers["Authorization"] =
+          "Bearer" + " " + data.accessToken;
+        // Gọi lại API ban đầu này với axiosInstance để thực thi
 
         return axiosInstance(error.config);
       } catch (err) {

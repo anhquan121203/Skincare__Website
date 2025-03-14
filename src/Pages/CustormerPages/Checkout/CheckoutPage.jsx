@@ -1,7 +1,9 @@
 import "./checkoutPage.css";
 import duongDa from "../../../assets/imageBlogger/duong-da.webp";
+import useAuth from "../../../Hooks/useAuth";
 
 const CheckoutPage = () => {
+  const {firstName, lastName, email, phoneNumber, address} = useAuth();
   return (
     <div className="checkout-container">
       <div className="checkout-box">
@@ -16,7 +18,7 @@ const CheckoutPage = () => {
                   Họ và tên <span className="required">*</span>
                 </label>
                 <input type="text" placeholder="Nhập họ và tên" />
-              </div>
+            </div>
               <div className="input-group">
                 <label>
                   Địa chỉ Email <span className="required">*</span>

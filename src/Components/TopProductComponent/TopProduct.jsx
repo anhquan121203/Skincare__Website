@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./TopProduct.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import useProduct from "../../Hooks/useProduct";
 
@@ -15,7 +15,7 @@ function TopProduct() {
   return (
     <div className="card-container">
       <div className="card-grid">
-        {products.slice(0, 3).map((item, index) => (
+        {products.slice(0, 6).map((item, index) => (
           <div
             key={index}
             className="card-product"
@@ -35,7 +35,7 @@ function TopProduct() {
                 </span>
                 <div className="btn-addToCard">
                   <button className="addToCard">
-                    Thêm giỏ hàng <BsCart4 />
+                   <Link>Chi tiết</Link>
                   </button>
                 </div>
               </div>

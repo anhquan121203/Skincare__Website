@@ -141,6 +141,10 @@
   background-color: #047c91;
 }
 
+.btn-addToCard{
+  color: white;
+}
+
 .pagination {
   display: flex;
   align-items: center;

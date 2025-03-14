@@ -63,9 +63,8 @@ export const removeProductFromCart = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken");
 
-      const response = await axios.delete(
+      await axios.delete(
         `${CART_API_URL}/RemoveProductFromCart?orderDetailId=${id}`,
-        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,7 +73,7 @@ export const removeProductFromCart = createAsyncThunk(
         }
       );
 
-      return response.data;
+      return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }

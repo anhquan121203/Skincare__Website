@@ -19,7 +19,7 @@ function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { roleName, avatar, firstName, lastName } = useAuth();
 
-  console.log(roleName)
+  // console.log(roleName)
 
   const [isOpen, setIsOpen] = useState();
 
@@ -111,28 +111,32 @@ function Header() {
           {isLoggedIn ? (
             <div className="dropdown-login">
               <div className="header-avavtar">
-              <img
-                style={{
-                  width: "50px",
-                  marginRight: "20px",
-                  height: "50px",
-                  border: "2px solid  #22a8e7",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-                onClick={toggleDropdown}
-                className="dropdown-button"
-                src={avatar || "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"} 
-                alt=""
-              />
-              {/* <p>{firstName} {lastName}</p> */}
+                <img
+                  style={{
+                    width: "50px",
+                    marginRight: "20px",
+                    height: "50px",
+                    border: "2px solid  #22a8e7",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                  onClick={toggleDropdown}
+                  className="dropdown-button"
+                  src={avatar || "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"}
+                  alt=""
+                />
+                {/* <p>{firstName} {lastName}</p> */}
               </div>
-              
+
               {isOpen && (
                 <div className="dropdown-content">
                   {roleName === "Customer" ? (
                     <>
-                      <Link to="/profile-user">Hồ sơ</Link>
+                      <ul>
+                        <li> <Link to="/profile-user">Hồ sơ</Link></li>
+                        <li> <Link to="/wallet-customer">Nạp tiền</Link></li>
+                      </ul>
+
                     </>
                   ) : roleName === "Staff" ? (
                     <>
@@ -143,7 +147,8 @@ function Header() {
                       <Link to="/manager/dashboard-manager">Dashboard</Link>
                     </>
                   )}
-                  <a onClick={handleLogout}>Thoát</a>
+                  {/* <a onClick={handleLogout}>Thoát</a> */}
+                  <Link onClick={handleLogout}>Thoát</Link>
                 </div>
               )}
             </div>

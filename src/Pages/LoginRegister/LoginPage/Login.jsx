@@ -20,10 +20,10 @@ function LoginPage() {
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email address")
-      .required("Email is required"),
+      .required("Bắt buộc nhập email!"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
+      .required("Bắt buộc nhập mật khẩu!"),
   });
 
   // Sử dụng Formik để quản lý form
