@@ -80,6 +80,24 @@ export const removeProductFromCart = createAsyncThunk(
   }
 );
 
+export const checkout = createAsyncThunk(
+  "cartProduct/Checkout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.put(`${CART_API_URL}/checkout`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: CART,
   initialState: {
@@ -116,9 +134,13 @@ const cartSlice = createSlice({
         toast.error(`Lỗi khi thêm sản phẩm vào giỏ: ${action.payload}`);
       })
       .addCase(removeProductFromCart.fulfilled, (state, action) => {
-        state.carts = state.carts.filter(
-          (p) => p.id !== action.payload
-        );
+        state.carts = state.carts.filter((p) => p.id !== action.payload);
+      })
+      .addCase(checkout.fulfilled, (state, action) => {
+        const index = state.carts.findIndex((p) => p.id === action.payload.id);
+        if (index !== -1) {
+          state.carts[index] = action.payload;
+        }
       });
   },
 });
