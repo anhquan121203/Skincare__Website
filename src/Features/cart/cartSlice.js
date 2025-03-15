@@ -102,13 +102,13 @@ export const removeProductFromCart = createAsyncThunk(
 //   }
 // );
 
-export const paymentt = createAsyncThunk(
-  "cartProduct/Payment",
+export const checkout = createAsyncThunk(
+  "cartProduct/Checkout",
   async (orderDetailsIds, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `${CART_API_URL}/Payment`,
+        `${CART_API_URL}/Checkout`,
         orderDetailsIds,
         {
           headers: {
@@ -164,10 +164,10 @@ const cartSlice = createSlice({
       .addCase(removeProductFromCart.fulfilled, (state, action) => {
         state.carts = state.carts.filter((p) => p.id !== action.payload);
       })
-      .addCase(paymentt.fulfilled, (state, action) => {
+      .addCase(checkout.fulfilled, (state, action) => {
         state.paymentResponse = action.payload; // Lưu dữ liệu từ API vào state
       })
-      .addCase(paymentt.rejected, (state, action) => {
+      .addCase(checkout.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

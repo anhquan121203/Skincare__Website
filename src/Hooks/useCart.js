@@ -4,7 +4,7 @@ import {
   createProductIntoCart,
   fetchCartProduct,
   removeProductFromCart,
-  paymentt,
+  checkout,
 } from "../Features/cart/cartSlice";
 
 const useCart = () => {
@@ -32,7 +32,7 @@ const useCart = () => {
   };
 
   const payment = async (orderDetailsIds) => {
-    const resultAction = await dispatch(paymentt(orderDetailsIds));
+    const resultAction = await dispatch(checkout(orderDetailsIds));
     return resultAction.payload; // Trả về response từ API
   };
 
