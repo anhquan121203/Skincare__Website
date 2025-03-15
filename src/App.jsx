@@ -14,6 +14,7 @@ import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
 import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 import CheckoutPage from "./Pages/CustormerPages/Checkout/CheckoutPage";
+import OrderConfirmationPage from "./Pages/CustormerPages/OrderConfirmation/OrderConfirmationPage.jsx";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
@@ -49,8 +50,12 @@ function App() {
           <Route path="/wishlist" element={<WishlistPage />}></Route>
           <Route path="/addtocard" element={<AddToCardPage />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
-          <Route path="/profile-user" element={<ProfileUser/>}></Route>
-          <Route path="/wallet-customer" element={<WalletCustomer/>}></Route>
+          <Route path="/profile-user" element={<ProfileUser />}></Route>
+          <Route path="/wallet-customer" element={<WalletCustomer />}></Route>
+          <Route
+            path="/order-confirmation"
+            element={<OrderConfirmationPage />}
+          ></Route>
           {/* Đúng tên */}
         </Route>
 

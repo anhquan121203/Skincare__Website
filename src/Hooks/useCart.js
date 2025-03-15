@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {
-  checkout,
   createProductIntoCart,
   fetchCartProduct,
   removeProductFromCart,
+  paymentt,
 } from "../Features/cart/cartSlice";
 
 const useCart = () => {
@@ -31,9 +31,10 @@ const useCart = () => {
     dispatch(removeProductFromCart(id));
   };
 
-  const payment = () => {
-    dispatch(checkout())
-  }
+  const payment = async (orderDetailsIds) => {
+    const resultAction = await dispatch(paymentt(orderDetailsIds));
+    return resultAction.payload; // Trả về response từ API
+  };
 
   return { carts, loading, error, addToCartfromProduct, deleteCart, payment };
 };

@@ -19,6 +19,7 @@ import useCart from "../../../Hooks/useCart";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useWallet from "../../../Hooks/useWallet";
+import { toast } from "react-toastify";
 
 const { Title, Text } = Typography;
 
@@ -30,7 +31,7 @@ const CheckoutPage = () => {
 
   const { carts, loading, error, payment } = useCart();
 
-  const {wallet} = useWallet();
+  const { wallet } = useWallet();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -40,11 +41,31 @@ const CheckoutPage = () => {
   }
 
   console.log(carts);
+  const handleCheckout = async () => {
+    const orderDetailsIds = carts.map((item) => item.id);
 
-  const handleCheckout = () => {
-    payment();
-    navigate('/');
-  }
+    if (orderDetailsIds.length === 0) {
+      toast.error("Không có sản phẩm nào trong giỏ hàng!");
+      return;
+    }
+
+    console.log("Thanh toán với danh sách ID:", orderDetailsIds);
+
+    try {
+      const response = await payment(orderDetailsIds); // Gọi API thanh toán
+      console.log("Kết quả thanh toán:", response);
+
+      if (response === 200) {
+        toast.success("Thanh toán thành công!");
+        navigate("/order-confirmation");
+      } else {
+        toast.error("Thanh toán thất bại! Vui lòng thử lại.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi thanh toán:", error);
+      toast.error("Có lỗi xảy ra khi thanh toán.");
+    }
+  };
 
   return (
     <div className="checkout-container">

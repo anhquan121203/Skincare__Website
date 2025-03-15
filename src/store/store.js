@@ -18,7 +18,7 @@ export const store = configureStore({
     category: categorySlice.reducer,
     cart: cartSlice.reducer,
     skinType: skinTypeSlice.reducer,
-    oderDetails: orderDetailSlice.reducer,
+    orderDetails: orderDetailSlice.reducer,
     wallet: walletSlice.reducer,
   },
 });
