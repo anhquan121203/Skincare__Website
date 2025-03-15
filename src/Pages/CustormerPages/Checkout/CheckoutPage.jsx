@@ -1,8 +1,6 @@
-import { useState } from "react";
 import {
   Form,
   Input,
-  Radio,
   Checkbox,
   Button,
   Card,
@@ -12,7 +10,7 @@ import {
   Image,
 } from "antd";
 import { LockOutlined } from "@ant-design/icons";
-import duongDa from "../../../assets/imageBlogger/duong-da.webp";
+
 import useAuth from "../../../Hooks/useAuth";
 import "./checkoutPage.css";
 import useCart from "../../../Hooks/useCart";
@@ -43,16 +41,26 @@ const CheckoutPage = () => {
   console.log(carts);
   const handleCheckout = async () => {
     const orderDetailsIds = carts.map((item) => item.id);
+    const totalPrice = carts.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    ); // Tổng tiền bao gồm phí vận chuyển
 
     if (orderDetailsIds.length === 0) {
       toast.error("Không có sản phẩm nào trong giỏ hàng!");
       return;
     }
 
-    console.log("Thanh toán với danh sách ID:", orderDetailsIds);
+    console.log(
+      "Thanh toán với danh sách ID:",
+      orderDetailsIds,
+      "Tổng tiền:",
+      totalPrice
+    );
 
     try {
-      const response = await payment(orderDetailsIds); // Gọi API thanh toán
+      const response = await payment(orderDetailsIds, totalPrice); // Gửi cả orderDetailsIds và totalPrice
+
       console.log("Kết quả thanh toán:", response);
 
       if (response === 200) {
@@ -147,29 +155,13 @@ const CheckoutPage = () => {
 
             {/* Tính tổng tiền */}
             <Card className="summary" bordered={false}>
-              <Row justify="space-between">
-                <Text>Tạm tính:</Text>
-                <Text>
-                  {new Intl.NumberFormat("vi-VN").format(
-                    carts.reduce(
-                      (total, item) => total + item.price * item.quantity,
-                      0
-                    )
-                  )}
-                  ₫
-                </Text>
-              </Row>
-              <Row justify="space-between">
-                <Text>Phí vận chuyển:</Text>
-                <Text>30.000₫</Text>
-              </Row>
               <Row justify="space-between" className="total">
                 <Text strong>Tổng cộng:</Text>
                 <Text strong>
                   {new Intl.NumberFormat("vi-VN").format(
                     carts.reduce(
                       (total, item) => total + item.price * item.quantity,
-                      30000
+                      0
                     )
                   )}
                   ₫

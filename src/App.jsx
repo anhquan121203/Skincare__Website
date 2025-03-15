@@ -18,8 +18,8 @@ import OrderConfirmationPage from "./Pages/CustormerPages/OrderConfirmation/Orde
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
-import ManagerReview from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
-import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
+import StaffProductManager from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
+import StaffOrderManager from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder.jsx";
 
 // Manager*******************************************************************************
 import ManagerLayout from "./Layout/ManagerLayout";
@@ -62,8 +62,14 @@ function App() {
         {/* Staff router */}
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<DashboardManager />}></Route>
-          <Route path="manage-order" element={<ManagerOrder />}></Route>
-          <Route path="manage-review" element={<ManagerReview />}></Route>
+          <Route
+            path="Staff-manage-order"
+            element={<StaffOrderManager />}
+          ></Route>
+          <Route
+            path="Staff-manage-product"
+            element={<StaffProductManager />}
+          ></Route>
         </Route>
 
         {/* Manager router */}

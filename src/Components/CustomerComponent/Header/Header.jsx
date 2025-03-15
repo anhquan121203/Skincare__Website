@@ -122,7 +122,10 @@ function Header() {
                   }}
                   onClick={toggleDropdown}
                   className="dropdown-button"
-                  src={avatar || "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"}
+                  src={
+                    avatar ||
+                    "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"
+                  }
                   alt=""
                 />
                 {/* <p>{firstName} {lastName}</p> */}
@@ -133,22 +136,37 @@ function Header() {
                   {roleName === "Customer" ? (
                     <>
                       <ul>
-                        <li> <Link to="/profile-user">Hồ sơ</Link></li>
-                        <li> <Link to="/wallet-customer">Nạp tiền</Link></li>
+                        <li>
+                          <Link to="/profile-user">Hồ sơ</Link>
+                        </li>
+                        <li>
+                          <Link to="/wallet-customer">Nạp tiền</Link>
+                        </li>
                       </ul>
-
                     </>
                   ) : roleName === "Staff" ? (
                     <>
-                      <Link>Manager Order</Link>
+                      <ul>
+                        <li>
+                          <Link to="/staff">Staff Manager</Link>
+                        </li>
+                      </ul>
                     </>
                   ) : (
                     <>
-                      <Link to="/manager/dashboard-manager">Dashboard</Link>
+                      <ul>
+                        <li>
+                          <Link to="/manager/dashboard-manager">Dashboard</Link>
+                        </li>
+                      </ul>
                     </>
                   )}
                   {/* <a onClick={handleLogout}>Thoát</a> */}
-                  <Link onClick={handleLogout}>Thoát</Link>
+                  <ul>
+                    <li>
+                      <Link onClick={handleLogout}>Thoát</Link>
+                    </li>
+                  </ul>
                 </div>
               )}
             </div>

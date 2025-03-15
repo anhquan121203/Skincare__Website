@@ -2,17 +2,15 @@ import { Button, Popconfirm, Table, Tag, Input } from "antd";
 import { useState, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import useOrder from "../../../Hooks/useOrder";
+import useAuth from "../../../Hooks/useAuth";
 
-function ManageOrder() {
+function StaffOrderManager() {
   const { orders, loading, error } = useOrder();
   const [filteredOrder, setFilteredOrder] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  // useEffect(() => {
-  //   if (orders) {
-  //     setFilteredOrder(orders);
-  //   }
-  // }, [orders]);
+  const { userId, firstName } = useAuth();
+  console.log(userId, firstName);
 
   const handleDelete = (id) => {
     setFilteredOrder(orders.filter((order) => order.id !== id));
@@ -20,37 +18,37 @@ function ManageOrder() {
 
   const columns = [
     {
-      title: "Order ID",
+      title: "Mã đơn hàng",
       dataIndex: "id",
       key: "id",
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: "Order Date",
+      title: "Ngày đặt hàng",
       dataIndex: "orderDate",
       key: "orderDate",
       render: (date) => new Date(date).toLocaleString(),
       sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
     },
     {
-      title: "Total Price",
+      title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
       render: (price) => `$${price}`,
       sorter: (a, b) => a.totalPrice - b.totalPrice,
     },
     {
-      title: "Customer ID",
+      title: "Mã khách hàng",
       dataIndex: "customerId",
       key: "customerId",
     },
     {
-      title: "Staff ID",
+      title: "Mã nhân viên",
       dataIndex: "staffId",
       key: "staffId",
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "orderStatus",
       key: "orderStatus",
       render: (status) => {
@@ -60,25 +58,33 @@ function ManageOrder() {
           Shipped: "purple",
           Delivered: "green",
           Cancelled: "red",
-          Returned: "volcano",
+          Cart: "volcano",
         };
-        return <Tag color={statusColors[status]}>{status}</Tag>;
+        const statusLabels = {
+          Pending: "Chờ xử lý",
+          Processing: "Đang xử lý",
+          Shipped: "Đã giao hàng",
+          Delivered: "Đã nhận hàng",
+          Cancelled: "Đã hủy",
+          Cart: "Đã trả hàng",
+        };
+        return <Tag color={statusColors[status]}>{statusLabels[status]}</Tag>;
       },
       sorter: (a, b) => a.orderStatus.localeCompare(b.orderStatus),
     },
     {
-      title: "Action",
+      title: "Hành động",
       key: "action",
       render: (_, record) => (
         <>
-          <Button type="primary">Edit</Button>{" "}
+          <Button type="primary">Chỉnh sửa</Button>{" "}
           <Popconfirm
-            title="Delete Order"
-            description="Are you sure to delete this order?"
+            title="Xóa đơn hàng"
+            description="Bạn có chắc chắn muốn xóa đơn hàng này không?"
             onConfirm={() => handleDelete(record.id)}
           >
             <Button danger type="primary">
-              Delete
+              Xóa
             </Button>
           </Popconfirm>
         </>
@@ -97,11 +103,12 @@ function ManageOrder() {
     setFilteredOrder(filteredData);
   };
 
-  if (loading) return <p>Loading orders...</p>;
-  if (error) return <p>Error loading orders: {error}</p>;
+  if (loading) return <p>Đang tải đơn hàng...</p>;
+  if (error) return <p>Lỗi khi tải đơn hàng: {error}</p>;
 
   return (
     <div>
+      <h1>Quản lý đơn hàng</h1>
       <div
         style={{
           display: "flex",
@@ -112,7 +119,7 @@ function ManageOrder() {
       >
         <SearchOutlined style={{ fontSize: "16px", color: "#1890ff" }} />
         <Input
-          placeholder="Search by Order ID or Status..."
+          placeholder="Tìm kiếm theo mã đơn hàng hoặc trạng thái..."
           value={searchText}
           onChange={handleSearch}
           style={{ width: 300 }}
@@ -126,4 +133,4 @@ function ManageOrder() {
   );
 }
 
-export default ManageOrder;
+export default StaffOrderManager;

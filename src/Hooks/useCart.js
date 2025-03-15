@@ -31,9 +31,17 @@ const useCart = () => {
     dispatch(removeProductFromCart(id));
   };
 
-  const payment = async (orderDetailsIds) => {
-    const resultAction = await dispatch(checkout(orderDetailsIds));
-    return resultAction.payload; // Trả về response từ API
+  const payment = async (orderDetailsIds, totalPrice) => {
+    try {
+      const resultAction = await dispatch(
+        checkout({ orderDetailsIds, totalPrice }) // Gửi cả ID sản phẩm và tổng tiền
+      );
+
+      return resultAction.payload; // Trả về phản hồi từ API
+    } catch (error) {
+      console.error("Payment failed:", error);
+      return null;
+    }
   };
 
   return { carts, loading, error, addToCartfromProduct, deleteCart, payment };

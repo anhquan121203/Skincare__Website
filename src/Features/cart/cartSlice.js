@@ -104,12 +104,19 @@ export const removeProductFromCart = createAsyncThunk(
 
 export const checkout = createAsyncThunk(
   "cartProduct/Checkout",
-  async (orderDetailsIds, { rejectWithValue }) => {
+  async ({ orderDetailsIds, totalPrice }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
+
+      // Kiểm tra token
+      if (!token) {
+        return rejectWithValue("Unauthorized: No token found");
+      }
+
+      // Gửi yêu cầu PUT với totalPrice trong query và orderDetailsIds trong body
       const response = await axios.put(
-        `${CART_API_URL}/Checkout`,
-        orderDetailsIds,
+        `${CART_API_URL}/Checkout?totalPrice=${totalPrice}`,
+        orderDetailsIds, // Gửi danh sách sản phẩm trong body
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -117,8 +124,8 @@ export const checkout = createAsyncThunk(
           },
         }
       );
-      console.log(response);
 
+      console.log(response);
       return response.status;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
