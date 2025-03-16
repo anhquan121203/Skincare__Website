@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Table, Tag, Image, Button, Popconfirm, Input, Space } from "antd";
 import {
   EditOutlined,
@@ -6,10 +6,16 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import useProduct from "../../../Hooks/useProduct";
+import useAuth from "../../../Hooks/useAuth";
+import useComment from "../../../Hooks/useComment";
 
 function StaffProductManager() {
   const { products, loading, error } = useProduct();
+  const { comments } = useComment();
   const [searchText, setSearchText] = useState("");
+  const { userId } = useAuth();
+  console.log("products", products);
+  console.log("comments", comments);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -34,6 +40,8 @@ function StaffProductManager() {
       product.skinTypeName.toLowerCase().includes(searchLower) // Tìm theo Loại da
     );
   });
+
+  console.log(filteredProducts);
 
   // Cấu hình cột cho bảng
   const columns = [
@@ -140,7 +148,9 @@ function StaffProductManager() {
         />
       </Space>
       <Table
-        dataSource={filteredProducts.map((item) => ({ ...item, key: item.id }))}
+        dataSource={filteredProducts
+          .map((item) => ({ ...item, key: item.id }))
+          .filter((item) => String(item.staffId) === String(userId))}
         columns={columns}
         pagination={{ pageSize: 10 }}
       />

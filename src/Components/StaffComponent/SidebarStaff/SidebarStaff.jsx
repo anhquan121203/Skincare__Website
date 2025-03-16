@@ -1,12 +1,16 @@
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
-import { Menu, Layout, Divider, Avatar } from "antd";
+import {
+  ShoppingOutlined,
+  ShopOutlined,
+  UserOutlined,
+  CommentOutlined,
+} from "@ant-design/icons";
+import { Menu, Layout, Avatar } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { IoSettingsOutline } from "react-icons/io5";
+
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../Features/user/authSlice";
 import { signOut } from "../../../Api/authApi";
-import { use } from "react";
 import useAuth from "../../../Hooks/useAuth";
 
 const { Sider } = Layout;
@@ -20,8 +24,10 @@ function getItem(label, key, icon) {
 }
 
 const items = [
-  getItem("Đơn hàng", "order", <ShoppingCartOutlined />),
-  getItem("Sản phẩm", "product", <UserOutlined />),
+  getItem("Hồ sơ nhân viên", "profile", <UserOutlined />),
+  getItem("Đơn hàng", "order", <ShoppingOutlined />),
+  getItem("Sản phẩm", "product", <ShopOutlined />),
+  getItem("Bình luận", "feedback", <CommentOutlined />),
 ];
 
 const SidebarStaff = ({ collapsed, setCollapsed }) => {
@@ -83,7 +89,7 @@ const SidebarStaff = ({ collapsed, setCollapsed }) => {
       <Menu
         theme="dark"
         mode="inline"
-        style={{ width: "100%", marginTop: "400px" }}
+        style={{ width: "100%", marginTop: "300px" }}
       >
         <Menu.Item key="logout" icon={<FiLogOut />}>
           <Link onClick={handleLogout}>Thoát</Link>

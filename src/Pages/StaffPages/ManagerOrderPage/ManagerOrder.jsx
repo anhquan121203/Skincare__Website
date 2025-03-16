@@ -1,5 +1,5 @@
 import { Button, Popconfirm, Table, Tag, Input } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import useOrder from "../../../Hooks/useOrder";
 import useAuth from "../../../Hooks/useAuth";
@@ -126,7 +126,9 @@ function StaffOrderManager() {
         />
       </div>
       <Table
-        dataSource={orders.map((item) => ({ ...item, key: item.id }))}
+        dataSource={orders
+          .map((item) => ({ ...item, key: item.id }))
+          .filter((item) => item.staffId === userId)}
         columns={columns}
       />
     </div>
