@@ -67,6 +67,9 @@ function Header() {
           <li>
             <Link>Hỗ trợ khách hàng</Link>
           </li>
+          <li>
+            <Link to="/test-skintype">Kiểm tra loại da</Link>
+          </li>
         </ul>
       </nav>
 

@@ -15,6 +15,7 @@ import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 import CheckoutPage from "./Pages/CustormerPages/Checkout/CheckoutPage";
 import OrderConfirmationPage from "./Pages/CustormerPages/OrderConfirmation/OrderConfirmationPage.jsx";
+import TestSkinType from "./Pages/CustormerPages/TestPage/TestSkinType/TestSkinType.jsx";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
@@ -58,6 +59,7 @@ function App() {
             path="/order-confirmation"
             element={<OrderConfirmationPage />}
           ></Route>
+          <Route path="/test-skintype" element={<TestSkinType />}></Route>
           {/* Đúng tên */}
         </Route>
 
