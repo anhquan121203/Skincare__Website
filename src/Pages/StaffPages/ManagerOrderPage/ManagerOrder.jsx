@@ -3,18 +3,46 @@ import { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import useOrder from "../../../Hooks/useOrder";
 import useAuth from "../../../Hooks/useAuth";
+import { toast } from "react-toastify";
+import ModalOrder from "./ModalOrder/ModalOrder";
 
 function StaffOrderManager() {
-  const { orders, loading, error } = useOrder();
-  const [filteredOrder, setFilteredOrder] = useState([]);
+  const { orders, loading, error, editOrder, removeOrder } = useOrder();
   const [searchText, setSearchText] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingOrder, setEditingOrder] = useState(null);
 
   const { userId, firstName } = useAuth();
   console.log(userId, firstName);
 
-  const handleDelete = (id) => {
-    setFilteredOrder(orders.filter((order) => order.id !== id));
+  const handleOk = async (newOrder) => {
+    setIsModalOpen(false);
+    await editOrder(newOrder);
+    toast.success("Cập nhật đơn hàng thành công");
+    setEditingOrder(null);
   };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setEditingOrder(null);
+  };
+
+  const handleDelete = (id) => {
+    removeOrder(id);
+    toast.success("Xóa đơn hàng thành công...");
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchText(value);
+  };
+
+  const filteredOrders = orders.filter(
+    (item) =>
+      item.staffId === userId &&
+      (item.id.toString().includes(searchText) ||
+        item.orderStatus.toLowerCase().includes(searchText))
+  );
 
   const columns = [
     {
@@ -46,6 +74,7 @@ function StaffOrderManager() {
       title: "Mã nhân viên",
       dataIndex: "staffId",
       key: "staffId",
+      render: (staffId) => {},
     },
     {
       title: "Trạng thái",
@@ -77,7 +106,15 @@ function StaffOrderManager() {
       key: "action",
       render: (_, record) => (
         <>
-          <Button type="primary">Chỉnh sửa</Button>{" "}
+          <Button
+            type="primary"
+            onClick={() => {
+              setEditingOrder(record);
+              setIsModalOpen(true);
+            }}
+          >
+            Chỉnh sửa
+          </Button>{" "}
           <Popconfirm
             title="Xóa đơn hàng"
             description="Bạn có chắc chắn muốn xóa đơn hàng này không?"
@@ -91,17 +128,6 @@ function StaffOrderManager() {
       ),
     },
   ];
-
-  const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearchText(value);
-    const filteredData = orders.filter(
-      (item) =>
-        item.id.toString().includes(value) ||
-        item.orderStatus.toLowerCase().includes(value)
-    );
-    setFilteredOrder(filteredData);
-  };
 
   if (loading) return <p>Đang tải đơn hàng...</p>;
   if (error) return <p>Lỗi khi tải đơn hàng: {error}</p>;
@@ -126,10 +152,14 @@ function StaffOrderManager() {
         />
       </div>
       <Table
-        dataSource={orders
-          .map((item) => ({ ...item, key: item.id }))
-          .filter((item) => item.staffId === userId)}
+        dataSource={filteredOrders.map((item) => ({ ...item, key: item.id }))}
         columns={columns}
+      />
+      <ModalOrder
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
+        handleOk={handleOk}
+        editingOrder={editingOrder} // Đã sửa lại tên biến đúng
       />
     </div>
   );

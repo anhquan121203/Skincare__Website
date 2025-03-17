@@ -30,7 +30,7 @@ export const updateOrder = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
       }
     );
-    return response.data;
+    return response;
   }
 );
 

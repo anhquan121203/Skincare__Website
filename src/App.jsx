@@ -16,6 +16,7 @@ import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDeta
 import CheckoutPage from "./Pages/CustormerPages/Checkout/CheckoutPage";
 import OrderConfirmationPage from "./Pages/CustormerPages/OrderConfirmation/OrderConfirmationPage.jsx";
 import TestSkinType from "./Pages/CustormerPages/TestPage/TestSkinType/TestSkinType.jsx";
+import SkincareRoutine from "./Pages/CustormerPages/TestPage/SkincareRoute/SkincareRoute.jsx";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
@@ -60,6 +61,8 @@ function App() {
             element={<OrderConfirmationPage />}
           ></Route>
           <Route path="/test-skintype" element={<TestSkinType />}></Route>
+          <Route path="/skincare-route" element={<SkincareRoutine />}></Route>
+
           {/* Đúng tên */}
         </Route>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./TestSkinType.css"; // Import file CSS
 
 function TestSkinType() {

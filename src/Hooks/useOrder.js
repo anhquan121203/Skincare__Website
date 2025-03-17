@@ -24,12 +24,10 @@ const useOrder = () => {
   // );
 
   // Cập nhật đơn hàng
-  const modifyOrder = useCallback(
-    (orderData) => {
-      dispatch(updateOrder(orderData));
-    },
-    [dispatch]
-  );
+  const editOrder = async (category) => {
+    await dispatch(updateOrder(category));
+    dispatch(fetchOrder()); // Fetch lại danh sách danh mục sau khi cập nhật
+  };
 
   // Xóa đơn hàng
   const removeOrder = useCallback(
@@ -39,7 +37,7 @@ const useOrder = () => {
     [dispatch]
   );
 
-  return { orders, loading, error, modifyOrder, removeOrder };
+  return { orders, loading, error, editOrder, removeOrder };
 };
 
 export default useOrder;
