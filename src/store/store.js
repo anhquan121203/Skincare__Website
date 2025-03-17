@@ -9,6 +9,7 @@ import skinTypeSlice from "../Features/skinType/skinTypeSlice";
 import orderDetailSlice from "../Features/OrderDetails/orderDetailSlice";
 import walletSlice from "../Features/wallet/walletSlice";
 import staffSlice from "../Features/staff/staffSlice";
+import stepRoutineSlide from "../Features/stepRoutine/stepRoutineSlide";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     orderDetails: orderDetailSlice.reducer,
     wallet: walletSlice.reducer,
     staff: staffSlice.reducer,
+    stepRoutine: stepRoutineSlide.reducer,
   },
 });

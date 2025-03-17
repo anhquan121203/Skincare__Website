@@ -61,7 +61,7 @@ function App() {
             element={<OrderConfirmationPage />}
           ></Route>
           <Route path="/test-skintype" element={<TestSkinType />}></Route>
-          <Route path="/skincare-route" element={<SkincareRoutine />}></Route>
+          <Route path="/skincare-routine/:id" element={<SkincareRoutine />} />
 
           {/* Đúng tên */}
         </Route>

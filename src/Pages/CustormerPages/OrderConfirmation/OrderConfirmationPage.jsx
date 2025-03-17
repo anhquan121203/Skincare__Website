@@ -21,6 +21,8 @@ const OrderConfirmationPage = () => {
   const { orderDetails } = useOrderDetails();
   const { products } = useProduct();
 
+  console.log("orders", orders);
+
   // Lấy order mới nhất theo orderDate
   const latestOrder = orders?.length
     ? orders.reduce((latest, current) =>

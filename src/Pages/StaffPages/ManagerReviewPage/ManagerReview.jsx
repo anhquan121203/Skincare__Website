@@ -8,9 +8,10 @@ import {
 import useProduct from "../../../Hooks/useProduct";
 import useAuth from "../../../Hooks/useAuth";
 import useComment from "../../../Hooks/useComment";
+import { toast } from "react-toastify";
 
 function StaffProductManager() {
-  const { products, loading, error } = useProduct();
+  const { products, loading, error, editProduct, deleteProduct } = useProduct();
   const { comments } = useComment();
   const [searchText, setSearchText] = useState("");
   const { userId } = useAuth();
@@ -26,9 +27,6 @@ function StaffProductManager() {
   };
 
   // Hàm xử lý xóa
-  const handleDelete = (id) => {
-    console.log("Xóa sản phẩm ID:", id);
-  };
 
   // Lọc sản phẩm theo ID, Tên, Danh mục hoặc Loại da
   const filteredProducts = products.filter((product) => {
@@ -135,6 +133,10 @@ function StaffProductManager() {
     },
   ];
 
+  const handleDelete = (id) => {
+    deleteProduct(id);
+    toast.success("Xóa sản phẩm thành công");
+  };
   return (
     <div>
       <h1>Quản lý sản phẩm</h1>
@@ -149,6 +151,7 @@ function StaffProductManager() {
       </Space>
       <Table
         dataSource={filteredProducts
+          .filter((item) => item.productStatus === "Available") // Chỉ hiển thị sản phẩm Available
           .map((item) => ({ ...item, key: item.id }))
           .filter((item) => String(item.staffId) === String(userId))}
         columns={columns}
