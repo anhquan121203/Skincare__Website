@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {
-  checkout,
   createProductIntoCart,
   fetchCartProduct,
   removeProductFromCart,
+  checkout,
 } from "../Features/cart/cartSlice";
 
 const useCart = () => {
@@ -31,9 +31,18 @@ const useCart = () => {
     dispatch(removeProductFromCart(id));
   };
 
-  const payment = () => {
-    dispatch(checkout())
-  }
+  const payment = async (orderDetailsIds, totalPrice) => {
+    try {
+      const resultAction = await dispatch(
+        checkout({ orderDetailsIds, totalPrice }) // Gửi cả ID sản phẩm và tổng tiền
+      );
+
+      return resultAction.payload; // Trả về phản hồi từ API
+    } catch (error) {
+      console.error("Payment failed:", error);
+      return null;
+    }
+  };
 
   return { carts, loading, error, addToCartfromProduct, deleteCart, payment };
 };

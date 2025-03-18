@@ -1,9 +1,8 @@
 import { useState } from "react";
-import "./ProfileUser.css"
+import "./ProfileUser.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Col, Form, Image, Row, Input } from "antd";
 import useAuth from "../../../Hooks/useAuth";
-
 
 function ProfileUser() {
   const {

@@ -27,17 +27,17 @@
 .category {
   flex: 1;
   text-align: center;
-  color: white;
+  color: #6c7ee2;
   height: 160px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   background-size: cover;
   background-position: center;
-  background-image: url("../../../assets/imageBlogger/duong-da.webp");
+  background-image: url("../../../assets/imageBlogger/cham-soc-da-2.jpg");
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -160,64 +160,4 @@
   font-size: 14px;
   color: #777;
   margin-top: 10px;
-}
-
-/* Quảng cáo */
-.ad-section {
-  display: flex;
-  background: #fcf7ee;
-  padding: 40px;
-  margin-top: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.ad-image {
-  width: 40%;
-  height: auto;
-  border-radius: 10px;
-}
-
-.ad-content {
-  flex: 1;
-  padding-left: 30px;
-}
-
-.ad-content h2 {
-  color: #6b46c1;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.ad-content ul {
-  margin-top: 10px;
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-.ad-content ul li {
-  font-size: 16px;
-  color: #555;
-}
-
-.ad-content button {
-  background: #6b46c1;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
-  margin-top: 15px;
-}
-
-.ad-content button:hover {
-  background: #553c9a;
-}
-
-/* Pagination */
-.pagination {
-  margin-top: 20px;
-  text-align: center;
 }

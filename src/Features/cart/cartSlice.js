@@ -80,14 +80,43 @@ export const removeProductFromCart = createAsyncThunk(
   }
 );
 
+// export const checkout = createAsyncThunk(
+//   "cartProduct/Checkout",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const token = localStorage.getItem("accessToken");
+//       const response = await axios.put(
+//         `${CART_API_URL}/Checkout`,
+//         {},
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
 export const checkout = createAsyncThunk(
   "cartProduct/Checkout",
-  async (_, { rejectWithValue }) => {
+  async ({ orderDetailsIds, totalPrice }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
+
+      // Kiểm tra token
+      if (!token) {
+        return rejectWithValue("Unauthorized: No token found");
+      }
+
+      // Gửi yêu cầu PUT với totalPrice trong query và orderDetailsIds trong body
       const response = await axios.put(
-        `${CART_API_URL}/Checkout`,
-        {},
+        `${CART_API_URL}/Checkout?totalPrice=${totalPrice}`,
+        orderDetailsIds, // Gửi danh sách sản phẩm trong body
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -95,7 +124,9 @@ export const checkout = createAsyncThunk(
           },
         }
       );
-      return response.data;
+
+      console.log(response);
+      return response.status;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -141,10 +172,10 @@ const cartSlice = createSlice({
         state.carts = state.carts.filter((p) => p.id !== action.payload);
       })
       .addCase(checkout.fulfilled, (state, action) => {
-        const index = state.carts.findIndex((p) => p.id === action.payload.id);
-        if (index !== -1) {
-          state.carts[index] = action.payload;
-        }
+        state.paymentResponse = action.payload; // Lưu dữ liệu từ API vào state
+      })
+      .addCase(checkout.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

@@ -1,0 +1,53 @@
+/* General container styling */
+.user-profile {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card styling */
+.ant-card {
+  border-radius: 12px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Title styling */
+.ant-typography {
+  color: #333;
+}
+
+/* Form input styling */
+.ant-input {
+  border-radius: 8px;
+  height: 40px;
+}
+
+/* Profile image styling */
+.user-profile .ant-image-img {
+  border: 5px solid #22a8e7;
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-profile .ant-image-img:hover {
+  transform: scale(1.05);
+}
+
+/* Buttons styling */
+.ant-btn {
+  border-radius: 8px;
+  height: 40px;
+}
+
+.ant-btn-primary {
+  background-color: #22a8e7;
+  border: none;
+}
+
+.ant-btn-primary:hover {
+  background-color: #1c91cc;
+}

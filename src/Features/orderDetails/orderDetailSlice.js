@@ -1,13 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ORDER_DETAILS } from "../../Constants/orderDetailsConstant";
-
+import {
+  ORDER_DETAILS,
+  ORDER_DETAILS_API_URL,
+} from "../../Constants/orderDetailsConstant";
 
 // Async thunks
-export const fetchOrderDetails = createAsyncThunk("orderDetails/fetchOrderDetails", async () => {
-  const response = await axios.get(`${ORDER_API_URL}/ListOrderDetails`);
-  return response.data;
-});
+export const fetchOrderDetails = createAsyncThunk(
+  "orderDetails/fetchOrderDetails",
+  async () => {
+    const response = await axios.get(
+      `${ORDER_DETAILS_API_URL}/ListOrderDetails`
+    );
+    return response.data;
+  }
+);
 
 const orderDetailSlice = createSlice({
   name: ORDER_DETAILS,

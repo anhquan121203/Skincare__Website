@@ -3,6 +3,10 @@ import { Button, Pagination, Card, Typography } from "antd";
 import adImage from "../../../assets/imageBlogger/duong-da.webp";
 import "./BlogPage.css";
 import { articlesDiscovery, healthArticles } from "./data/articles";
+import { use } from "react";
+import useSkinType from "../../../Hooks/useSkinType";
+import SkincareRoutine from "../TestPage/SkincareRoute/SkincareRoute";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Title, Paragraph } = Typography;
 
@@ -25,6 +29,15 @@ function BlogPage() {
   );
   const totalArticles = articlesDiscovery.length;
 
+  //skintype
+  const { skinTypes, loading, error } = useSkinType();
+
+  const navigate = useNavigate();
+
+  const skintypeActive = skinTypes.filter(
+    (skintype) => skintype.skinTypeStatus === "Active"
+  );
+
   const changePage = (page) => {
     setCurrentPage(page);
   };
@@ -33,9 +46,13 @@ function BlogPage() {
     <div className="blog-page" style={{ marginTop: 100 }}>
       <h1 className="title-blogger">Blogger</h1>
       <div className="categories">
-        {categoryData.map((category, index) => (
-          <div key={index} className="category">
-            {category.name}
+        {skintypeActive.map((value, index) => (
+          <div
+            key={index}
+            className="category"
+            onClick={() => navigate(`/skincare-routine/${value.id}`)}
+          >
+            Hướng dẫn chăm sóc {value.skinTypeName}
           </div>
         ))}
       </div>
@@ -97,25 +114,6 @@ function BlogPage() {
         <Button type="primary" style={{ marginTop: 20 }}>
           Xem thêm
         </Button>
-      </div>
-
-      <div className="ad-section">
-        <img src={adImage} alt="Advertisement" className="ad-image" />
-        <div className="ad-content">
-          <Title level={2}>MỸ PHẨM ĐẾN TỪ NHẬT BẢN</Title>
-          <Title level={3}>Top 10 Thương Hiệu Mỹ Phẩm Đến Từ Nhật Bản</Title>
-          <Paragraph>
-            Mỹ phẩm đến từ Nhật Bản rất được ưa chuộng tại Việt Nam một phần bởi
-            chất lượng tốt và mẫu mã đa dạng...
-          </Paragraph>
-          <ul>
-            <li>Naris Cosmetics</li>
-            <li>Sunplay</li>
-            <li>DHC</li>
-            <li>Hatomugi</li>
-          </ul>
-          <Button type="primary">Xem thêm</Button>
-        </div>
       </div>
     </div>
   );

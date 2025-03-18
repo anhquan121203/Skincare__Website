@@ -30,7 +30,13 @@ function FilterProduct({ setFilters }) {
   // call api category và map để lay danh sách category
   // chèn vào option trong chackbox ở phần loại sản phẩm
   const { categories } = useCategory();
-  const categoryOptions = categories.map((category) => category.categoryName);
+  const categogyActive = categories.filter(
+    (item) => item.categoryStatus === "Active"
+  );
+
+  const categoryOptions = categogyActive.map(
+    (category) => category.categoryName
+  );
 
   const [priceRange, setPriceRange] = useState([0, 3000000]);
   const [tempPriceRange, setTempPriceRange] = useState([0, 3000000]);

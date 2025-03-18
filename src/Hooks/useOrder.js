@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchOrder } from "../Features/order/orderSlice";
+import { useEffect, useCallback } from "react";
+import {
+  fetchOrder,
+  // getOrderById,
+  updateOrder,
+  deleteOrder,
+} from "../Features/order/orderSlice";
 
 const useOrder = () => {
   const dispatch = useDispatch();
@@ -10,7 +15,29 @@ const useOrder = () => {
     dispatch(fetchOrder());
   }, [dispatch]);
 
-  return { orders, loading, error };
+  // Lấy đơn hàng theo ID
+  // const fetchOrderById = useCallback(
+  //   (id) => {
+  //     dispatch(getOrderById(id));
+  //   },
+  //   [dispatch]
+  // );
+
+  // Cập nhật đơn hàng
+  const editOrder = async (category) => {
+    await dispatch(updateOrder(category));
+    dispatch(fetchOrder()); // Fetch lại danh sách danh mục sau khi cập nhật
+  };
+
+  // Xóa đơn hàng
+  const removeOrder = useCallback(
+    (id) => {
+      dispatch(deleteOrder(id));
+    },
+    [dispatch]
+  );
+
+  return { orders, loading, error, editOrder, removeOrder };
 };
 
 export default useOrder;

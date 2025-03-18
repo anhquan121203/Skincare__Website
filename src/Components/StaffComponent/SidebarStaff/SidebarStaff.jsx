@@ -1,8 +1,17 @@
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
-import { Menu, Layout, Divider, Avatar } from "antd";
-import { Link } from "react-router-dom";
-import { IoSettingsOutline } from "react-icons/io5";
+import {
+  ShoppingOutlined,
+  ShopOutlined,
+  UserOutlined,
+  CommentOutlined,
+} from "@ant-design/icons";
+import { Menu, Layout, Avatar } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+
 import { FiLogOut } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../Features/user/authSlice";
+import { signOut } from "../../../Api/authApi";
+import useAuth from "../../../Hooks/useAuth";
 
 const { Sider } = Layout;
 
@@ -10,16 +19,29 @@ function getItem(label, key, icon) {
   return {
     key,
     icon,
-    label: <Link to={`/staff/manage-${key}`}>{label}</Link>,
+    label: <Link to={`/staff/staff-manage-${key}`}>{label}</Link>,
   };
 }
 
 const items = [
-  getItem("Order", "order", <ShoppingCartOutlined />),
-  getItem("Review", "review", <UserOutlined />),
+  getItem("Hồ sơ nhân viên", "profile", <UserOutlined />),
+  getItem("Đơn hàng", "order", <ShoppingOutlined />),
+  getItem("Sản phẩm", "product", <ShopOutlined />),
+  getItem("Bình luận", "feedback", <CommentOutlined />),
 ];
 
 const SidebarStaff = ({ collapsed, setCollapsed }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { lastName, firstName } = useAuth();
+
+  const handleLogout = async () => {
+    await signOut();
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <Sider
       collapsible
@@ -46,8 +68,10 @@ const SidebarStaff = ({ collapsed, setCollapsed }) => {
           <div
             style={{ textAlign: "center", marginTop: "10px", color: "white" }}
           >
-            <div>Vo Van Phuc An</div>
-            <div style={{ fontSize: "12px", opacity: 0.7 }}>Actor: Staff</div>
+            <div>{firstName + " " + lastName}</div>
+            <div style={{ fontSize: "12px", opacity: 0.7 }}>
+              Vị trí: Nhân viên
+            </div>
           </div>
         )}
       </div>
@@ -65,13 +89,10 @@ const SidebarStaff = ({ collapsed, setCollapsed }) => {
       <Menu
         theme="dark"
         mode="inline"
-        style={{ width: "100%", marginTop: "400px" }}
+        style={{ width: "100%", marginTop: "300px" }}
       >
-        <Menu.Item key="settings" icon={<IoSettingsOutline />}>
-          <Link to="#">Settings</Link>
-        </Menu.Item>
         <Menu.Item key="logout" icon={<FiLogOut />}>
-          <Link to="/">Logout</Link>
+          <Link onClick={handleLogout}>Thoát</Link>
         </Menu.Item>
       </Menu>
     </Sider>

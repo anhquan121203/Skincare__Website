@@ -14,11 +14,16 @@ import WishlistPage from "./Pages/CustormerPages/Wishlist/WishlistPage";
 import AddToCardPage from "./Pages/CustormerPages/AddToCard/AddToCardPage";
 import ProductDetail from "./Pages/CustormerPages/ProductDetailsPage/ProductDetail";
 import CheckoutPage from "./Pages/CustormerPages/Checkout/CheckoutPage";
+import OrderConfirmationPage from "./Pages/CustormerPages/OrderConfirmation/OrderConfirmationPage.jsx";
+import TestSkinType from "./Pages/CustormerPages/TestPage/TestSkinType/TestSkinType.jsx";
+import SkincareRoutine from "./Pages/CustormerPages/TestPage/SkincareRoute/SkincareRoute.jsx";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
-import ManagerReview from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
-import ManagerOrder from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder";
+import StaffProductManager from "./Pages/StaffPages/ManagerReviewPage/ManagerReview";
+import StaffOrderManager from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder.jsx";
+import StaffProfile from "./Pages/StaffPages/StaffProfile/StaffProfile.jsx";
+import StaffComment from "./Pages/StaffPages/StaffComment/StaffComment.jsx";
 
 // Manager*******************************************************************************
 import ManagerLayout from "./Layout/ManagerLayout";
@@ -49,16 +54,34 @@ function App() {
           <Route path="/wishlist" element={<WishlistPage />}></Route>
           <Route path="/addtocard" element={<AddToCardPage />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
-          <Route path="/profile-user" element={<ProfileUser/>}></Route>
-          <Route path="/wallet-customer" element={<WalletCustomer/>}></Route>
+          <Route path="/profile-user" element={<ProfileUser />}></Route>
+          <Route path="/wallet-customer" element={<WalletCustomer />}></Route>
+          <Route
+            path="/order-confirmation"
+            element={<OrderConfirmationPage />}
+          ></Route>
+          <Route path="/test-skintype" element={<TestSkinType />}></Route>
+          <Route path="/skincare-routine/:id" element={<SkincareRoutine />} />
+
           {/* Đúng tên */}
         </Route>
 
         {/* Staff router */}
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<DashboardManager />}></Route>
-          <Route path="manage-order" element={<ManagerOrder />}></Route>
-          <Route path="manage-review" element={<ManagerReview />}></Route>
+          <Route path="Staff-manage-profile" element={<StaffProfile />}></Route>
+          <Route
+            path="Staff-manage-order"
+            element={<StaffOrderManager />}
+          ></Route>
+          <Route
+            path="Staff-manage-product"
+            element={<StaffProductManager />}
+          ></Route>
+          <Route
+            path="Staff-manage-feedback"
+            element={<StaffComment />}
+          ></Route>
         </Route>
 
         {/* Manager router */}

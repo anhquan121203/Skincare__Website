@@ -67,6 +67,9 @@ function Header() {
           <li>
             <Link>Hỗ trợ khách hàng</Link>
           </li>
+          <li>
+            <Link to="/test-skintype">Kiểm tra loại da</Link>
+          </li>
         </ul>
       </nav>
 
@@ -122,7 +125,10 @@ function Header() {
                   }}
                   onClick={toggleDropdown}
                   className="dropdown-button"
-                  src={avatar || "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"}
+                  src={
+                    avatar ||
+                    "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"
+                  }
                   alt=""
                 />
                 {/* <p>{firstName} {lastName}</p> */}
@@ -137,11 +143,19 @@ function Header() {
                     </>
                   ) : roleName === "Staff" ? (
                     <>
-                      <Link>Manager Order</Link>
+                      <ul>
+                        <li>
+                          <Link to="/staff">Staff Manager</Link>
+                        </li>
+                      </ul>
                     </>
                   ) : (
                     <>
-                      <Link to="/manager/dashboard-manager">Dashboard</Link>
+                      <ul>
+                        <li>
+                          <Link to="/manager/dashboard-manager">Dashboard</Link>
+                        </li>
+                      </ul>
                     </>
                   )}
                   <a onClick={handleLogout}>Thoát</a>
