@@ -1,0 +1,49 @@
+.order-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.order-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.order-item div {
+  flex-grow: 1;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.item-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333; /* Đổi từ đỏ sang đen */
+}
+
+.order-total {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 2px solid #ddd;
+  text-align: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.grand-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  color: #0056b3; /* Màu xanh đậm để nổi bật nhưng không chói */
+}

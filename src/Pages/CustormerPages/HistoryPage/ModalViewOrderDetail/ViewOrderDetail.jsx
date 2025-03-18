@@ -2,6 +2,7 @@ import { Modal } from "antd";
 import React from "react";
 import useOrderDetails from "../../../../Hooks/useOrderDetails";
 import useProduct from "../../../../Hooks/useProduct";
+import "./ViewOrderDetail.css";
 
 function ViewOrderDetail({ isModalOpen, handleCancel, selectedOrder }) {
   console.log("selectedOrder modal", selectedOrder);
