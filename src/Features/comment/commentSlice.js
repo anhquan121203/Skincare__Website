@@ -20,7 +20,7 @@ export const createComment = createAsyncThunk(
   "comment/createComment",
   async (comment, { rejectWithValue }) => {
     try {
-      const response = await axios.post(COMMENT_API_URL, comment);
+      const response = await axios.post(`${COMMENT_API_URL}/createComment`, comment);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -75,6 +75,9 @@ const commentSlice = createSlice({
       .addCase(fetchCommentByProductId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(createComment.fulfilled, (state, action) => {
+        state.comments.push(action.payload);
       })
       .addCase(updateComment.fulfilled, (state, action) => {
         const index = state.comments.findIndex(

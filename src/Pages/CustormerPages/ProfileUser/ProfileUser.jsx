@@ -14,6 +14,7 @@ function ProfileUser() {
     email,
     address,
     roleName,
+    wallet
   } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -36,25 +37,26 @@ function ProfileUser() {
             <Form layout="vertical">
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item label="First Name">
+                  <Form.Item label="Tên">
                     <Input value={firstName} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Last Name">
+                  <Form.Item label="Họ">
                     <Input value={lastName} disabled />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item label="Birthday">
+                  <Form.Item label="Ngày sinh">
                     <Input value={formatDate(birthday)} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Role">
-                    <Input value={roleName} disabled />
+                  <Form.Item label="Ví tiền">
+                  <Input value={(Number(wallet) || 0).toLocaleString("vi-VN")} disabled />
+
                   </Form.Item>
                 </Col>
               </Row>
@@ -65,13 +67,13 @@ function ProfileUser() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Phone">
+                  <Form.Item label="Số điẹn thoại">
                     <Input value={phoneNumber} disabled />
                   </Form.Item>
                 </Col>
               </Row>
-              <h4>Address</h4>
-              <Form.Item label="Address">
+              <h4>Địa chỉ</h4>
+              <Form.Item label="Địa chỉ">
                 <Input value={address} disabled />
               </Form.Item>
             </Form>
@@ -89,7 +91,7 @@ function ProfileUser() {
                 height: "280px",
                 borderRadius: "50%",
               }}
-              src="https://dragonball.guru/wp-content/uploads/2021/01/goku-dragon-ball-guru.jpg"
+              src={avatar}
               alt="User Avatar"
             />
             <h5>

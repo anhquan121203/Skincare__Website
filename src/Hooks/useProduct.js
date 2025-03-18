@@ -26,7 +26,7 @@ const useProduct = () => {
 
   const editProduct = async (product) => {
     try {
-      await dispatch(updateProduct(product)).unwrap(); // Ensure the async operation completes
+      await dispatch(updateProduct(product)); // Ensure the async operation completes
       dispatch(fetchProducts()); // Refresh the product list
     } catch (error) {
       console.error("Error updating product:", error);

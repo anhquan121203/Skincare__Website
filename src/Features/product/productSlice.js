@@ -72,7 +72,7 @@ export const deleteProduct = createAsyncThunk(
       const response = await axios.delete(
         `${PRODUCT_API_URL}/deleteProduct/${id}`
       );
-      return response;
+      return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -115,6 +115,7 @@ const productSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter((p) => p.id !== action.payload);
       });
+      
   },
 });
 

@@ -51,8 +51,8 @@ function SidebarManager() {
           <Link to="/manager/manager-skinType">Loại da <FaDropbox /></Link>
         </li>
         <hr />
-        <li className={isActive("") ? "active" : ""}>
-          <Link to="">Quan lý tài khoản <MdOutlineManageAccounts /></Link>
+        <li className={isActive("/manager/manager-account") ? "active" : ""}>
+          <Link to="/manager/manager-account">Quan lý tài khoản <MdOutlineManageAccounts /></Link>
         </li>
         <li className={isActive("/manager/manager-profile") ? "active" : ""}>
           <Link to="/manager/manager-profile">Hồ sơ <FaRegUser /></Link>

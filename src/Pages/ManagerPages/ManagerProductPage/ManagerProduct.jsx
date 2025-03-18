@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ManagerProduct.css";
-import { Input, Pagination } from "antd";
+import { Input, Modal, Pagination } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { toast } from "react-toastify";
@@ -17,6 +17,8 @@ function ManagerProduct() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   // Open Add Modal
   const openAddModal = () => {
@@ -44,13 +46,18 @@ function ManagerProduct() {
     setIsUpdateModalOpen(false);
   };
 
+  // Open Delete Confirmation Modal
+  const openDeleteModal = (product) => {
+    setProductToDelete(product);
+    setIsDeleteModalOpen(true);
+  };
+
   // Handle Delete Product
-  const handleDeleteProduct = (id) => {
-    try {
-      deleteProduct(id);
+  const handleDeleteProduct = () => {
+    if (productToDelete) {
+      deleteProduct(productToDelete.id);
       toast.success("Xóa sản phẩm thành công!");
-    } catch (error) {
-      console.error("Xóa sản phẩm không thành công!", error);
+      setIsDeleteModalOpen(false);
     }
   };
 
@@ -125,7 +132,7 @@ function ManagerProduct() {
                     </button>
                     <button
                       className="btn-removePro"
-                      onClick={() => handleDeleteProduct(item.id)}
+                      onClick={() => openDeleteModal(item)}
                     >
                       Xóa
                     </button>
@@ -159,6 +166,18 @@ function ManagerProduct() {
         handleUpdate={handleUpdateProduct}
         updateProduct={selectedProduct}
       />
+
+{/* Modal Delete */}
+      <Modal
+        title="Xác nhận xóa sản phẩm"
+        open={isDeleteModalOpen}
+        onOk={handleDeleteProduct}
+        onCancel={() => setIsDeleteModalOpen(false)}
+        okText="Xóa"
+        cancelText="Hủy"
+      >
+        <p>Bạn có chắc chắn muốn xóa sản phẩm <strong>{productToDelete?.productName}</strong>?</p>
+      </Modal>
     </div>
   );
 }

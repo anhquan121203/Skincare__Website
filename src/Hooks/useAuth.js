@@ -28,6 +28,7 @@ const useAuth = () => {
           },
         });
         setUser(response.data);
+        console.log(response.data)
 
         if (response.data.avatar) {
           dispatch(updateAvatarAction(response.data.avatar));

@@ -18,6 +18,7 @@ function Header() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { roleName, avatar, firstName, lastName, wallet } = useAuth();
+  // console.log(avatar)
 
   // console.log(roleName)
 
@@ -57,9 +58,6 @@ function Header() {
           </li>
           <li>
             <Link to="/product">Sản phẩm</Link>
-          </li>
-          <li>
-            <Link>Kiểm tra loại da</Link>
           </li>
           <li>
             <Link to="/blogger">Blogger</Link>
@@ -125,13 +123,13 @@ function Header() {
                   }}
                   onClick={toggleDropdown}
                   className="dropdown-button"
-                  src={
-                    avatar ||
-                    "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"
-                  }
+                  src={avatar ? avatar : "https://via.placeholder.com/50"}
+                  
                   alt=""
                 />
-                {/* <p>{firstName} {lastName}</p> */}
+
+
+                
               </div>
 
               {isOpen && (
