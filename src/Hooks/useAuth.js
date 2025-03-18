@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAvatar as updateAvatarAction } from "../Features/user/authSlice";
-import { FETCH_PROFILE_API_URL } from "../Constants/userContant";
+import { PROFILE_API_URL } from "../Constants/userContant";
 import axios from "axios";
 
 const useAuth = () => {
@@ -22,12 +22,13 @@ const useAuth = () => {
           console.log("No token found");
           return;
         }
-        const response = await axios.get(`${FETCH_PROFILE_API_URL}`, {
+        const response = await axios.get(`${PROFILE_API_URL}/GetUserProfile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setUser(response.data);
+        // console.log(response.data)
 
         if (response.data.avatar) {
           dispatch(updateAvatarAction(response.data.avatar));

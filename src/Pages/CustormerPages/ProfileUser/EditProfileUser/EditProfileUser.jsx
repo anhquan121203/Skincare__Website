@@ -1,13 +1,13 @@
-import { useState } from "react";
-import "./ProfileUser.css";
+import { useEffect, useState } from "react";
+import "../ProfileUser.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Col, Form, Image, Row, Input } from "antd";
-import useAuth from "../../../Hooks/useAuth";
-import { PROFILE_API_URL } from "../../../Constants/userContant";
-import { toast } from "react-toastify";
-import axios from "axios";
 
-function ProfileUser() {
+import useAuth from "../../../../Hooks/useAuth";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+function EditProfileUser() {
   const {
     avatar,
     firstName,
@@ -22,6 +22,7 @@ function ProfileUser() {
   } = useAuth();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem("accessToken");
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A"; // Kiểm tra null tránh lỗi
@@ -31,6 +32,45 @@ function ProfileUser() {
     ).padStart(2, "0")}/${date.getFullYear()}`;
   };
 
+  const [editUser, setEditUser] = useState({
+    firstName: firstName || "",
+    lastName: lastName || "",
+    phoneNumber: phoneNumber || "",
+    address: address || "",
+    birthday: birthday ? new Date(birthday).toISOString().split("T")[0] : "",
+  });
+
+  useEffect(() => {
+    setEditUser({
+      firstName: firstName || "",
+      lastName: lastName || "",
+      phoneNumber: phoneNumber || "",
+      address: address || "",
+      birthday: birthday ? new Date(birthday).toISOString().split("T")[0] : "",
+    });
+  }, [firstName, lastName, phoneNumber, address, birthday]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditUser((prevInfor) => ({ ...prevInfor, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    try {
+      await axios.put(`${PROFILE_API_URL}/UpdateUserProfile`, editUser, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Cập nhật hồ sơ thành công!");
+      navigate("/profile-user");
+    } catch (error) {
+      toast.error("Cập nhật không thành công!");
+    }
+  };
+
   return (
     <div className="user-profile container mt-4">
       <Row gutter={[16, 16]}>
@@ -38,23 +78,36 @@ function ProfileUser() {
         <Col md={16}>
           <Card className="p-4 mb-4">
             <h4>Thông tin người dùng</h4>
-            <Form layout="vertical">
+            <Form onFinish={handleSubmit} layout="vertical">
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Tên">
-                    <Input value={firstName} disabled />
+                    <Input
+                      name="firstName"
+                      value={editUser.firstName}
+                      onChange={handleChange}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
                   <Form.Item label="Họ">
-                    <Input value={lastName} disabled />
+                    <Input
+                      name="lastName"
+                      value={editUser.lastName}
+                      onChange={handleChange}
+                    />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Ngày sinh">
-                    <Input value={formatDate(birthday)} disabled />
+                    <Input
+                      name="birthday"
+                      type="date"
+                      value={editUser.birthday}
+                      onChange={handleChange}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -74,14 +127,38 @@ function ProfileUser() {
                 </Col>
                 <Col span={12}>
                   <Form.Item label="Số điẹn thoại">
-                    <Input value={phoneNumber} disabled />
+                    <Input
+                      name="phoneNumber"
+                      value={editUser.phoneNumber}
+                      onChange={handleChange}
+                    />
                   </Form.Item>
                 </Col>
               </Row>
               <h4>Địa chỉ</h4>
               <Form.Item label="Địa chỉ">
-                <Input value={address} disabled />
+                <Input
+                  name="address"
+                  value={editUser.address}
+                  onChange={handleChange}
+                />
               </Form.Item>
+
+              <Row justify="center" className="mt-3">
+                <Col>
+                  <Button
+                    onClick={() => navigate("/profile-user")}
+                    style={{ marginRight: "10px" }}
+                  >
+                    Hủy
+                  </Button>
+                </Col>
+                <Col>
+                  <Button htmlType="submit" type="primary">
+                    Cập nhật hồ sơ
+                  </Button>
+                </Col>
+              </Row>
             </Form>
           </Card>
         </Col>
@@ -121,8 +198,8 @@ function ProfileUser() {
                 />
               </Col>
               <Col>
-                <Link to="/editProfile-user">
-                  <Button>Cập nhật hồ sơ</Button>
+                <Link to="/profile-user">
+                  <Button>Quay lại</Button>
                 </Link>
               </Col>
             </Row>
@@ -133,4 +210,4 @@ function ProfileUser() {
   );
 }
 
-export default ProfileUser;
+export default EditProfileUser;

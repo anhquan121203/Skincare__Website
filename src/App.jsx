@@ -17,6 +17,9 @@ import CheckoutPage from "./Pages/CustormerPages/Checkout/CheckoutPage";
 import OrderConfirmationPage from "./Pages/CustormerPages/OrderConfirmation/OrderConfirmationPage.jsx";
 import TestSkinType from "./Pages/CustormerPages/TestPage/TestSkinType/TestSkinType.jsx";
 import SkincareRoutine from "./Pages/CustormerPages/TestPage/SkincareRoute/SkincareRoute.jsx";
+import EditProfileUser from "./Pages/CustormerPages/ProfileUser/EditProfileUser/EditProfileUser.jsx";
+import WalletCustomer from "./Pages/CustormerPages/WalletCustomer/WalletCustomer.jsx";
+import ProfileUser from "./Pages/CustormerPages/ProfileUser/ProfileUser.jsx";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
@@ -33,8 +36,8 @@ import ManagerProduct from "./Pages/ManagerPages/ManagerProductPage/ManagerProdu
 import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategory";
 import ManagerSkinType from "./Pages/ManagerPages/ManagerSkinType/ManageSkinType";
 import ManagerProfile from "./Pages/ManagerPages/ManagerProfile/ManagerProfile.jsx";
-import ProfileUser from "./Pages/CustormerPages/ProfileUser/ProfileUser.jsx";
-import WalletCustomer from "./Pages/CustormerPages/WalletCustomer/WalletCustomer.jsx";
+import ManagerAccount from "./Pages/ManagerPages/ManagerAccount/ManagerAccount.jsx";
+
 
 function App() {
   return (
@@ -56,6 +59,7 @@ function App() {
           <Route path="/addtocard" element={<AddToCardPage />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
           <Route path="/profile-user" element={<ProfileUser />}></Route>
+          <Route path="/editProfile-user" element={<EditProfileUser />}></Route>
           <Route path="/wallet-customer" element={<WalletCustomer />}></Route>
           <Route
             path="/order-confirmation"
@@ -98,6 +102,7 @@ function App() {
           <Route path="manager-skinType" element={<ManagerSkinType />}></Route>
 
           <Route path="manager-profile" element={<ManagerProfile />}></Route>
+          <Route path="manager-account" element={<ManagerAccount />}></Route>
         </Route>
 
         {/****************************************************************************/}

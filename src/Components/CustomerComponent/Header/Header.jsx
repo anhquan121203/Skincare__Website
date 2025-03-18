@@ -17,7 +17,8 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { roleName, avatar, firstName, lastName } = useAuth();
+  const { roleName, avatar, firstName, lastName, wallet } = useAuth();
+  // console.log(avatar)
 
   // console.log(roleName)
 
@@ -57,9 +58,6 @@ function Header() {
           </li>
           <li>
             <Link to="/product">Sản phẩm</Link>
-          </li>
-          <li>
-            <Link>Khuyến mãi</Link>
           </li>
           <li>
             <Link to="/blogger">Blogger</Link>
@@ -125,30 +123,22 @@ function Header() {
                   }}
                   onClick={toggleDropdown}
                   className="dropdown-button"
-                  src={
-                    avatar ||
-                    "https://genk.mediacdn.vn/2016/photo-1-1482990145725.jpg"
-                  }
+                  src={avatar ? avatar : "https://via.placeholder.com/50"}
+                  
                   alt=""
                 />
-                {/* <p>{firstName} {lastName}</p> */}
+
+
+                
               </div>
 
               {isOpen && (
                 <div className="dropdown-content">
                   {roleName === "Customer" ? (
                     <>
-                      <ul>
-                        <li>
-                          <Link to="/profile-user">Hồ sơ</Link>
-                        </li>
-                        <li>
-                          <Link to="/wallet-customer">Nạp tiền</Link>
-                        </li>
-                        <li>
-                          <Link to="/history">Lịch sử mua hàng</Link>
-                        </li>
-                      </ul>
+                      <a href="/profile-user">{firstName} {lastName}</a>
+                      <a href="/wallet-customer">{wallet}</a>
+                      <a href="/history">Lịch sử mua hàng</a>
                     </>
                   ) : roleName === "Staff" ? (
                     <>
@@ -167,12 +157,8 @@ function Header() {
                       </ul>
                     </>
                   )}
-                  {/* <a onClick={handleLogout}>Thoát</a> */}
-                  <ul>
-                    <li>
-                      <Link onClick={handleLogout}>Thoát</Link>
-                    </li>
-                  </ul>
+                  <a onClick={handleLogout}>Thoát</a>
+                  {/* <Link onClick={handleLogout}>Thoát</Link> */}
                 </div>
               )}
             </div>

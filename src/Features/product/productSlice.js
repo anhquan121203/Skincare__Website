@@ -31,11 +31,16 @@ export const createProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "product/updateProduct",
-  async ({ product }, { rejectWithValue }) => {
+  async (product, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${PRODUCT_API_URL}/updateProduct`,
-        product
+        "https://localhost:7088/api/product/updateProduct",
+        JSON.stringify({ productModel: product }), // Ensure JSON string format
+        {
+          headers: {
+            "Content-Type": "application/json", // Explicitly set JSON format
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -44,6 +49,22 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+
+// export const updateProduct = createAsyncThunk(
+//   "product/updateProduct",
+//   async ({ product }, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.put(
+//         `${PRODUCT_API_URL}/updateProduct`,
+//         product
+//       );
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
   async (id, { rejectWithValue }) => {
@@ -51,7 +72,7 @@ export const deleteProduct = createAsyncThunk(
       const response = await axios.delete(
         `${PRODUCT_API_URL}/deleteProduct/${id}`
       );
-      return response;
+      return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -94,6 +115,7 @@ const productSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter((p) => p.id !== action.payload);
       });
+      
   },
 });
 

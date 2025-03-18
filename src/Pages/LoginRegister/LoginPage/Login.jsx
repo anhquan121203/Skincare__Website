@@ -21,6 +21,7 @@ function LoginPage() {
     email: Yup.string()
       .email("Invalid email address")
       .required("Bắt buộc nhập email!"),
+
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Bắt buộc nhập mật khẩu!"),
@@ -52,7 +53,7 @@ function LoginPage() {
           setTimeout(() => {
             navigate("/");
           }, 1000);
-          
+
         } else {
           toast.error("Login failed. Please try again.");
         }
@@ -96,6 +97,7 @@ function LoginPage() {
             {formik.touched.email && formik.errors.email ? (
               <div className="error-message">{formik.errors.email}</div>
             ) : null}
+            
           </div>
 
           <div className="form-group">
