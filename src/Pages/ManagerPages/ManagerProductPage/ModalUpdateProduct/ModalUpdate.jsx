@@ -4,23 +4,26 @@ import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
 
-const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
+const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updateProduct }) => {
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
 
   useEffect(() => {
-    if (isModalOpen) {
-      form.resetFields(); // Always reset form when modal opens
+    if (updateProduct) {
+      form.setFieldsValue({
+        ...updateProduct,
+        CategoryId: updateProduct.CategoryId || null,
+        SkinTypeId: updateProduct.SkinTypeId || null,
+      });
     }
-  }, [isModalOpen]);
+  }, [updateProduct, isModalOpen]);
 
   const handleSubmit = () => {
     form.validateFields()
       .then((values) => {
-        handleAdd(values);
-        toast.success("Thêm sản phẩm mới thành công!");
-        form.resetFields();
+        handleUpdate(values);
+        toast.success("Cập nhật sản phẩm thành công!");
       })
       .catch((info) => {
         console.error("Validation Failed:", info);
@@ -29,7 +32,7 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
 
   return (
     <Modal
-      title="Tạo sản phẩm mới"
+      title="Cập nhật sản phẩm"
       open={isModalOpen}
       onCancel={handleCancel}
       footer={[
@@ -37,11 +40,15 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
           Hủy
         </Button>,
         <Button key="submit" type="primary" onClick={handleSubmit}>
-          Tạo sản phẩm
+          Cập nhật
         </Button>,
       ]}
     >
       <Form form={form} layout="vertical">
+        <Form.Item name="id" hidden>
+          <Input disabled />
+        </Form.Item>
+
         <Form.Item label="Tên sản phẩm" name="productName" rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm!" }]}>
           <Input />
         </Form.Item>
@@ -86,4 +93,4 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
   );
 };
 
-export default ModalAddProduct;
+export default ModalUpdateProduct;

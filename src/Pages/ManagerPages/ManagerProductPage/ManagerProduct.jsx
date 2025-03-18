@@ -3,38 +3,55 @@ import "./ManagerProduct.css";
 import { Input, Pagination } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
-import ModalProduct from "./ModalNewProduct/ModalProduct";
 import { toast } from "react-toastify";
+import ModalAddProduct from "./ModalNewProduct/ModalProduct";
+import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdate";
 
 function ManagerProduct() {
   const { products, loading, error, addProduct, deleteProduct, editProduct } =
     useProduct();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateProduct, setUpdateProduct] = useState("");
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  // Separate state for each modal
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  // Open Add Modal
+  const openAddModal = () => {
+    setSelectedProduct(null); // Ensure no product data is loaded
+    setIsAddModalOpen(true);
   };
 
-  const handleOk = (productData) => {
-    setIsModalOpen(false);
-  
-    if (updateProduct) {
-      editProduct(updateProduct.id, productData);
-      toast.success("Cập nhật sản phẩm thành công!!!");
-    } else {
-      addProduct(productData);
-      toast.success("Thêm sản phẩm mới thành công!!!");
+  // Open Update Modal
+  const openUpdateModal = (product) => {
+    setSelectedProduct(product);
+    setIsUpdateModalOpen(true);
+  };
+
+  // Handle Add Product
+  const handleAddProduct = (productData) => {
+    addProduct(productData);
+    toast.success("Thêm sản phẩm mới thành công!");
+    setIsAddModalOpen(false);
+  };
+
+  // Handle Update Product
+  const handleUpdateProduct = (productData) => {
+    editProduct(selectedProduct.id, productData);
+    toast.success("Cập nhật sản phẩm thành công!");
+    setIsUpdateModalOpen(false);
+  };
+
+  // Handle Delete Product
+  const handleDeleteProduct = (id) => {
+    try {
+      deleteProduct(id);
+      toast.success("Xóa sản phẩm thành công!");
+    } catch (error) {
+      console.error("Xóa sản phẩm không thành công!", error);
     }
-  
-    setUpdateProduct(null); 
-  };
-  
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    toast.success("Xóa sản phẩm thành công!!!");
   };
 
   if (loading) return <p>Loading products...</p>;
@@ -43,38 +60,19 @@ function ManagerProduct() {
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
 
-  const hanleDeleteProduct = (id) => {
-    try {
-      deleteProduct(id);
-      toast.success("Xóa sản phẩm thành công!");
-    } catch (error) {
-      console.error("Thêm sản phẩm ko thành công!!!", error);
-    }
-  };
-
-  const handleUpdateProduct = (product) => {
-    setUpdateProduct(product); 
-    setIsModalOpen(true); // Open the modal
-  };
-  
-
   return (
     <div className="managerProduct-container">
       <h1>Manager Product</h1>
 
       <div className="content-manager-product">
         <div className="header-manager-product">
-          <button className="btn-addProduct" onClick={showModal}>
+          <button className="btn-addProduct" onClick={openAddModal}>
             <FaPlus style={{ marginRight: "8px" }} />
-            Add new products
+            Add new product
           </button>
 
           <div className="search-product">
-            <Input.Search
-              placeholder="Tìm kiếm sản phẩm..."
-              // onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: 200 }}
-            />
+            <Input.Search placeholder="Tìm kiếm sản phẩm..." style={{ width: 200 }} />
           </div>
         </div>
 
@@ -94,9 +92,9 @@ function ManagerProduct() {
                 <th>Action</th>
               </tr>
             </thead>
-            {paginatedProducts.map((item, index) => (
-              <tbody key={index}>
-                <tr>
+            <tbody>
+              {paginatedProducts.map((item, index) => (
+                <tr key={index}>
                   <td>{item.id}</td>
                   <td>{item.productName}</td>
                   <td>{item.description}</td>
@@ -116,30 +114,28 @@ function ManagerProduct() {
                   <td>{item.categoryName}</td>
                   <td>{item.skinTypeName}</td>
                   <td>
-                    <span class="status-active">{item.productStatus}</span>
+                    <span className="status-active">{item.productStatus}</span>
                   </td>
                   <td className="action-btnPro">
                     <button
                       className="btn-updatePro"
-                      isModalOpen={isModalOpen}
-                      handleCancel={handleCancel}
-                      handleOk={handleOk}
-                      onClick={() => handleUpdateProduct(item)}
+                      onClick={() => openUpdateModal(item)}
                     >
                       Cập nhật
                     </button>
                     <button
                       className="btn-removePro"
-                      onClick={() => hanleDeleteProduct(item.id)}
+                      onClick={() => handleDeleteProduct(item.id)}
                     >
                       Xóa
                     </button>
                   </td>
                 </tr>
-              </tbody>
-            ))}
+              ))}
+            </tbody>
           </table>
         </div>
+
         <Pagination
           current={currentPage}
           pageSize={pageSize}
@@ -149,11 +145,19 @@ function ManagerProduct() {
         />
       </div>
 
-      <ModalProduct
-        isModalOpen={isModalOpen}
-        handleCancel={handleCancel}
-        handleOk={handleOk}
-        updateProduct={updateProduct}
+      {/* Add Product Modal */}
+      <ModalAddProduct
+        isModalOpen={isAddModalOpen}
+        handleCancel={() => setIsAddModalOpen(false)}
+        handleAdd={handleAddProduct}
+      />
+
+      {/* Update Product Modal */}
+      <ModalUpdateProduct
+        isModalOpen={isUpdateModalOpen}
+        handleCancel={() => setIsUpdateModalOpen(false)}
+        handleUpdate={handleUpdateProduct}
+        updateProduct={selectedProduct}
       />
     </div>
   );

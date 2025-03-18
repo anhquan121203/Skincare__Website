@@ -303,7 +303,7 @@
   flex-direction: column;
 }
 
-.dropdown-content ul li {
+.dropdown-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
@@ -314,7 +314,7 @@
   align-items: center;
 }
 
-.dropdown-content ul li:hover {
+.dropdown-content a:hover {
   background-color: #21a1f1;
 }
 

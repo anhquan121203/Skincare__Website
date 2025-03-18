@@ -28,7 +28,7 @@ function TabDetails({productId}) {
           className={activeTab === "reviews" ? "tab active" : "tab"}
           onClick={() => setActiveTab("reviews")}
         >
-          Đánh giá (1)
+          Đánh giá ({comments.length})
         </button>
       </div>
 
@@ -83,7 +83,7 @@ function TabDetails({productId}) {
             <div className="area-user-review">
               {loading && <p>Loading comments...</p>}
               {error && <p>Error: {error}</p>}
-              {comments?.length > 0 ? (
+              {comments.length > 0 ? (
                 comments.slice(0, 7).map((item, index) => (
                   <div key={index}>
                     <span>{item.firstName}</span>

@@ -25,9 +25,14 @@ const useProduct = () => {
   };
 
   const editProduct = async (product) => {
-    await dispatch(updateProduct( product));
-    dispatch(fetchProducts());
-  }
+    try {
+      await dispatch(updateProduct(product)).unwrap(); // Ensure the async operation completes
+      dispatch(fetchProducts()); // Refresh the product list
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
+  
 
   const deleteProduct = (id) => dispatch(removeProduct(id));
 

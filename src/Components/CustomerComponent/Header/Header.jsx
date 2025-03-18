@@ -17,7 +17,7 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { roleName, avatar, firstName, lastName } = useAuth();
+  const { roleName, avatar, firstName, lastName, wallet } = useAuth();
 
   // console.log(roleName)
 
@@ -59,7 +59,7 @@ function Header() {
             <Link to="/product">Sản phẩm</Link>
           </li>
           <li>
-            <Link>Khuyến mãi</Link>
+            <Link>Kiểm tra loại da</Link>
           </li>
           <li>
             <Link to="/blogger">Blogger</Link>
@@ -132,11 +132,8 @@ function Header() {
                 <div className="dropdown-content">
                   {roleName === "Customer" ? (
                     <>
-                      <ul>
-                        <li> <Link to="/profile-user">Hồ sơ</Link></li>
-                        <li> <Link to="/wallet-customer">Nạp tiền</Link></li>
-                      </ul>
-
+                      <a href="/profile-user">{firstName} {lastName}</a>
+                      <a href="/wallet-customer">{wallet}</a>
                     </>
                   ) : roleName === "Staff" ? (
                     <>
@@ -147,8 +144,8 @@ function Header() {
                       <Link to="/manager/dashboard-manager">Dashboard</Link>
                     </>
                   )}
-                  {/* <a onClick={handleLogout}>Thoát</a> */}
-                  <Link onClick={handleLogout}>Thoát</Link>
+                  <a onClick={handleLogout}>Thoát</a>
+                  {/* <Link onClick={handleLogout}>Thoát</Link> */}
                 </div>
               )}
             </div>

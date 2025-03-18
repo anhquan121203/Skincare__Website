@@ -35,12 +35,12 @@ function SidebarManager() {
 
       <ul className="sidebar-menu">
         <hr />
-        <h3 style={{textAlign: "center"}}>Doanh số</h3>
+        {/* <h3 style={{textAlign: "center"}}>Doanh số</h3> */}
         <li className={isActive("/manager") ? "active" : ""}>
           <Link to="/manager">Doanh thu <LuLayoutDashboard style={{fontSize: "15px"}}/></Link>
         </li>
         <hr />
-        <h3 style={{textAlign: "center"}}>Quản lý</h3>
+        <h3 style={{textAlign: "center", fontSize: "25px"}}>Quản lý</h3>
         <li className={isActive("/manager/manager-product") ? "active" : ""}>
           <Link to="/manager/manager-product">Sản phẩm <FaDropbox /></Link>
         </li>
@@ -62,9 +62,9 @@ function SidebarManager() {
 
       <div className="sidebar-footer">
         <ul>
-          <li className={isActive("#") ? "active" : ""}>
+          {/* <li className={isActive("#") ? "active" : ""}>
             <Link to="#">Settings <IoSettingsOutline /></Link>
-          </li>
+          </li> */}
           <li>
             <Link onClick={handleLogout}>Logout <FiLogOut /></Link>
           </li>

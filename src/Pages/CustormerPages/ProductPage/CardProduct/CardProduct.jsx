@@ -69,6 +69,8 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
     setCurrentPage(page);
     setPageSize(pageSize);
   };
+
+  
   return (
     <div className="card-container">
       <div className="card-grid">
@@ -95,7 +97,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
               </div>
               <div className="card-footer">
                 <span>
-                  <span className="card-price">{item.price} VND</span>
+                  <span className="card-price">{item.price.toLocaleString("vi-VN")} VND</span>
                 </span>
                 <div className="btn-addToCard">
                   <Link>Chi tiet</Link>
