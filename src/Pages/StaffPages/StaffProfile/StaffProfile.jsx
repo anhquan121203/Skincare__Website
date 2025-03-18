@@ -19,7 +19,7 @@ import useStaff from "../../../Hooks/useStaff";
 
 const { Title, Text } = Typography;
 
-function ProfileUser() {
+function StaffProfile() {
   const {
     avatar,
     firstName,
@@ -31,6 +31,7 @@ function ProfileUser() {
     roleName,
   } = useAuth();
   const { editStaff } = useStaff();
+  const { token } = useAuth(); // Lấy token từ auth
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
@@ -66,7 +67,8 @@ function ProfileUser() {
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
-      await editStaff(values);
+      const updatedStaff = { ...values, avatar };
+      await editStaff({ staff: updatedStaff, token });
       message.success("Cập nhật thông tin thành công!");
       setIsModalOpen(false);
     } catch (error) {
@@ -209,6 +211,9 @@ function ProfileUser() {
               </Form.Item>
             </Col>
           </Row>
+          <Form.Item name="email" label="Email">
+            <Input />
+          </Form.Item>
           <Form.Item name="address" label="Địa chỉ">
             <Input />
           </Form.Item>
@@ -218,4 +223,4 @@ function ProfileUser() {
   );
 }
 
-export default ProfileUser;
+export default StaffProfile;

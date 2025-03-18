@@ -1,32 +1,41 @@
 import { useState } from "react";
-import { Table, Tag, Image, Button, Popconfirm, Input, Space } from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { Table, Tag, Image, Button, Input, Space } from "antd";
+import { EditOutlined, SearchOutlined } from "@ant-design/icons";
 import useProduct from "../../../Hooks/useProduct";
 import useAuth from "../../../Hooks/useAuth";
-import useComment from "../../../Hooks/useComment";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; // Import Modal cập nhật
+import ModalProduct from "./ModalProduct/ModalProduct";
 
 function StaffProductManager() {
-  const { products, loading, error, editProduct, deleteProduct } = useProduct();
-  const { comments } = useComment();
+  const { products, loading, error, editProduct } = useProduct();
   const [searchText, setSearchText] = useState("");
   const { userId } = useAuth();
-  console.log("products", products);
-  console.log("comments", comments);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  // Hàm xử lý cập nhật
-  const handleUpdate = (id) => {
-    console.log("Cập nhật sản phẩm ID:", id);
+  // Xử lý mở Modal khi cập nhật sản phẩm
+  const handleUpdate = (product) => {
+    setEditingProduct(product);
+    setIsModalOpen(true);
   };
 
-  // Hàm xử lý xóa
+  // Xử lý xác nhận cập nhật
+  const handleConfirmUpdate = async (updatedProduct) => {
+    console.log("Updated Product:", updatedProduct);
+
+    await editProduct(updatedProduct);
+    toast.success("Cập nhật sản phẩm thành công!");
+    setIsModalOpen(false);
+    setEditingProduct(null);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setEditingProduct(null);
+  };
 
   // Lọc sản phẩm theo ID, Tên, Danh mục hoặc Loại da
   const filteredProducts = products.filter((product) => {
@@ -38,8 +47,6 @@ function StaffProductManager() {
       product.skinTypeName.toLowerCase().includes(searchLower) // Tìm theo Loại da
     );
   });
-
-  console.log(filteredProducts);
 
   // Cấu hình cột cho bảng
   const columns = [
@@ -96,47 +103,26 @@ function StaffProductManager() {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleUpdate(record.id)}
-            style={{
-              backgroundColor: "#1890ff",
-              borderColor: "#1890ff",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            Cập nhật
-          </Button>
-          <Popconfirm
-            title="Bạn có chắc muốn xóa sản phẩm này?"
-            onConfirm={() => handleDelete(record.id)}
-            okText="Xóa"
-            cancelText="Hủy"
-          >
-            <Button
-              type="primary"
-              danger
-              icon={<DeleteOutlined />}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              Xóa
-            </Button>
-          </Popconfirm>
-        </div>
+        <Button
+          type="primary"
+          icon={<EditOutlined />}
+          onClick={() => {
+            handleUpdate(record);
+            setIsModalOpen(true);
+          }}
+          style={{
+            backgroundColor: "#1890ff",
+            borderColor: "#1890ff",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          Cập nhật
+        </Button>
       ),
     },
   ];
 
-  const handleDelete = (id) => {
-    deleteProduct(id);
-    toast.success("Xóa sản phẩm thành công");
-  };
   return (
     <div>
       <h1>Quản lý sản phẩm</h1>
@@ -156,6 +142,14 @@ function StaffProductManager() {
           .filter((item) => String(item.staffId) === String(userId))}
         columns={columns}
         pagination={{ pageSize: 10 }}
+      />
+
+      {/* Modal cập nhật sản phẩm */}
+      <ModalProduct
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
+        handleConfirmUpdate={handleConfirmUpdate}
+        editingProduct={editingProduct}
       />
     </div>
   );

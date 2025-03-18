@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { Table, Input, Typography, Tag } from "antd";
-import { StarFilled } from "@ant-design/icons";
+import { Table, Input, Typography, Tag, Button, Modal, message } from "antd";
+import {
+  StarFilled,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import useComment from "../../../Hooks/useComment";
 
 const { Title } = Typography;
+const { confirm } = Modal;
 
 function StaffComment() {
+  const [searchValue, setSearchValue] = useState("");
   const [productId, setProductId] = useState("");
-  const { comments, loading, error } = useComment(productId); // Giả sử lấy tất cả comment ban đầu
+  const { comments, loading, error, deleteComment } = useComment(productId); // Thêm deleteComment từ hook
 
   if (loading) return <p>Loading comments...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -16,6 +23,31 @@ function StaffComment() {
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     return new Date(dateString).toLocaleDateString("vi-VN");
+  };
+
+  // Hàm xử lý xóa bình luận
+  const handleDelete = (id) => {
+    confirm({
+      title: "Bạn có chắc muốn xóa bình luận này?",
+      icon: <ExclamationCircleOutlined />,
+      content: "Thao tác này không thể hoàn tác.",
+      okText: "Xóa",
+      okType: "danger",
+      cancelText: "Hủy",
+      onOk: async () => {
+        try {
+          await deleteComment(id);
+          message.success("Xóa bình luận thành công!");
+        } catch (error) {
+          message.error("Xóa bình luận thất bại!");
+        }
+      },
+    });
+  };
+
+  // Xử lý khi nhấn Enter
+  const handleSearch = () => {
+    setProductId(searchValue);
   };
 
   // Cấu hình cột của bảng Table
@@ -39,13 +71,12 @@ function StaffComment() {
       key: "rating",
       width: 100,
       align: "center",
-      render: (rating) => (
-        <>
-          {[...Array(rating)].map((_, i) => (
-            <StarFilled key={i} style={{ color: "#fadb14" }} />
-          ))}
-        </>
-      ),
+      render: (rating) =>
+        rating
+          ? [...Array(rating)].map((_, i) => (
+              <StarFilled key={i} style={{ color: "#fadb14" }} />
+            ))
+          : "N/A",
     },
     {
       title: "Ngày tạo",
@@ -65,6 +96,22 @@ function StaffComment() {
         <Tag color={status === "Approved" ? "green" : "red"}>{status}</Tag>
       ),
     },
+    {
+      title: "Hành động",
+      key: "action",
+      width: 120,
+      align: "center",
+      render: (_, record) => (
+        <Button
+          type="primary"
+          danger
+          icon={<DeleteOutlined />}
+          onClick={() => handleDelete(record.id)}
+        >
+          Xóa
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -77,7 +124,15 @@ function StaffComment() {
       <Input
         placeholder="Nhập Product ID"
         style={{ width: 300, marginBottom: 20 }}
-        onChange={(e) => setProductId(e.target.value)}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        onPressEnter={handleSearch} // Chỉ tìm khi nhấn Enter
+        suffix={
+          <SearchOutlined
+            onClick={handleSearch}
+            style={{ cursor: "pointer" }}
+          />
+        }
       />
 
       {/* Hiển thị bảng dữ liệu */}
@@ -86,6 +141,7 @@ function StaffComment() {
         columns={columns}
         rowKey="id"
         bordered
+        loading={loading}
         pagination={{ pageSize: 5 }}
       />
     </div>

@@ -7,13 +7,19 @@ import {
 
 export const updateStaffProfile = createAsyncThunk(
   "staff/UpdateUserProfile",
-  async (staff, { rejectWithValue }) => {
+  async ({ staff, token }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${FETCH_STAFF_PROFILE_API_URL}/UpdateUserProfile`,
-        staff
+        staff,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -34,7 +40,7 @@ const staffSlice = createSlice({
       // Update skin type
       .addCase(updateStaffProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.skinTypes = state.skinTypes.map((staff) =>
+        state.staffs = state.staffs.map((staff) =>
           staff.id === action.payload.id ? action.payload : staff
         );
       });

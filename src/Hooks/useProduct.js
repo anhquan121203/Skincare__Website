@@ -25,9 +25,9 @@ const useProduct = () => {
   };
 
   const editProduct = async (product) => {
-    await dispatch(updateProduct( product));
+    await dispatch(updateProduct(product));
     dispatch(fetchProducts());
-  }
+  };
 
   const deleteProduct = (id) => dispatch(removeProduct(id));
 

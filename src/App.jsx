@@ -24,6 +24,7 @@ import StaffProductManager from "./Pages/StaffPages/ManagerReviewPage/ManagerRev
 import StaffOrderManager from "./Pages/StaffPages/ManagerOrderPage/ManagerOrder.jsx";
 import StaffProfile from "./Pages/StaffPages/StaffProfile/StaffProfile.jsx";
 import StaffComment from "./Pages/StaffPages/StaffComment/StaffComment.jsx";
+import HistoryPage from "./Pages/CustormerPages/HistoryPage/HistoryPage.jsx";
 
 // Manager*******************************************************************************
 import ManagerLayout from "./Layout/ManagerLayout";
@@ -62,6 +63,7 @@ function App() {
           ></Route>
           <Route path="/test-skintype" element={<TestSkinType />}></Route>
           <Route path="/skincare-routine/:id" element={<SkincareRoutine />} />
+          <Route path="/history" element={<HistoryPage />}></Route>
 
           {/* Đúng tên */}
         </Route>

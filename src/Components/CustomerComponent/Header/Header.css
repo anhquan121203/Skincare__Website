@@ -298,7 +298,7 @@
   display: block;
 }
 
-.dropdown-content ul{
+.dropdown-content ul {
   display: flex;
   flex-direction: column;
 }

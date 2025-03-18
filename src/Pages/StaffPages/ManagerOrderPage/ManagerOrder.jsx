@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Table, Tag, Input } from "antd";
+import { Button, Table, Tag, Input } from "antd";
 import { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import useOrder from "../../../Hooks/useOrder";
@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import ModalOrder from "./ModalOrder/ModalOrder";
 
 function StaffOrderManager() {
-  const { orders, loading, error, editOrder, removeOrder } = useOrder();
+  const { orders, loading, error, editOrder } = useOrder();
   const [searchText, setSearchText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingOrder, setEditingOrder] = useState(null);
@@ -25,11 +25,6 @@ function StaffOrderManager() {
   const handleCancel = () => {
     setIsModalOpen(false);
     setEditingOrder(null);
-  };
-
-  const handleDelete = (id) => {
-    removeOrder(id);
-    toast.success("Xóa đơn hàng thành công...");
   };
 
   const handleSearch = (e) => {
@@ -71,12 +66,6 @@ function StaffOrderManager() {
       key: "customerId",
     },
     {
-      title: "Mã nhân viên",
-      dataIndex: "staffId",
-      key: "staffId",
-      render: (staffId) => {},
-    },
-    {
       title: "Trạng thái",
       dataIndex: "orderStatus",
       key: "orderStatus",
@@ -105,26 +94,15 @@ function StaffOrderManager() {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
-        <>
-          <Button
-            type="primary"
-            onClick={() => {
-              setEditingOrder(record);
-              setIsModalOpen(true);
-            }}
-          >
-            Chỉnh sửa
-          </Button>{" "}
-          <Popconfirm
-            title="Xóa đơn hàng"
-            description="Bạn có chắc chắn muốn xóa đơn hàng này không?"
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button danger type="primary">
-              Xóa
-            </Button>
-          </Popconfirm>
-        </>
+        <Button
+          type="primary"
+          onClick={() => {
+            setEditingOrder(record);
+            setIsModalOpen(true);
+          }}
+        >
+          Chỉnh sửa
+        </Button>
       ),
     },
   ];
@@ -159,7 +137,7 @@ function StaffOrderManager() {
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         handleOk={handleOk}
-        editingOrder={editingOrder} // Đã sửa lại tên biến đúng
+        editingOrder={editingOrder}
       />
     </div>
   );

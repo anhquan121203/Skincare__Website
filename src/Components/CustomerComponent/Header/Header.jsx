@@ -145,6 +145,9 @@ function Header() {
                         <li>
                           <Link to="/wallet-customer">Nạp tiền</Link>
                         </li>
+                        <li>
+                          <Link to="/history">Lịch sử mua hàng</Link>
+                        </li>
                       </ul>
                     </>
                   ) : roleName === "Staff" ? (

@@ -64,7 +64,7 @@ const SkincareRoutine = () => {
   return (
     <div className="skincare-container">
       <h1 className="skincare-title">
-        Quy trình chăm sóc da {selectedSkinType.skinTypeName}
+        Quy trình chăm sóc {selectedSkinType.skinTypeName}
       </h1>
 
       <ul className="skincare-list">
@@ -82,7 +82,9 @@ const SkincareRoutine = () => {
         className="toggle-products-btn"
         onClick={() => setShowProducts(!showProducts)}
       >
-        {showProducts ? "Ẩn sản phẩm" : "Các sản phẩm phù hợp với loại da"}
+        {showProducts
+          ? "Ẩn sản phẩm"
+          : `Các sản phẩm phù hợp với ${selectedSkinType.skinTypeName}`}
       </button>
 
       {/* Danh sách sản phẩm - Ẩn nếu `showProducts` = false */}
