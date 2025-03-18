@@ -6,6 +6,7 @@ import useSkinType from "../../../Hooks/useSkinType";
 // import ModalSkinTypes from "./ModalNewSkinType/ModalSkinType";
 import { toast } from "react-toastify";
 import useAccount from "../../../Hooks/useAccount";
+import ModalAccountStaff from "./ModalAccountStaff/ModalAccountStaff";
 
 function ManagerAccount() {
   const { account, loading, error, addNewStaff } = useAccount();
@@ -21,30 +22,15 @@ function ManagerAccount() {
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedAccount = account.slice(startIndex, startIndex + pageSize);
 
-  const handleOk = (newAccountStaff) => {
-      setIsStaffModalOpen(false);
-  
-      if (editCreateStaff) {
-        console.log(editCreateStaff);
-  
-        editSkinType(newAccountStaff);
-        toast.success("Cập nhật loại da thành công.");
-      } else {
-        addNewStaff(newAccountStaff);
-        toast.success("Tạo mới loại da thành công.");
-      }
-  
-      setEditCreateStaff(null);
-    };
+  const openAddStaffModal = () => {
+    setEditCreateStaff(null); 
+    setIsStaffModalOpen(true);
+  };
 
-    const showModal = () => {
-      setEditCreateStaff(null); 
-      setIsStaffModalOpen(true);
-    };
-
-    const handleCancel = () => {
+    const handleAddStaff = (accountData) => {
+      addNewStaff(accountData);
+      toast.success("Thêm sản phẩm mới thành công!");
       setIsStaffModalOpen(false);
-      setEditCreateStaff(null);
     };
 
   return (
@@ -53,7 +39,7 @@ function ManagerAccount() {
       <h1>Quản lý tài khoản</h1>
       <div className="content-account">
         <div className="header-account">
-          <Button className="btn-addAccount">
+          <Button className="btn-addAccount" onClick={openAddStaffModal}>
             <FaPlus style={{ marginRight: "8px" }} /> Tạo tài khoản staff
           </Button>
           <div className="search-account">
@@ -139,10 +125,10 @@ function ManagerAccount() {
 
       <ModalAccountStaff
         isModalOpen={isStaffModalOpen}
-        handleCancel={handleCancel}
-        handleOk={handleOk}
-        editCreateStaff={editCreateStaff} 
+        handleCancel={() => setIsStaffModalOpen(false)}
+        handleAdd={handleAddStaff}
       />
+
     </div>
   );
 }

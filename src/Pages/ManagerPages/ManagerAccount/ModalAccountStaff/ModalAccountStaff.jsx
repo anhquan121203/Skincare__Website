@@ -1,79 +1,75 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, Modal, Select } from "antd";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import useCategory from "../../../../Hooks/useCategory";
+import useSkinType from "../../../../Hooks/useSkinType";
 
-const ModalAccountStaff = ({
-    isStaffModalOpen,
-  handleCancel,
-  handleOk,
-  editCreateStaff,
-}) => {
+const ModalAccountStaff = ({ isModalOpen, handleCancel, handleAdd }) => {
   const [form] = Form.useForm();
+  const { categories } = useCategory();
+  const { skinTypes, loading } = useSkinType();
 
   useEffect(() => {
-    if (editCreateStaff) {
-      form.setFieldsValue(editCreateStaff);
-    } else {
-      form.resetFields();
+    if (isModalOpen) {
+      form.resetFields(); // Always reset form when modal opens
     }
-  }, [editCreateStaff, form]);
+  }, [isModalOpen]);
 
   const handleSubmit = () => {
-    form
-      .validateFields()
+    form.validateFields()
       .then((values) => {
-        handleOk({ ...editCreateStaff, ...values });
+        handleAdd(values);
+        toast.success("Thêm sản phẩm mới thành công!");
         form.resetFields();
       })
       .catch((info) => {
-        console.log("Validation Failed:", info);
+        console.error("Validation Failed:", info);
       });
-  };
-
-  // Reset form khi đóng modal
-  const onClose = () => {
-    form.resetFields();
-    handleCancel();
   };
 
   return (
     <Modal
-      title={editingSkintype ? "Cập nhật loại da" : "Tạo mới loại da"}
+      title="Tạo sản phẩm mới"
       open={isModalOpen}
-      onCancel={onClose}
+      onCancel={handleCancel}
       footer={[
-        <Button key="cancel" onClick={onClose}>
+        <Button key="cancel" onClick={handleCancel}>
           Hủy
         </Button>,
         <Button key="submit" type="primary" onClick={handleSubmit}>
-          {editingSkintype ? "Cập nhật" : "Thêm mới"}
+          Tạo sản phẩm
         </Button>,
       ]}
     >
       <Form form={form} layout="vertical">
-        {/* ID chỉ hiển thị khi chỉnh sửa */}
-        {editingSkintype && (
-          <Form.Item label="ID" name="id">
-            <Input disabled />
-          </Form.Item>
-        )}
-
-        <Form.Item
-          label="Tên loại da"
-          name="skinTypeName"
-          rules={[{ required: true, message: "Vui lòng nhập tên loại da!" }]}
-        >
+        <Form.Item label="Tên Staff" name="firstName" rules={[{ required: true, message: "Vui lòng nhập tên!" }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label="Trạng thái"
-          name="skinTypeStatus"
-          rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
-        >
-          <Select>
-            <Select.Option value="active">Active</Select.Option>
-          </Select>
+        <Form.Item label="Họ Staff" name="lastName" rules={[{ required: true, message: "Vui lòng nhập họ!" }]}>
+          <Input />
         </Form.Item>
+
+        <Form.Item label="Địa chỉ" name="address" rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}>
+          <Input/>
+        </Form.Item>
+
+        <Form.Item label="Ngày sinh" name="birthday" rules={[{ required: true, message: "Vui lòng nhập ngày sinh!" }]}>
+        <Input type="date"  />
+        </Form.Item>
+
+        <Form.Item label="Số điện thoại" name="phoneNumber" rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }]}>
+        <Input />
+        </Form.Item>
+
+        <Form.Item label="Email" name="email" rules={[{ required: true, message: "Vui lòng nhập email!" }]}>
+          <Input type="email"/>
+        </Form.Item>
+
+        <Form.Item label="Password" name="password" rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}>
+          <Input type="password"/>
+        </Form.Item>
+        
       </Form>
     </Modal>
   );
