@@ -33,11 +33,13 @@ const OrderConfirmationPage = () => {
     : null;
   console.log("latestOrder", latestOrder);
 
+  // tim ra order details theo order id
   const orderDetailsIds = orderDetails.filter(
     (item) => item.orderId === latestOrder.id
   );
   console.log("orderDetailsIds:", orderDetailsIds);
 
+  // tìm ra list sản phẩm theo order details id
   const orderedProducts = products.filter((product) =>
     orderDetailsIds.some((orderDetail) => orderDetail.productId === product.id)
   );
