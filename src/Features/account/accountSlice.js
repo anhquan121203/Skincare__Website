@@ -21,6 +21,23 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
+export const createStaffAccount = createAsyncThunk("account/createStaffAccount",
+  async (account, {rejectWithValue}) => {
+    try {
+      const token = localStorage.getItem("accessToken")
+      const response = await axios.post(`${ACCOUNT_API_URL}/CreateStaffAccount`, account, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+)
+
 const accountSlice = createSlice({
   name: ACCOUNT,
   initialState: {
@@ -41,7 +58,11 @@ const accountSlice = createSlice({
       .addCase(getAllUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(createStaffAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.account.push(action.payload);
+      })
   },
 });
 

@@ -8,45 +8,67 @@ import { toast } from "react-toastify";
 import useAccount from "../../../Hooks/useAccount";
 
 function ManagerAccount() {
-
-  const {account, loading, error} = useAccount();
+  const { account, loading, error, addNewStaff } = useAccount();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingSkintype, setEditingSkintype] = useState(null);
   const pageSize = 5;
-
+  const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
+  const [editCreateStaff, setEditCreateStaff] = useState(null);
 
   if (loading) return <p>Loading skin types...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedAccount = account.slice(startIndex, startIndex + pageSize);
+
+  const handleOk = (newAccountStaff) => {
+      setIsStaffModalOpen(false);
   
+      if (editCreateStaff) {
+        console.log(editCreateStaff);
+  
+        editSkinType(newAccountStaff);
+        toast.success("Cập nhật loại da thành công.");
+      } else {
+        addNewStaff(newAccountStaff);
+        toast.success("Tạo mới loại da thành công.");
+      }
+  
+      setEditCreateStaff(null);
+    };
+
+    const showModal = () => {
+      setEditCreateStaff(null); 
+      setIsStaffModalOpen(true);
+    };
+
+    const handleCancel = () => {
+      setIsStaffModalOpen(false);
+      setEditCreateStaff(null);
+    };
 
   return (
-    <div className="managerSkinType-container">
+    <div className="account-container">
       {/* {account.length} */}
       <h1>Quản lý tài khoản</h1>
-      <div className="content-manager-skinType">
-        <div className="header-manager-skinType">
-          <Button className="btn-addSkinType">
+      <div className="content-account">
+        <div className="header-account">
+          <Button className="btn-addAccount">
             <FaPlus style={{ marginRight: "8px" }} /> Tạo tài khoản staff
           </Button>
-          <div className="search-skinType">
+          <div className="search-account">
             <Input.Search
-              placeholder="Search skin type..."
+              placeholder="Search account..."
               style={{ width: 200 }}
             />
           </div>
         </div>
-    
 
-        <div className="table-skinType-container">
-          <table className="table-skinType">
+        <div className="table-account-container">
+          <table className="table-account">
             <thead>
               <tr>
-              <th>STT</th>
+                <th>STT</th>
                 <th>Tên</th>
                 <th>Họ</th>
                 <th>Địa chỉ</th>
@@ -58,7 +80,6 @@ function ManagerAccount() {
 
                 <th>Trạng thái</th>
                 <th>Hành động</th>
-                
               </tr>
             </thead>
             <tbody>
@@ -71,24 +92,35 @@ function ManagerAccount() {
                   <td>{item.birthday}</td>
                   <td>{item.email}</td>
                   <td>{item.phoneNumber}</td>
-                  <td>{item.avatar}</td>
+                  <td>
+                    <img
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        borderRadius: "15px",
+                        objectFit: "cover",
+                      }}
+                      src={item.avatar}
+                      alt=""
+                    />
+                  </td>
                   <td>{item.roleName}</td>
                   <td>
-                    <span className="status-active">{item.skinTypeStatus}</span>
+                    <span className="status-active">Active</span>
                   </td>
                   <td>
                     <Button
-                      className="btn-updateSkinType"
+                      className="btn-updateAccount"
                       onClick={() => showEditModal(item)}
                     >
                       Cập nhật
                     </Button>
                     <Popconfirm
-                      title="Xóa loại da"
-                      description="Bạn muốn xóa loại da này?"
+                      title="Xóa tài khoản!"
+                      description="Bạn có muốn xóa tài khoản này?"
                       onConfirm={() => handleDeleteSkinType(item.id)}
                     >
-                      <Button className="btn-removeSkinType">Xóa</Button>
+                      <Button className="btn-removeAccount">Xóa</Button>
                     </Popconfirm>
                   </td>
                 </tr>
@@ -105,12 +137,12 @@ function ManagerAccount() {
         />
       </div>
 
-      {/* <ModalSkinTypes
-        isModalOpen={isModalOpen}
+      <ModalAccountStaff
+        isModalOpen={isStaffModalOpen}
         handleCancel={handleCancel}
         handleOk={handleOk}
-        editingSkintype={editingSkintype} 
-      /> */}
+        editCreateStaff={editCreateStaff} 
+      />
     </div>
   );
 }

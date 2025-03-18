@@ -9,6 +9,7 @@ import { MdPayment } from "react-icons/md";
 import useCart from "../../../Hooks/useCart";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import TopProduct from "../../../Components/TopProductComponent/TopProduct";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -17,6 +18,7 @@ function ProductDetail() {
   const { addToCartfromProduct } = useCart();
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
+
 
   // const addToCart = async () => {
   //   if (quantity < 1) {
@@ -135,12 +137,12 @@ function ProductDetail() {
 
       {/* Details element wrap */}
       <div className="details-element-wrap">
-        <TabDetails productId={id} />
+        <TabDetails productId={id} product={product}/>
       </div>
 
       <div className="details-product-more">
         <h1 style={{ marginBottom: "50px" }}>Các sản phẩm khác</h1>
-        {/* <CardComponent /> */}
+        <TopProduct/>
       </div>
     </div>
   );

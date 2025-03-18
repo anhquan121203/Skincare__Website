@@ -1,1 +1,1 @@
-export const FETCH_PROFILE_API_URL = "https://localhost:7088/api/account/GetUserProfile"
+export const PROFILE_API_URL = "https://localhost:7088/api/account"

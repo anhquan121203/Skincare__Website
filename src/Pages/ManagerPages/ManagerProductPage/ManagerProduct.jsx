@@ -22,7 +22,7 @@ function ManagerProduct() {
 
   // Open Add Modal
   const openAddModal = () => {
-    setSelectedProduct(null); // Ensure no product data is loaded
+    setSelectedProduct(null); 
     setIsAddModalOpen(true);
   };
 

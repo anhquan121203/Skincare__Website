@@ -1,5 +1,5 @@
 /* Container chính */
-.managerSkinType-container {
+.account-container {
     display: flex;
     flex-direction: column;
     margin-top: 100px;
@@ -10,7 +10,7 @@
   }
   
   /* Header Manager */
-  .header-manager-skinType {
+  .header-account {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +19,7 @@
   }
   
   /* Nút Thêm Mới */
-  .btn-addSkinType {
+  .btn-addAccount {
     width: 180px;
     height: 50px;
     padding: 5px;
@@ -36,13 +36,13 @@
     transition: 0.3s ease-in-out;
   }
   
-  .btn-addSkinType:hover {
+  .btn-addAccount:hover {
     background-color: #218838;
     transform: scale(1.05);
   }
   
   /* Ô tìm kiếm */
-  .search-skinType input {
+  .search-account input {
     width: 200px;
     height: 40px;
     padding: 8px;
@@ -52,13 +52,13 @@
   }
   
   /* Bảng hiển thị danh sách */
-  .table-skinType-container {
+  .table-account-container {
     display: flex;
     width: 100%;
     overflow-x: auto;
   }
   
-  .table-skinType {
+  .table-account {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
@@ -67,20 +67,20 @@
     border: 1px solid #ddd;
   }
   
-  .table-skinType th,
-  .table-skinType td {
+  .table-account th,
+  .table-account td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
   }
   
-  .table-skinType th {
+  .table-account th {
     background-color: #f8f9fa;
     font-weight: bold;
     cursor: pointer;
     position: relative;
   }
   
-  .table-skinType tbody tr:hover {
+  .table-account tbody tr:hover {
     background-color: #f1f1f1;
   }
   
@@ -94,8 +94,8 @@
   }
   
   /* Nút thao tác */
-  .btn-updateSkinType,
-  .btn-removeSkinType {
+  .btn-updateAccount,
+  .btn-removeAccount {
     border: none;
     margin-right: 5px;
     padding: 6px 12px;
@@ -106,23 +106,23 @@
     transition: 0.3s ease-in-out;
   }
   
-  .btn-updateSkinType {
+  .btn-updateAccount {
     background-color: #0ca678;
     color: white;
   }
   
-  .btn-updateSkinType:hover {
+  .btn-updateAccount:hover {
     background-color: white !important;
     color: #0ca678 !important;
     transform: scale(1.05);
   }
   
-  .btn-removeSkinType {
+  .btn-removeAccount {
     background-color: #dc3545;
     color: white;
   }
   
-  .btn-removeSkinType:hover {
+  .btn-removeAccount:hover {
     background-color: white !important;
     color: #dc3545 !important;
     transform: scale(1.05);

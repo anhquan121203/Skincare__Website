@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllUsers } from "../Features/account/accountSlice";
+import { createStaffAccount, getAllUsers } from "../Features/account/accountSlice";
 
 const useAccount = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,16 @@ const useAccount = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  return { account, loading, error };
+  const addNewStaff = async (account) => {
+try {
+  await dispatch(createStaffAccount(account));
+  dispatch(getAllUsers());
+} catch (error) {
+  console.error("Error create Staff");
+  
+}
+  }
+  return { account, loading, error, addNewStaff };
 };
 
 export default useAccount;
