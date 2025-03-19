@@ -2,37 +2,40 @@
 .managerSkinType-container {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
-  max-width: 100%;
+  margin-top: 50px;
   padding: 20px;
-  overflow: auto;
-  scrollbar-width: none;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Manager */
+/* Tiêu đề chính */
+.managerSkinType-container h1 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Header - Nút thêm mới và ô tìm kiếm */
 .header-manager-skinType {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   margin-bottom: 20px;
 }
 
-/* Nút Thêm Mới */
 .btn-addSkinType {
-  width: 180px;
-  height: 50px;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: center;
   background-color: #0ca678;
   color: white;
-  border: none;
-  cursor: pointer;
+  font-weight: bold;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 6px;
   transition: 0.3s ease-in-out;
 }
 
@@ -42,62 +45,42 @@
 }
 
 /* Ô tìm kiếm */
-.search-skinType input {
-  width: 200px;
-  height: 40px;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+.ant-input-search {
+  width: 250px !important;
 }
 
-/* Bảng hiển thị danh sách */
-.table-skinType-container {
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
+/* Bảng Ant Design */
+.custom-ant-table {
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.table-skinType {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  text-align: left;
-  border: 1px solid #ddd;
+.custom-ant-table .ant-table {
+  border-radius: 8px;
 }
 
-.table-skinType th,
-.table-skinType td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-.table-skinType th {
+.custom-ant-table .ant-table-thead > tr > th {
   background-color: #f8f9fa;
   font-weight: bold;
-  cursor: pointer;
-  position: relative;
+  text-align: center;
 }
 
-.table-skinType tbody tr:hover {
+.custom-ant-table .ant-table-tbody > tr:hover {
   background-color: #f1f1f1;
 }
 
 /* Trạng thái */
-.status-active {
-  background-color: #d4f8e8;
-  color: #0ca678;
-  padding: 4px 8px;
+.ant-tag {
+  font-size: 14px;
+  padding: 5px 10px;
   border-radius: 5px;
-  font-weight: bold;
 }
 
-/* Nút thao tác */
+/* Các nút thao tác */
 .btn-updateSkinType,
 .btn-removeSkinType {
-  border: none;
   margin-right: 5px;
+  border: none;
   padding: 6px 12px;
   border-radius: 5px;
   font-size: 14px;
@@ -132,4 +115,15 @@
 .ant-pagination {
   margin-top: 16px;
   text-align: center;
+}
+.status-active {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #52c41a; /* Xanh lá nổi bật */
+  border-radius: 6px;
+  text-align: center;
+  min-width: 80px;
 }
