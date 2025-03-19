@@ -1,0 +1,181 @@
+/* Header support */
+.header-support {
+  background-color: #047857;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  background-image: image-set(
+    "https://hotro.hasaki.vn/css/images/graphics/bg_support.jpg"
+  );
+}
+
+.header-support h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: rgb(255, 255, 255);
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.search-box input {
+  width: 60%;
+  padding: 12px;
+  border-radius: 25px 0 0 25px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-box button {
+  background: white;
+  color: #047857;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.search-box button:hover {
+  background: #e0f2f1;
+  transform: scale(1.1);
+}
+
+/* Contact Info */
+.contact-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgb(255, 255, 255) !important;
+}
+
+/* Icon Section */
+/* Icon Section */
+.icon-section {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  text-align: center;
+  padding: 30px;
+  border-radius: 20px;
+  margin: 20px;
+}
+
+.icon-item {
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-item:hover {
+  transform: scale(1.1);
+}
+
+/* Tăng kích thước của icon */
+.icon-item svg {
+  font-size: 48px; /* Điều chỉnh kích thước icon */
+  color: #047857;
+  margin-bottom: 8px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.icon-item:hover svg {
+  color: #ff7c24;
+  transform: scale(1.2);
+}
+
+/* Căn chỉnh văn bản */
+.icon-item p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* FAQ Section */
+.faq-section {
+  background-color: white;
+  padding: 30px;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.faq-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.faq-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq-list ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.faq-list li {
+  padding: 8px 0;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.faq-list li:hover {
+  color: #047857;
+}
+
+/* Support Information Section */
+.support-info {
+  background-color: white;
+  padding: 30px;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.support-info h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.support-grid ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.support-grid li {
+  padding: 5px 0;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.support-grid li:hover {
+  color: #047857;
+}

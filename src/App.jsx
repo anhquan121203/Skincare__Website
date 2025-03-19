@@ -20,6 +20,7 @@ import SkincareRoutine from "./Pages/CustormerPages/TestPage/SkincareRoute/Skinc
 import EditProfileUser from "./Pages/CustormerPages/ProfileUser/EditProfileUser/EditProfileUser.jsx";
 import WalletCustomer from "./Pages/CustormerPages/WalletCustomer/WalletCustomer.jsx";
 import ProfileUser from "./Pages/CustormerPages/ProfileUser/ProfileUser.jsx";
+import SuportCustomer from "./Pages/CustormerPages/SuportPage/SuportCustomer.jsx";
 
 // Staff************************************************************************************
 import StaffLayout from "./Layout/StaffLayout";
@@ -37,7 +38,6 @@ import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategor
 import ManagerSkinType from "./Pages/ManagerPages/ManagerSkinType/ManageSkinType";
 import ManagerProfile from "./Pages/ManagerPages/ManagerProfile/ManagerProfile.jsx";
 import ManagerAccount from "./Pages/ManagerPages/ManagerAccount/ManagerAccount.jsx";
-
 
 function App() {
   return (
@@ -68,6 +68,7 @@ function App() {
           <Route path="/test-skintype" element={<TestSkinType />}></Route>
           <Route path="/skincare-routine/:id" element={<SkincareRoutine />} />
           <Route path="/history" element={<HistoryPage />}></Route>
+          <Route path="/support" element={<SuportCustomer />}></Route>
 
           {/* Đúng tên */}
         </Route>

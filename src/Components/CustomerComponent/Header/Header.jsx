@@ -63,7 +63,7 @@ function Header() {
             <Link to="/blogger">Blogger</Link>
           </li>
           <li>
-            <Link>Hỗ trợ khách hàng</Link>
+            <Link to="/support">Hỗ trợ khách hàng</Link>
           </li>
           <li>
             <Link to="/test-skintype">Kiểm tra loại da</Link>
@@ -124,19 +124,17 @@ function Header() {
                   onClick={toggleDropdown}
                   className="dropdown-button"
                   src={avatar ? avatar : "https://via.placeholder.com/50"}
-                  
                   alt=""
                 />
-
-
-                
               </div>
 
               {isOpen && (
                 <div className="dropdown-content">
                   {roleName === "Customer" ? (
                     <>
-                      <a href="/profile-user">{firstName} {lastName}</a>
+                      <a href="/profile-user">
+                        {firstName} {lastName}
+                      </a>
                       <a href="/wallet-customer">{wallet}</a>
                       <a href="/history">Lịch sử mua hàng</a>
                     </>
