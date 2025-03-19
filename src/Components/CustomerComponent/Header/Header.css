@@ -171,7 +171,14 @@
   cursor: pointer;
 }
 
-.header-end ul li .btn-button {
+.btn-login-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.header-end ul li .button-login {
   font-size: 18px;
   border-radius: 10px;
   border: none;
@@ -181,10 +188,10 @@
   background-color: #fcf7ee;
   transition: background-color 0.4s, transform 0.4s ease-in-out;
   cursor: pointer;
-  margin-top: 20px;
+  /* margin-top: 40px; */
 }
 
-.header-end ul li .btn-button:hover {
+.header-end ul li .button-login:hover {
   background-color: #f7c974;
   transform: scale(1.05);
   cursor: pointer;
@@ -198,7 +205,7 @@
   justify-content: center;
   align-items: center;
   padding: 8px;
-  margin-top: 18px;
+  margin-top: 22px;
   border: 1px solid #d9d9d9;
   border-radius: 30px;
   background-color: white;

@@ -6,8 +6,6 @@ import useSkinType from "../../../../Hooks/useSkinType";
 
 const ModalAccountStaff = ({ isModalOpen, handleCancel, handleAdd }) => {
   const [form] = Form.useForm();
-  const { categories } = useCategory();
-  const { skinTypes, loading } = useSkinType();
 
   useEffect(() => {
     if (isModalOpen) {
