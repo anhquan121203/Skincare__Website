@@ -11,6 +11,8 @@ import walletSlice from "../Features/wallet/walletSlice";
 import staffSlice from "../Features/staff/staffSlice";
 import stepRoutineSlide from "../Features/stepRoutine/stepRoutineSlide";
 import accountSlice from "../Features/account/accountSlice";
+import skinQuestionSlice from "../Features/skinQuestion/skinQuestionSlice";
+import skinAnswerSlice from "../Features/skinAnswer/skinAnswerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,5 +28,7 @@ export const store = configureStore({
     staff: staffSlice.reducer,
     stepRoutine: stepRoutineSlide.reducer,
     account: accountSlice.reducer,
+    skinQuestion: skinQuestionSlice.reducer,
+    skinAnswer: skinAnswerSlice.reducer
   },
 });

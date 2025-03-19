@@ -133,6 +133,7 @@ function TabDetails({ productId, product }) {
             <div className="add-review">
               <h1>Thêm đánh giá</h1>
               <h6>Đánh giá</h6>
+
               <Rate
                 min={1}
                 max={5}
@@ -153,7 +154,7 @@ function TabDetails({ productId, product }) {
                 Đánh giá
               </button>
             </div>
-
+            <hr />
             {/* Display Comments */}
             <div className="area-user-review">
               {loading && <p>Loading comments...</p>}
@@ -166,7 +167,7 @@ function TabDetails({ productId, product }) {
                 <Rate value={item.rating} disabled />
                 <hr /> */}
                   <Card
-                    title="Nguyen Van Quan"
+                    title={item.firstName} 
                     extra={
                       <div className="btn-card-comment">
                         <Button

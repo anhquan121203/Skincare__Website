@@ -95,11 +95,11 @@ function Header() {
 
           {/* Wishkist and cart */}
           <ul className="icon">
-            <li>
+            {/* <li>
               <Link to="/wishlist">
                 <CiHeart />
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to="/addtocard">
@@ -161,9 +161,9 @@ function Header() {
               )}
             </div>
           ) : (
-            <li>
+            <li className="btn-login-form">
               <Link to="/login">
-                <button className="btn-button">Đăng nhập</button>
+                <button className="button-login">Đăng nhập</button>
               </Link>
             </li>
           )}

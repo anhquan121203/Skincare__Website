@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateAvatar as updateAvatarAction } from "../Features/user/authSlice";
 import { PROFILE_API_URL } from "../Constants/userContant";
 import axios from "axios";
+import axiosInstance from "../Api/axiosInstance";
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -22,7 +23,7 @@ const useAuth = () => {
           console.log("No token found");
           return;
         }
-        const response = await axios.get(`${PROFILE_API_URL}/GetUserProfile`, {
+        const response = await axiosInstance.get(`${PROFILE_API_URL}/GetUserProfile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -38,6 +38,8 @@ import ManagerCategory from "./Pages/ManagerPages/ManagerCategory/ManagerCategor
 import ManagerSkinType from "./Pages/ManagerPages/ManagerSkinType/ManageSkinType";
 import ManagerProfile from "./Pages/ManagerPages/ManagerProfile/ManagerProfile.jsx";
 import ManagerAccount from "./Pages/ManagerPages/ManagerAccount/ManagerAccount.jsx";
+import ManagerSkinQuestion from "./Pages/ManagerPages/ManagerSkinQuestion/ManagerSkinQuestion.jsx";
+import ManagerSkinAnswer from "./Pages/ManagerPages/ManagerSkinAnswer/ManagerSkinAnswer.jsx";
 
 function App() {
   return (
@@ -104,6 +106,8 @@ function App() {
 
           <Route path="manager-profile" element={<ManagerProfile />}></Route>
           <Route path="manager-account" element={<ManagerAccount />}></Route>
+          <Route path="manager-skinQuestion" element={<ManagerSkinQuestion />}></Route>
+          <Route path="manager-skinAnswer" element={<ManagerSkinAnswer />}></Route>
         </Route>
 
         {/****************************************************************************/}
