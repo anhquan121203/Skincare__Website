@@ -29,10 +29,10 @@ export const createProductIntoCart = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken");
 
-      console.log("Sending request with query params:", {
-        productId,
-        quantity,
-      });
+      // console.log("Sending request with query params:", {
+      //   productId,
+      //   quantity,
+      // });
 
       const response = await axios.post(
         `${CART_API_URL}/AddProductIntoCart?productId=${productId}&quantity=${quantity}`,
@@ -52,7 +52,8 @@ export const createProductIntoCart = createAsyncThunk(
         "Error adding product to cart:",
         error.response?.data || error.message
       );
-      return rejectWithValue(error.response?.data || error.message);
+      return rejectWithValue("Vui lòng đăng nhập");
+      
     }
   }
 );

@@ -38,7 +38,7 @@ export const registerUser = async (userData) => {
       error.response?.data?.Errors ||
       error.response?.data?.Message ||
       "An error occurred"
-    );
+  );
   }
 };
 
