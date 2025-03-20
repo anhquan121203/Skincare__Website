@@ -34,41 +34,21 @@ function StaffProfile() {
   } = useAuth();
   const { editStaff } = useStaff();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const formatDate = (dateString) => {
-    if (!dateString) return "N/A";
-    const date = new Date(dateString);
-    return `${String(date.getDate()).padStart(2, "0")}/${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}/${date.getFullYear()}`;
-  };
-
-  const handleUpload = (info) => {
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} upload failed.`);
-    }
-  };
+  const [staffData, setStaffData] = useState(null);
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    // setEditingProduct(null);
   };
 
-  const handleConfirmUpdate = async (updatedProduct) => {
-    console.log("Updated Product:", updatedProduct);
-
-    await editStaff(updatedProduct);
-    toast.success("Cập nhật sản phẩm thành công!");
+  const handleConfirmUpdate = async (updatedData) => {
+    await editStaff(updatedData);
+    toast.success("Cập nhật thông tin nhân viên thành công!");
     setIsModalOpen(false);
-    // setEditingProduct(null);
   };
 
   return (
     <div className="user-profile container mt-5 p-4">
       <Row gutter={[24, 24]}>
-        {/* Left Column - Form */}
         <Col md={16} sm={24}>
           <Card className="p-4 shadow-sm" style={{ borderRadius: "10px" }}>
             <Title level={4}>Thông tin nhân viên</Title>
@@ -88,7 +68,7 @@ function StaffProfile() {
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Sinh Nhật">
-                    <Input value={formatDate(birthday)} disabled />
+                    <Input value={birthday} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -116,7 +96,7 @@ function StaffProfile() {
           </Card>
         </Col>
 
-        {/* Right Column - User Card */}
+        {/* Cột phải - Avatar và nút cập nhật */}
         <Col md={8} sm={24}>
           <Card
             className="p-4 shadow-sm text-center"
@@ -142,16 +122,26 @@ function StaffProfile() {
             </Title>
             <Text type="secondary">{email}</Text>
             <p>{phoneNumber}</p>
-            <Upload
-              showUploadList={false}
-              beforeUpload={() => false}
-              onChange={handleUpload}
-            >
+            <Upload showUploadList={false} beforeUpload={() => false}>
               <Button icon={<UploadOutlined />} style={{ margin: "10px 0" }}>
                 Thay ảnh đại diện
               </Button>
             </Upload>
-            <Button type="primary" onClick={() => setIsModalOpen(true)}>
+            <Button
+              type="primary"
+              onClick={() => {
+                setStaffData({
+                  firstName,
+                  lastName,
+                  birthday,
+                  email,
+                  phoneNumber,
+                  address,
+                  roleName,
+                });
+                setIsModalOpen(true);
+              }}
+            >
               Cập nhật thông tin
             </Button>
           </Card>
@@ -163,6 +153,7 @@ function StaffProfile() {
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         handleConfirmUpdate={handleConfirmUpdate}
+        valuesFromParent={staffData} // Truyền dữ liệu vào modal
       />
     </div>
   );

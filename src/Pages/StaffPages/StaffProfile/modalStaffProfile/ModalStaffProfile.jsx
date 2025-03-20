@@ -1,5 +1,5 @@
 import { Col, Form, Input, Modal, Row } from "antd";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 function ModalStaffProfile({
   isModalOpen,
@@ -10,7 +10,7 @@ function ModalStaffProfile({
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (isModalOpen) {
+    if (isModalOpen && valuesFromParent) {
       form.setFieldsValue(valuesFromParent);
     }
   }, [isModalOpen, valuesFromParent]);
@@ -67,15 +67,19 @@ function ModalStaffProfile({
               <Input disabled />
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={12}>
             <Form.Item name="phoneNumber" label="Số điện thoại">
               <Input />
             </Form.Item>
           </Col>
+          <Col span={12}>
+            <Form.Item name="email" label="Email">
+              <Input />
+            </Form.Item>
+          </Col>
         </Row>
-        <Form.Item name="email" label="Email">
-          <Input />
-        </Form.Item>
         <Form.Item name="address" label="Địa chỉ">
           <Input />
         </Form.Item>

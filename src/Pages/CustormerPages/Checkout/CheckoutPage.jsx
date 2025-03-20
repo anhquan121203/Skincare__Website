@@ -79,7 +79,18 @@ const CheckoutPage = () => {
     <div className="checkout-container">
       <Card
         className="checkout-box"
-        title={<Title level={2}>Thanh toán</Title>}
+        title={
+          <Title
+            level={2}
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            Thanh toán
+          </Title>
+        }
       >
         <Row gutter={[24, 24]}>
           {/* Thông tin giao hàng */}
@@ -93,7 +104,11 @@ const CheckoutPage = () => {
                 />
               </Form.Item>
               <Form.Item label="Địa chỉ Email">
-                <Input value={email} placeholder="Nhập email của bạn" />
+                <Input
+                  value={email}
+                  placeholder="Nhập email của bạn"
+                  disabled
+                />
               </Form.Item>
               <Form.Item label="Số điện thoại">
                 <Input value={phoneNumber} placeholder="Nhập số điện thoại" />
@@ -112,11 +127,11 @@ const CheckoutPage = () => {
                 </Radio.Group>
               </Form.Item> */}
 
-              <Form.Item>
+              {/* <Form.Item>
                 <Checkbox>
                   Tôi đồng ý với Điều khoản và Chính sách bảo mật.
                 </Checkbox>
-              </Form.Item>
+              </Form.Item> */}
             </Form>
           </Col>
 
@@ -157,7 +172,7 @@ const CheckoutPage = () => {
             <Card className="summary" bordered={false}>
               <Row justify="space-between" className="total">
                 <Text strong>Tổng cộng:</Text>
-                <Text strong>
+                <Text strong style={{ marginLeft: 10 }}>
                   {new Intl.NumberFormat("vi-VN").format(
                     carts.reduce(
                       (total, item) => total + item.price * item.quantity,
@@ -178,9 +193,9 @@ const CheckoutPage = () => {
             >
               Thanh toán ngay
             </Button>
-            <div className="secure-checkout">
+            {/* <div className="secure-checkout">
               <LockOutlined /> <span>Thanh toán an toàn - Bảo mật SSL</span>
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Card>

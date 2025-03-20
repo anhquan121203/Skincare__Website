@@ -163,14 +163,16 @@ const OrderConfirmationPage = () => {
               sắm
             </button>
           </Link>
-          <button className="btn btn-secondary">
-            <PrinterOutlined style={{ marginRight: "5px" }} />
-            In đơn hàng
-          </button>
-          <button className="btn btn-primary">
+          <Link to="/history">
+            <button className="btn btn-secondary">
+              <PrinterOutlined style={{ marginRight: "5px" }} />
+              Xem lịch sử đơn hàng
+            </button>
+          </Link>
+          {/* <button className="btn btn-primary">
             <ReloadOutlined style={{ marginRight: "5px" }} />
             Đặt hàng lại
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

@@ -121,6 +121,7 @@ h2 {
   color: #e63946;
   text-align: right;
   min-width: 80px;
+  margin-right: 10px;
 }
 
 .order-total {

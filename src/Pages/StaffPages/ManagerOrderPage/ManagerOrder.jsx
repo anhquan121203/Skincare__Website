@@ -5,31 +5,34 @@ import useOrder from "../../../Hooks/useOrder";
 import useAuth from "../../../Hooks/useAuth";
 import { toast } from "react-toastify";
 import ModalOrder from "./ModalOrder/ModalOrder";
+import ViewOrderDetail from "../../CustormerPages/HistoryPage/ModalViewOrderDetail/ViewOrderDetail";
 
 function StaffOrderManager() {
   const { orders, loading, error, editOrder } = useOrder();
   const [searchText, setSearchText] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingOrder, setEditingOrder] = useState(null);
 
-  const { userId, firstName } = useAuth();
-  console.log(userId, firstName);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+  const [editingOrder, setEditingOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const { userId } = useAuth();
 
   const handleOk = async (newOrder) => {
-    setIsModalOpen(false);
+    setIsEditModalOpen(false);
     await editOrder(newOrder);
     toast.success("Cập nhật đơn hàng thành công");
     setEditingOrder(null);
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsEditModalOpen(false);
     setEditingOrder(null);
   };
 
   const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearchText(value);
+    setSearchText(e.target.value.toLowerCase());
   };
 
   const filteredOrders = orders.filter(
@@ -94,15 +97,27 @@ function StaffOrderManager() {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
-        <Button
-          type="primary"
-          onClick={() => {
-            setEditingOrder(record);
-            setIsModalOpen(true);
-          }}
-        >
-          Chỉnh sửa
-        </Button>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <Button
+            type="primary"
+            onClick={() => {
+              setEditingOrder(record);
+              setIsEditModalOpen(true);
+            }}
+          >
+            Chỉnh sửa
+          </Button>
+
+          <Button
+            type="default"
+            onClick={() => {
+              setSelectedOrder(record);
+              setIsViewModalOpen(true);
+            }}
+          >
+            Xem chi tiết đơn hàng
+          </Button>
+        </div>
       ),
     },
   ];
@@ -133,8 +148,19 @@ function StaffOrderManager() {
         dataSource={filteredOrders.map((item) => ({ ...item, key: item.id }))}
         columns={columns}
       />
+
+      {/* Modal xem chi tiết đơn hàng */}
+      {selectedOrder && (
+        <ViewOrderDetail
+          isModalOpen={isViewModalOpen}
+          handleCancel={() => setIsViewModalOpen(false)}
+          selectedOrder={selectedOrder}
+        />
+      )}
+
+      {/* Modal chỉnh sửa đơn hàng */}
       <ModalOrder
-        isModalOpen={isModalOpen}
+        isModalOpen={isEditModalOpen}
         handleCancel={handleCancel}
         handleOk={handleOk}
         editingOrder={editingOrder}
