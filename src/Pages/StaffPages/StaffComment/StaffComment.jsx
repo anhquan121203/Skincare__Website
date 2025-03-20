@@ -1,52 +1,53 @@
-import React, { useState } from "react";
-import { Table, Input, Typography, Tag, Button, Modal, message } from "antd";
-import {
-  StarFilled,
-  DeleteOutlined,
-  ExclamationCircleOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { Table, Input, Typography, Tag, Button, Popconfirm } from "antd";
+import { StarFilled, DeleteOutlined, SearchOutlined } from "@ant-design/icons";
 import useComment from "../../../Hooks/useComment";
+import { toast } from "react-toastify";
+import useAuth from "../../../Hooks/useAuth";
+import useProduct from "../../../Hooks/useProduct";
 
 const { Title } = Typography;
-const { confirm } = Modal;
 
 function StaffComment() {
   const [searchValue, setSearchValue] = useState("");
   const [productId, setProductId] = useState("");
-  const { comments, loading, error, deleteComment } = useComment(productId); // Thêm deleteComment từ hook
+  const { comments, loading, error, deleteComment } = useComment(productId);
+  const { products } = useProduct();
+  const { userId } = useAuth();
 
-  if (loading) return <p>Loading comments...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // Kiểm tra khi comments thay đổi
+  useEffect(() => {
+    if (productId && comments === "No comments found for this product.") {
+      toast.error("Không tìm thấy bình luận!");
+    }
+  }, [comments, productId]);
 
-  // Hàm định dạng ngày tháng
-  const formatDate = (dateString) => {
-    if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleDateString("vi-VN");
-  };
-
-  // Hàm xử lý xóa bình luận
-  const handleDelete = (id) => {
-    confirm({
-      title: "Bạn có chắc muốn xóa bình luận này?",
-      icon: <ExclamationCircleOutlined />,
-      content: "Thao tác này không thể hoàn tác.",
-      okText: "Xóa",
-      okType: "danger",
-      cancelText: "Hủy",
-      onOk: async () => {
-        try {
-          await deleteComment(id);
-          message.success("Xóa bình luận thành công!");
-        } catch (error) {
-          message.error("Xóa bình luận thất bại!");
-        }
-      },
-    });
+  // Xử lý xóa bình luận
+  const handleDelete = async (id) => {
+    try {
+      await deleteComment(id);
+      toast.success("Xóa bình luận thành công!");
+    } catch (error) {
+      toast.error("Xóa bình luận thất bại! Vui lòng thử lại.");
+    }
   };
 
   // Xử lý khi nhấn Enter
   const handleSearch = () => {
+    const selectedProduct = products.find(
+      (item) => item.id === parseInt(searchValue, 10)
+    );
+
+    if (!selectedProduct) {
+      toast.error("Sản phẩm không tồn tại!");
+      return;
+    }
+
+    if (selectedProduct.staffId !== userId) {
+      toast.error("Bạn không có quyền quản lý sản phẩm này!");
+      return;
+    }
+
     setProductId(searchValue);
   };
 
@@ -84,7 +85,8 @@ function StaffComment() {
       key: "createdDate",
       width: 120,
       align: "center",
-      render: (date) => formatDate(date),
+      render: (date) =>
+        date ? new Date(date).toLocaleDateString("vi-VN") : "N/A",
     },
     {
       title: "Trạng thái",
@@ -101,16 +103,25 @@ function StaffComment() {
       key: "action",
       width: 120,
       align: "center",
-      render: (_, record) => (
-        <Button
-          type="primary"
-          danger
-          icon={<DeleteOutlined />}
-          onClick={() => handleDelete(record.id)}
-        >
-          Xóa
-        </Button>
-      ),
+      render: (_, record) => {
+        const product = products.find(
+          (item) => item.id === parseInt(productId, 10)
+        );
+        const isAuthorized =
+          product && String(product.staffId) === String(userId);
+
+        return isAuthorized ? (
+          <Popconfirm
+            title="Chặn bình luận này?"
+            description="Bạn muốn chặn bình luận này?"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button type="primary" danger icon={<DeleteOutlined />}>
+              Chặn bình luận
+            </Button>
+          </Popconfirm>
+        ) : null;
+      },
     },
   ];
 
@@ -120,13 +131,12 @@ function StaffComment() {
         Danh sách bình luận
       </Title>
 
-      {/* Input nhập Product ID */}
       <Input
-        placeholder="Nhập Product ID"
+        placeholder="Nhập ID của sản phẩm..."
         style={{ width: 300, marginBottom: 20 }}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        onPressEnter={handleSearch} // Chỉ tìm khi nhấn Enter
+        onPressEnter={handleSearch}
         suffix={
           <SearchOutlined
             onClick={handleSearch}
@@ -135,15 +145,23 @@ function StaffComment() {
         }
       />
 
-      {/* Hiển thị bảng dữ liệu */}
-      <Table
-        dataSource={comments}
-        columns={columns}
-        rowKey="id"
-        bordered
-        loading={loading}
-        pagination={{ pageSize: 5 }}
-      />
+      {!productId ? (
+        <p>Nhập ID sản phẩm để xem bình luận.</p>
+      ) : loading ? (
+        <p>Đang tải bình luận...</p>
+      ) : (
+        <Table
+          dataSource={
+            Array.isArray(comments)
+              ? comments.filter((c) => c.commentStatus === "Approved")
+              : []
+          }
+          columns={columns}
+          rowKey="id"
+          bordered
+          pagination={{ pageSize: 5 }}
+        />
+      )}
     </div>
   );
 }

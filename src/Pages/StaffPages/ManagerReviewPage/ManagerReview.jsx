@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Tag, Image, Button, Input, Space } from "antd";
+import { Table, Tag, Image, Button, Input, Space, Popconfirm } from "antd";
 import { EditOutlined, SearchOutlined } from "@ant-design/icons";
 import useProduct from "../../../Hooks/useProduct";
 import useAuth from "../../../Hooks/useAuth";
@@ -7,7 +7,7 @@ import { toast } from "react-toastify"; // Import Modal cập nhật
 import ModalProduct from "./ModalProduct/ModalProduct";
 
 function StaffProductManager() {
-  const { products, loading, error, editProduct } = useProduct();
+  const { products, loading, error, editProduct, deleteProduct } = useProduct();
   const [searchText, setSearchText] = useState("");
   const { userId } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -103,25 +103,42 @@ function StaffProductManager() {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
-        <Button
-          type="primary"
-          icon={<EditOutlined />}
-          onClick={() => {
-            handleUpdate(record);
-            setIsModalOpen(true);
-          }}
-          style={{
-            backgroundColor: "#1890ff",
-            borderColor: "#1890ff",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          Cập nhật
-        </Button>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => {
+              handleUpdate(record);
+              setIsModalOpen(true);
+            }}
+            style={{
+              backgroundColor: "#1890ff",
+              borderColor: "#1890ff",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            Cập nhật
+          </Button>
+
+          <Popconfirm
+            title="Xóa sản phẩm"
+            description="Bạn muốn xóa sản phẩm này không?"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button type="danger" className="btn-delete">
+              Xóa
+            </Button>
+          </Popconfirm>
+        </div>
       ),
     },
   ];
+
+  const handleDelete = (id) => {
+    deleteProduct(id);
+    toast.success("Xóa sản phẩm thành công.");
+  };
 
   return (
     <div>
@@ -141,7 +158,7 @@ function StaffProductManager() {
           .map((item) => ({ ...item, key: item.id }))
           .filter((item) => String(item.staffId) === String(userId))}
         columns={columns}
-        pagination={{ pageSize: 10 }}
+        pagination={{ pageSize: 5 }}
       />
 
       {/* Modal cập nhật sản phẩm */}
