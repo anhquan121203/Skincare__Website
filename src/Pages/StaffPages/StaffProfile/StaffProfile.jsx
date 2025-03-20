@@ -11,17 +11,19 @@ import {
   Typography,
   Upload,
   message,
-  Modal,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import useAuth from "../../../Hooks/useAuth";
 import useStaff from "../../../Hooks/useStaff";
+import ModalStaffProfile from "./modalStaffProfile/ModalStaffProfile";
+import { toast } from "react-toastify";
 
 const { Title, Text } = Typography;
 
 function StaffProfile() {
   const {
     avatar,
+    userId,
     firstName,
     lastName,
     phoneNumber,
@@ -31,10 +33,7 @@ function StaffProfile() {
     roleName,
   } = useAuth();
   const { editStaff } = useStaff();
-  const { token } = useAuth(); // Lấy token từ auth
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [form] = Form.useForm();
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -52,28 +51,18 @@ function StaffProfile() {
     }
   };
 
-  const handleUpdate = () => {
-    form.setFieldsValue({
-      firstName,
-      lastName,
-      phoneNumber,
-      birthday,
-      email,
-      address,
-    });
-    setIsModalOpen(true);
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    // setEditingProduct(null);
   };
 
-  const handleSave = async () => {
-    try {
-      const values = await form.validateFields();
-      const updatedStaff = { ...values, avatar };
-      await editStaff({ staff: updatedStaff, token });
-      message.success("Cập nhật thông tin thành công!");
-      setIsModalOpen(false);
-    } catch (error) {
-      message.error("Vui lòng nhập đầy đủ thông tin!");
-    }
+  const handleConfirmUpdate = async (updatedProduct) => {
+    console.log("Updated Product:", updatedProduct);
+
+    await editStaff(updatedProduct);
+    toast.success("Cập nhật sản phẩm thành công!");
+    setIsModalOpen(false);
+    // setEditingProduct(null);
   };
 
   return (
@@ -162,7 +151,7 @@ function StaffProfile() {
                 Thay ảnh đại diện
               </Button>
             </Upload>
-            <Button type="primary" onClick={handleUpdate}>
+            <Button type="primary" onClick={() => setIsModalOpen(true)}>
               Cập nhật thông tin
             </Button>
           </Card>
@@ -170,55 +159,11 @@ function StaffProfile() {
       </Row>
 
       {/* Modal Update Profile */}
-      <Modal
-        title="Cập nhật thông tin nhân viên"
-        open={isModalOpen}
-        onOk={handleSave}
-        onCancel={() => setIsModalOpen(false)}
-        okText="Lưu thay đổi"
-        cancelText="Hủy"
-      >
-        <Form form={form} layout="vertical">
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="firstName"
-                label="Họ"
-                rules={[{ required: true, message: "Vui lòng nhập họ!" }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="lastName"
-                label="Tên"
-                rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="birthday" label="Sinh Nhật">
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="phoneNumber" label="Số điện thoại">
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item name="email" label="Email">
-            <Input />
-          </Form.Item>
-          <Form.Item name="address" label="Địa chỉ">
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <ModalStaffProfile
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
+        handleConfirmUpdate={handleConfirmUpdate}
+      />
     </div>
   );
 }

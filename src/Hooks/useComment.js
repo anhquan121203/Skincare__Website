@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { createComment, fetchCommentByProductId, removeComment } from "../Features/comment/commentSlice";
+import {
+  createComment,
+  fetchCommentByProductId,
+  removeComment,
+} from "../Features/comment/commentSlice";
 
 const useComment = (productId) => {
   const dispatch = useDispatch();
@@ -13,12 +17,12 @@ const useComment = (productId) => {
   }, [dispatch, productId]);
 
   const addNewComment = (comment) => {
-    dispatch(createComment(comment))
-  }
+    dispatch(createComment(comment));
+  };
 
   const deleteComment = (id) => {
     dispatch(removeComment(id));
-  }
+  };
 
   return { comments, loading, error, addNewComment, deleteComment };
 };

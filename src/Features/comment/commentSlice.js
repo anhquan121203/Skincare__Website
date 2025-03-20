@@ -20,7 +20,10 @@ export const createComment = createAsyncThunk(
   "comment/createComment",
   async (comment, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${COMMENT_API_URL}/createComment`, comment);
+      const response = await axios.post(
+        `${COMMENT_API_URL}/createComment`,
+        comment
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -44,7 +47,7 @@ export const removeComment = createAsyncThunk(
   "comment/removeComment",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${COMMENT_API_URL}/${id}`);
+      await axios.delete(`${COMMENT_API_URL}/deleteComment/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
