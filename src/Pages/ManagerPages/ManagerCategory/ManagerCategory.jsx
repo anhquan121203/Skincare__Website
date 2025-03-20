@@ -107,7 +107,9 @@ function ManagerCategory() {
         Thêm loại sản phẩm
       </Button>
       <Table
-        dataSource={categories}
+        dataSource={categories.filter(
+          (item) => item.categoryStatus === "Active"
+        )}
         columns={columns}
         rowKey="id"
         pagination={{

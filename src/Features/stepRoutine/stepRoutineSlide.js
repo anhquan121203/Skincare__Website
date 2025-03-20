@@ -10,7 +10,7 @@ export const fetchStepRoutineId = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${STEP_ROUTINE_API_URL}/getActiveStepRoutineByRoutineId/${id}`
+        `${STEP_ROUTINE_API_URL}/getStepRoutineByRoutineId/${id}`
       );
       return response.data;
     } catch (error) {

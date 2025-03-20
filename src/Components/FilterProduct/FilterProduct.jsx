@@ -9,17 +9,17 @@ import {
 import "./FilterProduct.css";
 import useCategory from "../../Hooks/useCategory";
 
-const discountOptions = [
-  "0 - 10%",
-  "10% - 20%",
-  "20% - 30%",
-  "30% - 40%",
-  "40% - 50%",
-  "50% - 60%",
-];
+// const discountOptions = [
+//   "0 - 10%",
+//   "10% - 20%",
+//   "20% - 30%",
+//   "30% - 40%",
+//   "40% - 50%",
+//   "50% - 60%",
+// ];
 
 function FilterProduct({ setFilters }) {
-  const [isDiscountOpen, setIsDiscountOpen] = useState(false);
+  // const [isDiscountOpen, setIsDiscountOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
 
@@ -44,7 +44,7 @@ function FilterProduct({ setFilters }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  const toggleDiscountSection = () => setIsDiscountOpen(!isDiscountOpen);
+  // const toggleDiscountSection = () => setIsDiscountOpen(!isDiscountOpen);
   const toggleCategorySection = () => setIsCategoryOpen(!isCategoryOpen);
   const togglePriceSection = () => setIsPriceOpen(!isPriceOpen);
 
@@ -188,7 +188,7 @@ function FilterProduct({ setFilters }) {
         </div>
 
         {/* Khuyến mãi */}
-        <div className="filter-section">
+        {/* <div className="filter-section">
           <div className="filter-header" onClick={toggleDiscountSection}>
             <span className="font-bold">KHUYẾN MẠI</span>
             {isDiscountOpen ? <MinusOutlined /> : <PlusOutlined />}
@@ -201,7 +201,7 @@ function FilterProduct({ setFilters }) {
               onChange={handleDiscountChange}
             />
           )}
-        </div>
+        </div> */}
 
         {/* Loại sản phẩm */}
         <div className="filter-section">

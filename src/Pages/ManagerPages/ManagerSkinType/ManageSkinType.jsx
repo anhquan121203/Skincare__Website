@@ -104,13 +104,15 @@ function ManagerSkinType() {
 
         <Table
           columns={columns}
-          dataSource={skinTypes}
+          dataSource={skinTypes.filter(
+            (item) => item.skinTypeStatus === "Active"
+          )}
           loading={loading}
           rowKey="id"
           pagination={{
             current: currentPage,
             pageSize: pageSize,
-            total: skinTypes.length,
+
             onChange: (page) => setCurrentPage(page),
           }}
         />

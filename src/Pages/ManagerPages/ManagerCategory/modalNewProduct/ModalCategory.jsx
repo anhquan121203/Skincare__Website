@@ -68,7 +68,6 @@ function ModalCategory({
         >
           <Select>
             <Select.Option value="active">Active</Select.Option>
-            <Select.Option value="inactive">Inactive</Select.Option>
           </Select>
         </Form.Item>
       </Form>
