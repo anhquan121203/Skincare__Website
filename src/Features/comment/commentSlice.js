@@ -11,7 +11,7 @@ export const fetchCommentByProductId = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.error("Fetch api comment by product id FAILEDDDD!!!", error);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -77,7 +77,7 @@ const commentSlice = createSlice({
       })
       .addCase(fetchCommentByProductId.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       })
       .addCase(createComment.fulfilled, (state, action) => {
         state.comments.push(action.payload);

@@ -168,20 +168,20 @@ function TabDetails({ productId, product }) {
                 <hr /> */}
                   <Card
                     title={item.firstName} 
-                    extra={
-                      <div className="btn-card-comment">
-                        <Button
-                          className="btn-comment"
-                          color="cyan"
-                          variant="solid"
-                        >
-                          <RiEditFill />
-                        </Button>
-                        <Button onClick={() => openDeleteModal(item)} color="danger" variant="solid">
-                          <MdDelete />
-                        </Button>
-                      </div>
-                    }
+                    // extra={
+                    //   <div className="btn-card-comment">
+                    //     <Button
+                    //       className="btn-comment"
+                    //       color="cyan"
+                    //       variant="solid"
+                    //     >
+                    //       <RiEditFill />
+                    //     </Button>
+                    //     <Button onClick={() => openDeleteModal(item)} color="danger" variant="solid">
+                    //       <MdDelete />
+                    //     </Button>
+                    //   </div>
+                    // }
                     variant="borderless"
                     style={{
                       width: "100%",

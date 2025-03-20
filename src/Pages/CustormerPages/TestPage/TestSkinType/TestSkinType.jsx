@@ -2,10 +2,12 @@ import { useState } from "react";
 import "./TestSkinType.css"; // Import file CSS
 import useSkinQuestion from "../../../../Hooks/useSkinQuestion";
 import useSkinAnswer from "../../../../Hooks/useSkinAnswer";
+import { useNavigate } from "react-router-dom";
 
 function TestSkinType() {
   const { skinQuestion, loading, error } = useSkinQuestion();
   const { skinAnswer } = useSkinAnswer();
+  const naviagte = useNavigate();
 
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [resultSkin, setResultSkin] = useState(null);
@@ -52,6 +54,23 @@ function TestSkinType() {
     setResultSkin(skinTypeName || "Không xác định");
   };
 
+  const handleSkinRoutine = () => {
+    const skinTypeMapping = {
+      "Da dầu": 1,
+      "Da khô": 2,
+      "Da hỗn hợp": 3,
+      "Da nhạy cảm": 4,
+    };
+  
+    const skinTypeId = skinTypeMapping[resultSkin]; 
+  
+    if (skinTypeId) {
+      naviagte(`/skincare-routine/${skinTypeId}`);
+    } else {
+      naviagte("/test-skintype"); 
+    }
+  };
+  
   return (
     <div className="quiz-container">
       <h1 className="quiz-title">Bài kiểm tra loại da</h1>
@@ -59,7 +78,9 @@ function TestSkinType() {
         {/* Câu hỏi 1 */}
         {activeSkinQuestions.map((question) => (
           <div className="quiz-question" key={question.id}>
-            <p style={{fontWeight: "bold"}}>{question.id}. {question.questionText}</p>
+            <p style={{ fontWeight: "bold" }}>
+              {question.id}. {question.questionText}
+            </p>
             {getAnswerForQuestion(question.id).map((answer) => (
               <div className="quiz-options" key={answer.id}>
                 <label className="test-answer">
@@ -87,6 +108,7 @@ function TestSkinType() {
       {resultSkin && (
         <div className="quiz-result">
           <h2>Kết quả loại da: {resultSkin}</h2>
+          <p onClick={handleSkinRoutine}>Xem quy trình!</p>
         </div>
       )}
     </div>
