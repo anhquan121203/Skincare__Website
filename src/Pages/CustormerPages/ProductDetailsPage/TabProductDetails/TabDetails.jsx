@@ -41,7 +41,7 @@ function TabDetails({ productId, product }) {
   if (!product) return <p>Sản phẩm không tồn tại!</p>;
 
   const startIndex = (currentPage - 1) * pageSize;
-  const paginatedComment = comments.slice(startIndex, startIndex + pageSize);
+  const paginatedComment = comments?.length ? comments.slice(startIndex, startIndex + pageSize) : [];
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -79,7 +79,7 @@ function TabDetails({ productId, product }) {
           className={activeTab === "reviews" ? "tab active" : "tab"}
           onClick={() => setActiveTab("reviews")}
         >
-          Đánh giá ({comments.length})
+          Đánh giá ({comments?.length})
         </button>
       </div>
 
@@ -160,14 +160,28 @@ function TabDetails({ productId, product }) {
               {loading && <p>Loading comments...</p>}
               {error && <p>Error: {error}</p>}
 
-              {paginatedComment.map((item, index) => (
+              {/* {paginatedComment.map((item, index) => (
                 <div key={index}>
-                  {/* <span>{firstName}</span>
-                <span>{item.content}</span>
-                <Rate value={item.rating} disabled />
-                <hr /> */}
                   <Card
                     title={item.firstName} 
+                    
+                    variant="borderless"
+                    style={{
+                      width: "100%",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    <Rate value={item.rating} disabled />
+                    <p>{item.content}</p>
+                  </Card>
+                </div>
+              ))} */}
+
+              {Array.isArray(paginatedComment) && paginatedComment.length > 0 ? (
+                paginatedComment.map((item, index) => (
+                  <Card
+                    key={index}
+                    title={item.firstName}
                     // extra={
                     //   <div className="btn-card-comment">
                     //     <Button
@@ -191,25 +205,30 @@ function TabDetails({ productId, product }) {
                     <Rate value={item.rating} disabled />
                     <p>{item.content}</p>
                   </Card>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p>Chưa có đánh giá nào.</p>
+              )}
 
-              <Pagination
-                current={currentPage}
-                pageSize={pageSize}
-                total={comments.length}
-                onChange={(page) => setCurrentPage(page)}
-                style={{ marginTop: "16px", textAlign: "center" }}
-              />
+              {comments?.length > pageSize && (
+                <Pagination
+                  current={currentPage}
+                  pageSize={pageSize}
+                  total={comments.length}
+                  onChange={(page) => setCurrentPage(page)}
+                  style={{ marginTop: "16px", textAlign: "center" }}
+                />
+              )}
+
             </div>
 
             <Modal
-            title="Xác nhận xóa đánh giá"
-            open={isDeleteModal}
-            onOk={handleDeleteComment}
-            onCancel={() => setIsDeleteModal(false)}
-            okText="Xóa"
-            cancelText="Hủy">
+              title="Xác nhận xóa đánh giá"
+              open={isDeleteModal}
+              onOk={handleDeleteComment}
+              onCancel={() => setIsDeleteModal(false)}
+              okText="Xóa"
+              cancelText="Hủy">
               <p>Bạn có chắc chắn muốn xóa đánh giá không?</p>
             </Modal>
           </div>

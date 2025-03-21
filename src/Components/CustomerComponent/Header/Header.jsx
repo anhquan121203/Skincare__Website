@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../../Api/authApi";
 import { logout } from "../../../Features/user/authSlice";
 import useAuth from "../../../Hooks/useAuth";
+import useAccount from "../../../Hooks/useAccount";
 
 function Header() {
   const dispatch = useDispatch();
@@ -135,7 +136,7 @@ function Header() {
                       <a href="/profile-user">
                         {firstName} {lastName}
                       </a>
-                      <a href="/wallet-customer">{wallet}</a>
+                      <a href="/wallet-customer">{wallet.toLocaleString("vi-VN")}</a>
                       <a href="/history">Lịch sử mua hàng</a>
                     </>
                   ) : roleName === "Staff" ? (

@@ -21,22 +21,49 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
-export const createStaffAccount = createAsyncThunk("account/createStaffAccount",
-  async (account, {rejectWithValue}) => {
+export const createStaffAccount = createAsyncThunk(
+  "account/createStaffAccount",
+  async (account, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("accessToken")
-      const response = await axios.post(`${ACCOUNT_API_URL}/CreateStaffAccount`, account, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.post(
+        `${ACCOUNT_API_URL}/CreateStaffAccount`,
+        account,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
   }
-)
+);
+
+export const updateWallet = createAsyncThunk(
+  "account/updateWallet",
+  async (money, { rejectWithValue }) => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axios.put(
+        `${ACCOUNT_API_URL}/UpdateWallet?money=${money}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
 const accountSlice = createSlice({
   name: ACCOUNT,
@@ -63,6 +90,17 @@ const accountSlice = createSlice({
         state.loading = false;
         state.account.push(action.payload);
       })
+      .addCase(updateWallet.fulfilled, (state, action) => {
+        state.loading = false;
+        // update wallet
+        if (action.payload && state.account.length) {
+          state.account = state.account.map((user) =>
+            user.id === action.payload.id
+              ? { ...user, wallet: action.payload.wallet }
+              : user
+          );
+        }
+      });
   },
 });
 

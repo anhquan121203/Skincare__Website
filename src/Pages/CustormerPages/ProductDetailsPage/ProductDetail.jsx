@@ -86,7 +86,7 @@ function ProductDetail() {
           {/* Details Form right */}
           <div className="details-form-right">
             <h2 className="details-title">{product.productName}</h2>
-            <p className="details-price">{product.price} VNĐ</p>
+            <p className="details-price">{product.price.toLocaleString("vi-VN")} VNĐ</p>
             <p className="details-rating">
               <div className="category-details">
                 <div className="details-cateName">{product.categoryName}</div>

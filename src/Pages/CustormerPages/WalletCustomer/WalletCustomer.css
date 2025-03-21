@@ -1,18 +1,21 @@
 .wallet-container{
-    margin-top: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 200px;
+    margin-left: 400px;
     text-align: center;
+    max-width: 50%;
+    border: 1px solid;
 }
 
-.wallet-form{
-    width: 50%;
+/* .wallet-form{
+    width: 1200px;
     border: 1px solid;
     box-shadow: 0 6px 6px 0 rgba(black, black, black, 0.5);
     margin: 0 30px;
 
-}
+} */
 
 .wallet-input{
     display: flex;

@@ -45,7 +45,7 @@ export const createProductIntoCart = createAsyncThunk(
         }
       );
 
-      console.log("Response from server:", response.data);
+      // console.log("Response from server:", response.data);
       return response.data;
     } catch (error) {
       console.error(
