@@ -91,6 +91,9 @@ const SidebarStaff = ({ collapsed, setCollapsed }) => {
         mode="inline"
         style={{ width: "100%", marginTop: "300px" }}
       >
+        <Menu.Item key="" icon={<FiLogOut />}>
+          <Link to={"/"}>Quay lại</Link>
+        </Menu.Item>
         <Menu.Item key="logout" icon={<FiLogOut />}>
           <Link onClick={handleLogout}>Thoát</Link>
         </Menu.Item>

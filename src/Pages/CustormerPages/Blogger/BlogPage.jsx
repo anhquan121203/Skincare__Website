@@ -58,7 +58,9 @@ function BlogPage() {
       </div>
 
       <div className="article-list">
-        <Title level={2}>Khám phá</Title>
+        <Title level={2} style={{ display: "flex", justifyContent: "center" }}>
+          Khám phá
+        </Title>
         {currentArticles.map((article, index) => (
           <div key={index} className="articlesDiscovery">
             <img

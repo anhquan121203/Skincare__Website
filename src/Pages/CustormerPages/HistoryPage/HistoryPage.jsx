@@ -11,7 +11,7 @@ function HistoryPage() {
 
   // Gọi API
   const { userId } = useAuth();
-  const { orders, loading, error } = useOrder();
+  const { orders, loading, error, deleteOrder } = useOrder();
 
   if (loading) return <p>Đang tải đơn hàng...</p>;
   if (error) return <p>Lỗi khi tải đơn hàng: {error}</p>;
