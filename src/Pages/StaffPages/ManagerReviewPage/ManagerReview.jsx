@@ -26,7 +26,14 @@ function StaffProductManager() {
   const handleConfirmUpdate = async (updatedProduct) => {
     console.log("Updated Product:", updatedProduct);
 
-    await editProduct(updatedProduct);
+    const formattedProduct = {
+      ...editingProduct,
+      ...updatedProduct,
+      createdDate: updatedProduct.createdDate.format(),
+      expiredDate: updatedProduct.expiredDate.format(),
+    };
+
+    await editProduct(formattedProduct);
     toast.success("Cập nhật sản phẩm thành công!");
     setIsModalOpen(false);
     setEditingProduct(null);

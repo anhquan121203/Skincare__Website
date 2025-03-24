@@ -30,6 +30,7 @@ function ModalProduct({
         createdDate: values.createdDate.format(),
         expiredDate: values.expiredDate.format(),
       });
+      handleCancel(); // Đóng modal sau khi cập nhật
     });
   };
 
@@ -96,6 +97,26 @@ function ModalProduct({
             <Option value="Available">Có sẵn</Option>
             <Option value="Unavailable">Hết hàng</Option>
           </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="categoryId"
+          label="Danh mục"
+          rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
+        >
+          <InputNumber style={{ width: "100%" }} min={1} />
+        </Form.Item>
+
+        <Form.Item
+          name="skinTypeId"
+          label="Loại da"
+          rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
+        >
+          <InputNumber style={{ width: "100%" }} min={1} />
+        </Form.Item>
+
+        <Form.Item name="image" label="Hình ảnh">
+          <Input />
         </Form.Item>
       </Form>
     </Modal>

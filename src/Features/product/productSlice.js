@@ -35,7 +35,7 @@ export const updateProduct = createAsyncThunk(
     try {
       const response = await axios.put(
         "https://localhost:7088/api/product/updateProduct",
-        JSON.stringify({ productModel: product }), // Ensure JSON string format
+        product, // Ensure JSON string format
         {
           headers: {
             "Content-Type": "application/json", // Explicitly set JSON format
@@ -48,7 +48,6 @@ export const updateProduct = createAsyncThunk(
     }
   }
 );
-
 
 // export const updateProduct = createAsyncThunk(
 //   "product/updateProduct",
@@ -115,7 +114,6 @@ const productSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter((p) => p.id !== action.payload);
       });
-      
   },
 });
 
