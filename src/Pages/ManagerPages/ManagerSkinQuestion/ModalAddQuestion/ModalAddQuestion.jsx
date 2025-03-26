@@ -7,9 +7,7 @@ import useSkinQuestion from "../../../../Hooks/useSkinQuestion";
 
 const ModalAddQuestion = ({ isModalOpen, handleCancel, handleAdd }) => {
   const [form] = Form.useForm();
-//  const {skinQuestion} = useSkinQuestion();
  
-
   useEffect(() => {
     if (isModalOpen) {
       form.resetFields(); 

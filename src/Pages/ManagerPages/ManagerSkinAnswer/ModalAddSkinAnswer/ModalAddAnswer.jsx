@@ -14,7 +14,7 @@ import useSkinQuestion from "../../../../Hooks/useSkinQuestion";
 
 const ModalAddAnswer = ({ isModalOpen, handleCancel, handleAdd }) => {
   const [form] = Form.useForm();
-  const { skinQuestion } = useSkinQuestion();
+  const { skinQuestion, loading } = useSkinQuestion();
   const { skinTypes } = useSkinType();
 
   useEffect(() => {
@@ -58,28 +58,27 @@ const ModalAddAnswer = ({ isModalOpen, handleCancel, handleAdd }) => {
         >
           <Input id="Câu hỏi" style={{ width: "115%" }} />
         </Form.Item>
-      </Form>
 
-      <Form.Item layout="vertical"
-        label="Câu hỏi"
-        name="questionId"
+        <Form.Item
+        label="Loại da"
+        name="SkinQuestionId"
         rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
       >
-        <Select placeholder="Chọn loại da">
-          {skinQuestion.map((skinQuestion) => (
-            <Select.Option key={skinQuestion.id} value={skinQuestion.id}>
-              {skinQuestion.questionText}
+        <Select loading={loading} placeholder="Chọn loại da">
+          {skinQuestion.map((skinQuestions) => (
+            <Select.Option key={skinQuestions.id} value={skinQuestions.id}>
+              {skinQuestions.questionText}
             </Select.Option>
           ))}
         </Select>
       </Form.Item>
 
-      <Form.Item layout="vertical"
+      <Form.Item
         label="Loại da"
-        name="skinTypeId"
+        name="SkinTypeId"
         rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
       >
-        <Select placeholder="Chọn loại da">
+        <Select loading={loading} placeholder="Chọn loại da">
           {skinTypes.map((skinType) => (
             <Select.Option key={skinType.id} value={skinType.id}>
               {skinType.skinTypeName}
@@ -87,6 +86,9 @@ const ModalAddAnswer = ({ isModalOpen, handleCancel, handleAdd }) => {
           ))}
         </Select>
       </Form.Item>
+
+      </Form>
+
     </Modal>
   );
 };

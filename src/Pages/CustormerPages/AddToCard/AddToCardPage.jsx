@@ -116,8 +116,7 @@ const AddToCardPage = () => {
       dataIndex: "image",
       render: (text, record) => (
         <div className="product-info">
-          <Image width={50} height={50} src={"https://media.hasaki.vn/wysiwyg/HaNguyen/nuoc-tay-trang-l-oreal-3-in-1-1.jpg" || record.image} alt={text} />
-          <Text>{text}</Text>
+          <Image width={100} height={100} src={record.image} alt={text} />
         </div>
       ),
     },

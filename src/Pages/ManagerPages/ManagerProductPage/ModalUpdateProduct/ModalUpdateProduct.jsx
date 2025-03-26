@@ -65,7 +65,7 @@ const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updatePro
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item label="Loại sản phẩm" name="CategoryId" rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}>
+        <Form.Item label="Loại sản phẩm" name="categoryId" rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}>
           <Select loading={loading} placeholder="Chọn loại sản phẩm">
             {categories.map((category) => (
               <Select.Option key={category.id} value={category.id}>
@@ -75,7 +75,7 @@ const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updatePro
           </Select>
         </Form.Item>
 
-        <Form.Item label="Loại da" name="SkinTypeId" rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}>
+        <Form.Item label="Loại da" name="skinTypeId" rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}>
           <Select loading={loading} placeholder="Chọn loại da">
             {skinTypes.map((skinType) => (
               <Select.Option key={skinType.id} value={skinType.id}>

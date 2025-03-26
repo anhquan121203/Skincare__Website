@@ -38,11 +38,11 @@ export const updateSkinQuestion = createAsyncThunk(
   "skinQuestion/updateSkinQuestion",
   async (skinQuestion, { rejectWithValue }) => {
     try {
-      const respone = await axios.put(
+      const response = await axios.put(
         `${SKIN_QUESTION_API_URL}/updateSkinQuestion`,
         skinQuestion
       );
-      return respone.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }

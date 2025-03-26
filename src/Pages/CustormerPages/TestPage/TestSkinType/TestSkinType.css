@@ -87,3 +87,15 @@
 .test-answer p {
   padding-top: 18px;
 }
+
+.quiz-result p{
+  font-size: 20px;
+  font-weight: bold;
+  color: #d97706;
+  cursor: pointer;
+}
+
+.quiz-result p:hover {
+  color: #b45309;
+  transform: scale(1.1);
+}

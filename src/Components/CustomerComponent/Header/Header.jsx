@@ -20,6 +20,8 @@ function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { roleName, avatar, firstName, lastName, wallet } = useAuth();
   // console.log(avatar)
+  const money = wallet?.toLocaleString("vi-VN", {
+    style: "currency",});
 
   // console.log(roleName)
 
@@ -136,7 +138,7 @@ function Header() {
                       <a href="/profile-user">
                         {firstName} {lastName}
                       </a>
-                      <a href="/wallet-customer">{wallet.toLocaleString("vi-VN")}</a>
+                      <a href="/wallet-customer">{money}</a>
                       <a href="/history">Lịch sử mua hàng</a>
                     </>
                   ) : roleName === "Staff" ? (

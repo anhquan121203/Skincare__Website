@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createSkinQuestion,
+  deleteSkinQuestion,
   fetchSkinQuestion,
+  updateSkinQuestion,
 } from "../Features/skinQuestion/skinQuestionSlice";
 
 const useSkinQuestion = () => {
@@ -20,7 +22,19 @@ const useSkinQuestion = () => {
     dispatch(fetchSkinQuestion());
   };
 
-  return { skinQuestion, loading, error, addNewSkinQuestion };
+  const editSkinQuestion = async (skinQuestion) => {
+    await dispatch(updateSkinQuestion(skinQuestion));
+    dispatch(fetchSkinQuestion());
+  };
+
+  const removeSkinQuestion = async (id) => {
+    await dispatch(deleteSkinQuestion(id));
+    dispatch(fetchSkinQuestion());
+  }
+
+    // const removeSkinQuestion = (id) => dispatch(deleteSkinQuestion(id));
+
+  return { skinQuestion, loading, error, addNewSkinQuestion, editSkinQuestion, removeSkinQuestion };
 };
 
 export default useSkinQuestion;

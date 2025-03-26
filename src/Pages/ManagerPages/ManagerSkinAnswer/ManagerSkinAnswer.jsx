@@ -1,18 +1,34 @@
 import React, { useState } from "react";
 import "./ManagerSkinAnswer.css";
-import { Input, Pagination, Button, Popconfirm } from "antd";
+import { Input, Pagination, Button, Popconfirm, Modal } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useSkinAnswer from "../../../Hooks/useSkinAnswer";
 import ModalAddAnswer from "./ModalAddSkinAnswer/ModalAddAnswer";
+import ModalUpdateSkinAnswer from "./ModalUpdateSkinAnswer/ModalUpdateSkinAnswer";
+import { toast } from "react-toastify";
 
 function ManagerSkinAnswer() {
-  const { skinAnswer, loading, error, addNewSkinAnswer } = useSkinAnswer();
+  const {
+    skinAnswer,
+    loading,
+    error,
+    addNewSkinAnswer,
+    editSkinAnswer,
+    removeSkinAnswer,
+  } = useSkinAnswer();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 4;
 
   const [isNewAnswerModal, setIsNewAnswerModal] = useState(false);
   const [selectAnswer, setSelectAnswer] = useState(null);
+
+  //Modal update question
+  const [isUpdateAnswerModal, setIsUpdateAnswerModal] = useState(false);
+
+  // Modal delete question
+  const [isDeleteAnswerModal, setIsDeleteAnswerModal] = useState(false);
+  const [answerToDelete, setAnswerToDelete] = useState(null);
 
   const openAddAnswerModal = () => {
     setIsNewAnswerModal(true);
@@ -27,6 +43,39 @@ function ManagerSkinAnswer() {
     } catch (error) {
       toast.error("Thêm câu hỏi thất bại! Vui lòng thử lại.");
       console.error("Error adding question:", error);
+    }
+  };
+
+  // Open Update Modal
+  const openUpdateAnswerModal = (answer) => {
+    setSelectAnswer(answer);
+    setIsUpdateAnswerModal(true);
+  };
+
+  const handleUpdateAnswer = (answerData) => {
+    if (!selectAnswer) {
+      toast.error("Không tìm thấy câu hỏi để cập nhật!");
+      return;
+    }
+    const updatedAnswer = { ...answerData, id: selectAnswer.id };
+
+    editSkinAnswer(updatedAnswer); // Ensure the correct format
+    toast.success("Cập nhật câu trả lời thành công!");
+    setIsUpdateAnswerModal(false);
+  };
+
+  // Open Delete Confirmation Modal
+  const openDeleteAnswerModal = (question) => {
+    setSelectAnswer(question);
+    setIsDeleteAnswerModal(true);
+  };
+
+  const handleDeleteSkinAnswer = (id) => {
+    if (id) {
+      removeSkinAnswer(id);
+      toast.success("Xóa câu trả lời thành công!");
+    } else {
+      toast.error("Xóa câu trả lời thất bại! Vui lòng thử lại.");
     }
   };
 
@@ -82,14 +131,14 @@ function ManagerSkinAnswer() {
                   <td>
                     <Button
                       className="btn-updateSkinType"
-                      //   onClick={() => showEditModal(item)}
+                      onClick={() => openUpdateAnswerModal(item)}
                     >
                       Cập nhật
                     </Button>
                     <Popconfirm
                       title="Xóa loại da"
                       description="Bạn muốn xóa loại da này?"
-                      //   onConfirm={() => handleDeleteSkinType(item.id)}
+                      onConfirm={() => handleDeleteSkinAnswer(item.id)}
                     >
                       <Button className="btn-removeSkinType">Xóa</Button>
                     </Popconfirm>
@@ -113,6 +162,25 @@ function ManagerSkinAnswer() {
         handleCancel={() => setIsNewAnswerModal(false)}
         handleAdd={handleAddAnswer}
       />
+
+      <ModalUpdateSkinAnswer
+        isModalOpen={isUpdateAnswerModal}
+        handleCancel={() => setIsUpdateAnswerModal(false)} // Fix
+        handleUpdate={handleUpdateAnswer}
+        updateAnswer={selectAnswer}
+      />
+
+      {/* Modal delete */}
+      <Modal
+        title="Xác nhận xóa sản phẩm"
+        open={isDeleteAnswerModal}
+        onOk={handleDeleteSkinAnswer}
+        onCancel={() => setIsDeleteAnswerModal(false)}
+        okText="Xóa"
+        cancelText="Hủy"
+      >
+        <p>Bạn có chắc chắn muốn xóa câu trả lời?</p>
+      </Modal>
     </div>
   );
 }

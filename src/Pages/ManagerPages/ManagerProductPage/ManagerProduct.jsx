@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { toast } from "react-toastify";
 import ModalAddProduct from "./ModalNewProduct/ModalProduct";
-import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdate";
+import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdateProduct";
 
 function ManagerProduct() {
   const { products, loading, error, addProduct, deleteProduct, editProduct } =
@@ -22,7 +22,7 @@ function ManagerProduct() {
 
   // Open Add Modal
   const openAddModal = () => {
-    setSelectedProduct(null); 
+    setSelectedProduct(null);
     setIsAddModalOpen(true);
   };
 
@@ -79,7 +79,10 @@ function ManagerProduct() {
           </button>
 
           <div className="search-product">
-            <Input.Search placeholder="Tìm kiếm sản phẩm..." style={{ width: 200 }} />
+            <Input.Search
+              placeholder="Tìm kiếm sản phẩm..."
+              style={{ width: 200 }}
+            />
           </div>
         </div>
 
@@ -167,7 +170,7 @@ function ManagerProduct() {
         updateProduct={selectedProduct}
       />
 
-{/* Modal Delete */}
+      {/* Modal Delete */}
       <Modal
         title="Xác nhận xóa sản phẩm"
         open={isDeleteModalOpen}
@@ -176,7 +179,10 @@ function ManagerProduct() {
         okText="Xóa"
         cancelText="Hủy"
       >
-        <p>Bạn có chắc chắn muốn xóa sản phẩm <strong>{productToDelete?.productName}</strong>?</p>
+        <p>
+          Bạn có chắc chắn muốn xóa sản phẩm{" "}
+          <strong>{productToDelete?.productName}</strong>?
+        </p>
       </Modal>
     </div>
   );

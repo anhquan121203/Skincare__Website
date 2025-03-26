@@ -1,21 +1,44 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
-import { createSkinAnswer, fetchSkinAnswer } from "../Features/skinAnswer/skinAnswerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createSkinAnswer,
+  deleteSkinAnswer,
+  fetchSkinAnswer,
+  updateSkinAnswer,
+} from "../Features/skinAnswer/skinAnswerSlice";
 
 const useSkinAnswer = () => {
-    const dispatch = useDispatch();
-    const {skinAnswer, loading, error} = useSelector((state) => state.skinAnswer);
+  const dispatch = useDispatch();
+  const { skinAnswer, loading, error } = useSelector(
+    (state) => state.skinAnswer
+  );
 
-    useEffect(() => {
-        dispatch(fetchSkinAnswer());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchSkinAnswer());
+  }, [dispatch]);
 
-    const addNewSkinAnswer = async (skinAnswer) => {
-        await dispatch(createSkinAnswer(skinAnswer));
-        dispatch(fetchSkinAnswer());
-    }
+  const addNewSkinAnswer = async (skinAnswer) => {
+    await dispatch(createSkinAnswer(skinAnswer));
+    dispatch(fetchSkinAnswer());
+  };
 
-    return {skinAnswer, loading, error, addNewSkinAnswer};
-}
+  const editSkinAnswer = async (skinAnswer) => {
+    await dispatch(updateSkinAnswer(skinAnswer));
+    dispatch(fetchSkinAnswer());
+  };
+  const removeSkinAnswer = async (id) => {
+    await dispatch(deleteSkinAnswer(id));
+    dispatch(fetchSkinAnswer());
+  };
+
+  return {
+    skinAnswer,
+    loading,
+    error,
+    addNewSkinAnswer,
+    editSkinAnswer,
+    removeSkinAnswer,
+  };
+};
 
 export default useSkinAnswer;

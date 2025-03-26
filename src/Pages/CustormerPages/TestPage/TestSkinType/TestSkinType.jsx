@@ -3,6 +3,7 @@ import "./TestSkinType.css"; // Import file CSS
 import useSkinQuestion from "../../../../Hooks/useSkinQuestion";
 import useSkinAnswer from "../../../../Hooks/useSkinAnswer";
 import { useNavigate } from "react-router-dom";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 function TestSkinType() {
   const { skinQuestion, loading, error } = useSkinQuestion();
@@ -108,7 +109,7 @@ function TestSkinType() {
       {resultSkin && (
         <div className="quiz-result">
           <h2>Kết quả loại da: {resultSkin}</h2>
-          <p onClick={handleSkinRoutine}>Xem quy trình!</p>
+          <p onClick={handleSkinRoutine}>Xem quy trình <FaLongArrowAltRight /></p>
         </div>
       )}
     </div>
