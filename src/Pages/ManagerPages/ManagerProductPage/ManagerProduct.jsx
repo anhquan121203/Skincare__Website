@@ -8,7 +8,7 @@ import ModalAddProduct from "./ModalNewProduct/ModalProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdateProduct";
 
 function ManagerProduct() {
-  const { products, loading, error, addProduct, deleteProduct, editProduct } =
+  const { products, loading, error, addProduct, removeProduct, editProduct } =
     useProduct();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
@@ -51,15 +51,19 @@ function ManagerProduct() {
     setProductToDelete(product);
     setIsDeleteModalOpen(true);
   };
+  
 
   // Handle Delete Product
   const handleDeleteProduct = () => {
-    if (productToDelete) {
-      deleteProduct(productToDelete.id);
+    if (productToDelete && productToDelete.id) { // Ensure id is defined
+      removeProduct(productToDelete.id);
       toast.success("Xóa sản phẩm thành công!");
       setIsDeleteModalOpen(false);
+    } else {
+      toast.error("Lỗi: ID sản phẩm không hợp lệ!");
     }
   };
+  
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;

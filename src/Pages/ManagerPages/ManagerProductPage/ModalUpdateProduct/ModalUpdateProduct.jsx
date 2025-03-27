@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
 
-const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updateProduct }) => {
+const ModalUpdateProduct = ({
+  isModalOpen,
+  handleCancel,
+  handleUpdate,
+  updateProduct,
+}) => {
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
@@ -19,10 +24,27 @@ const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updatePro
     }
   }, [updateProduct, isModalOpen]);
 
+  // const handleSubmit = () => {
+  //   form.validateFields()
+  //     .then((values) => {
+  //       handleUpdate(values);
+  //       toast.success("Cập nhật sản phẩm thành công!");
+  //     })
+  //     .catch((info) => {
+  //       console.error("Validation Failed:", info);
+  //     });
+  // };
+
   const handleSubmit = () => {
-    form.validateFields()
+    form
+      .validateFields()
       .then((values) => {
-        handleUpdate(values);
+        const formData = new FormData();
+        Object.keys(values).forEach((key) => {
+          formData.append(key, values[key]);
+        });
+
+        handleUpdate(formData);
         toast.success("Cập nhật sản phẩm thành công!");
       })
       .catch((info) => {
@@ -49,23 +71,43 @@ const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updatePro
           <Input disabled />
         </Form.Item>
 
-        <Form.Item label="Tên sản phẩm" name="productName" rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm!" }]}>
+        <Form.Item
+          label="Tên sản phẩm"
+          name="productName"
+          rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm!" }]}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item label="Mô tả" name="description" rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}>
+        <Form.Item
+          label="Mô tả"
+          name="description"
+          rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}
+        >
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item label="Giá tiền" name="price" rules={[{ required: true, message: "Vui lòng nhập giá!" }]}>
+        <Form.Item
+          label="Giá tiền"
+          name="price"
+          rules={[{ required: true, message: "Vui lòng nhập giá!" }]}
+        >
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item label="Số lượng" name="quantity" rules={[{ required: true, message: "Vui lòng nhập số lượng!" }]}>
+        <Form.Item
+          label="Số lượng"
+          name="quantity"
+          rules={[{ required: true, message: "Vui lòng nhập số lượng!" }]}
+        >
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item label="Loại sản phẩm" name="categoryId" rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}>
+        <Form.Item
+          label="Loại sản phẩm"
+          name="categoryId"
+          rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}
+        >
           <Select loading={loading} placeholder="Chọn loại sản phẩm">
             {categories.map((category) => (
               <Select.Option key={category.id} value={category.id}>
@@ -75,7 +117,11 @@ const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updatePro
           </Select>
         </Form.Item>
 
-        <Form.Item label="Loại da" name="skinTypeId" rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}>
+        <Form.Item
+          label="Loại da"
+          name="skinTypeId"
+          rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
+        >
           <Select loading={loading} placeholder="Chọn loại da">
             {skinTypes.map((skinType) => (
               <Select.Option key={skinType.id} value={skinType.id}>
@@ -85,7 +131,11 @@ const ModalUpdateProduct = ({ isModalOpen, handleCancel, handleUpdate, updatePro
           </Select>
         </Form.Item>
 
-        <Form.Item label="Ảnh sản phẩm" name="image" rules={[{ required: true, message: "Vui lòng nhập URL ảnh!" }]}>
+        <Form.Item
+          label="Ảnh sản phẩm"
+          name="image"
+          rules={[{ required: true, message: "Vui lòng nhập URL ảnh!" }]}
+        >
           <Input />
         </Form.Item>
       </Form>

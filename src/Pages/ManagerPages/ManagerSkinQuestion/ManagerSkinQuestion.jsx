@@ -151,7 +151,7 @@ function ManagerSkinQuestion() {
                     <Popconfirm
                       title="Xóa loại da"
                       description="Bạn muốn xóa loại da này?"
-                      onConfirm={() => handleDeleteSkinQuestion(item.id)}
+                      onConfirm={() => openDeleteQuestionModal(item.id)}
                     >
                       <Button className="btn-removeSkinType">Xóa</Button>
                     </Popconfirm>
