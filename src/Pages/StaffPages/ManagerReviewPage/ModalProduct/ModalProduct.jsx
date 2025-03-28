@@ -1,5 +1,15 @@
 import { useEffect } from "react";
-import { Modal, Form, Input, InputNumber, DatePicker, Select } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  InputNumber,
+  DatePicker,
+  Select,
+  Image,
+  Upload,
+  Space,
+} from "antd";
 import dayjs from "dayjs";
 
 const { Option } = Select;
@@ -11,27 +21,25 @@ function ModalProduct({
   editingProduct,
 }) {
   const [form] = Form.useForm();
+  console.log("product: ", editingProduct);
 
   useEffect(() => {
     if (editingProduct) {
-      form.setFieldsValue({
-        ...editingProduct,
-        createdDate: dayjs(editingProduct.createdDate),
-        expiredDate: dayjs(editingProduct.expiredDate),
-      });
+      form.setFieldsValue(editingProduct);
+    } else {
+      form.resetFields();
     }
   }, [editingProduct, form]);
 
   const handleSubmit = () => {
     form.validateFields().then((values) => {
-      handleConfirmUpdate({
-        ...editingProduct,
-        ...values,
-        createdDate: values.createdDate.format(),
-        expiredDate: values.expiredDate.format(),
-      });
+      handleConfirmUpdate(values);
       handleCancel(); // Đóng modal sau khi cập nhật
     });
+  };
+
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
   };
 
   return (
@@ -44,7 +52,7 @@ function ModalProduct({
       cancelText="Hủy"
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="id">
+        <Form.Item name="id" label="Mã sản phẩm">
           <Input />
         </Form.Item>
 
@@ -58,6 +66,22 @@ function ModalProduct({
 
         <Form.Item name="description" label="Mô tả">
           <Input.TextArea rows={3} />
+        </Form.Item>
+
+        <Form.Item
+          name="createdDate"
+          label="Ngày tạo"
+          rules={[{ required: true, message: "Vui lòng chọn ngày tạo!" }]}
+        >
+          <Input style={{ width: "100%" }} showTime />
+        </Form.Item>
+
+        <Form.Item
+          name="expiredDate"
+          label="Ngày hết hạn"
+          rules={[{ required: true, message: "Vui lòng chọn ngày hết hạn!" }]}
+        >
+          <Input style={{ width: "100%" }} showTime />
         </Form.Item>
 
         <Form.Item
@@ -76,20 +100,29 @@ function ModalProduct({
           <InputNumber style={{ width: "100%" }} min={0} />
         </Form.Item>
 
-        <Form.Item
-          name="createdDate"
-          label="Ngày tạo"
-          rules={[{ required: true, message: "Vui lòng chọn ngày tạo!" }]}
-        >
-          <DatePicker style={{ width: "100%" }} showTime />
-        </Form.Item>
+        <Form.Item name="image" label="Hình ảnh">
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
+            {editingProduct?.image && (
+              <Image width={200} src={editingProduct.image} />
+            )}
 
-        <Form.Item
-          name="expiredDate"
-          label="Ngày hết hạn"
-          rules={[{ required: true, message: "Vui lòng chọn ngày hết hạn!" }]}
-        >
-          <DatePicker style={{ width: "100%" }} showTime />
+            <Upload
+              listType="picture"
+              showUploadList={false}
+              beforeUpload={(file) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  form.setFieldsValue({ image: e.target.result });
+                };
+                reader.readAsDataURL(file);
+                return false; // Ngăn tải lên ngay lập tức
+              }}
+            >
+              <Input type="button" value="Chọn ảnh mới" />
+            </Upload>
+          </div>
         </Form.Item>
 
         <Form.Item name="productStatus" label="Trạng thái">
@@ -113,10 +146,6 @@ function ModalProduct({
           rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
         >
           <InputNumber style={{ width: "100%" }} min={1} />
-        </Form.Item>
-
-        <Form.Item name="image" label="Hình ảnh">
-          <Input />
         </Form.Item>
       </Form>
     </Modal>

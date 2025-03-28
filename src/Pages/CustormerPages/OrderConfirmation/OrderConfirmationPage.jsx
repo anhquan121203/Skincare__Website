@@ -6,7 +6,6 @@ import {
   LeftCircleOutlined,
   CreditCardFilled,
   ShoppingCartOutlined,
-  ReloadOutlined,
   PrinterOutlined,
 } from "@ant-design/icons";
 import useOrder from "../../../Hooks/useOrder";
@@ -16,12 +15,15 @@ import useProduct from "../../../Hooks/useProduct";
 import { Link } from "react-router-dom";
 
 const OrderConfirmationPage = () => {
-  const { orders } = useOrder();
+  const { orders, loading: ordersLoading } = useOrder();
   const { firstName, lastName, phoneNumber, address } = useAuth();
-  const { orderDetails } = useOrderDetails();
-  const { products } = useProduct();
+  const { orderDetails, loading: orderDetailsLoading } = useOrderDetails();
+  const { products, loading: productsLoading } = useProduct();
 
-  console.log("orders", orders);
+  // Kiểm tra nếu bất kỳ dữ liệu nào đang tải
+  if (ordersLoading || orderDetailsLoading || productsLoading) {
+    return <div>Loading...</div>;
+  }
 
   // Lấy order mới nhất theo orderDate
   const latestOrder = orders?.length

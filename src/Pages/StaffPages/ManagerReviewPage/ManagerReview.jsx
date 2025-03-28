@@ -23,17 +23,10 @@ function StaffProductManager() {
   };
 
   // Xử lý xác nhận cập nhật
-  const handleConfirmUpdate = async (updatedProduct) => {
+  const handleConfirmUpdate = (updatedProduct) => {
     console.log("Updated Product:", updatedProduct);
 
-    const formattedProduct = {
-      ...editingProduct,
-      ...updatedProduct,
-      createdDate: updatedProduct.createdDate.format(),
-      expiredDate: updatedProduct.expiredDate.format(),
-    };
-
-    await editProduct(formattedProduct);
+    editProduct(updatedProduct);
     toast.success("Cập nhật sản phẩm thành công!");
     setIsModalOpen(false);
     setEditingProduct(null);
