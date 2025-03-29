@@ -119,11 +119,11 @@
 }
 
 .btn-detailPro{
-  background-color: #9c6a0b;
+  background-color: #468499;
   color: white;
 }
 
 .btn-detailPro:hover {
-  background-color: #e29911;
+  background-color: #6dbabc;
   transform: scale(1);
 }
