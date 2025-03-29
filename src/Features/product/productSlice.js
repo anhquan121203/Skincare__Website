@@ -20,7 +20,10 @@ export const createProduct = createAsyncThunk(
     try {
       const response = await axios.post(
         `${PRODUCT_API_URL}/createProduct`,
-        product
+        product,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       return response.data;
     } catch (error) {
@@ -35,7 +38,10 @@ export const updateProduct = createAsyncThunk(
     try {
       const response = await axios.put(
         `${PRODUCT_API_URL}/updateProduct`,
-        product
+        product,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       return response.data;
     } catch (error) {
@@ -43,6 +49,8 @@ export const updateProduct = createAsyncThunk(
     }
   }
 );
+
+
 
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
@@ -82,7 +90,6 @@ const productSlice = createSlice({
         state.products.push(action.payload);
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
-        state.loading = false;
         state.products = state.products.map((product) =>
           product.id === action.payload.id ? action.payload : product
         );

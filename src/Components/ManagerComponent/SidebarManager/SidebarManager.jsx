@@ -27,12 +27,7 @@ function SidebarManager() {
   return (
     <div className="sidebar-manager">
       <div className="sidebar-header">
-        <img
-          src={
-            "https://dragonball.guru/wp-content/uploads/2021/01/goku-dragon-ball-guru.jpg"
-          }
-          alt=""
-        />
+        <img src={avatar} alt="" />
         <h2>
           {firstName} {lastName}
         </h2>
@@ -40,7 +35,7 @@ function SidebarManager() {
       </div>
 
       <ul className="sidebar-menu">
-        <hr />
+        {/* <hr /> */}
         {/* <h3 style={{textAlign: "center"}}>Doanh số</h3> */}
         <li className={isActive("/manager") ? "active" : ""}>
           <Link to="/manager">
@@ -109,21 +104,13 @@ function SidebarManager() {
             Hồ sơ <FaRegUser className="manager-icon" />
           </Link>
         </li>
-        <hr />
+        <li>
+          <Link onClick={handleLogout}>
+            Logout <FiLogOut className="manager-icon" />
+          </Link>
+        </li>
+        {/* <hr /> */}
       </ul>
-
-      <div className="sidebar-footer">
-        <ul>
-          {/* <li className={isActive("#") ? "active" : ""}>
-            <Link to="#">Settings <IoSettingsOutline /></Link>
-          </li> */}
-          <li>
-            <Link onClick={handleLogout}>
-              Logout <FiLogOut className="manager-icon" />
-            </Link>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 }

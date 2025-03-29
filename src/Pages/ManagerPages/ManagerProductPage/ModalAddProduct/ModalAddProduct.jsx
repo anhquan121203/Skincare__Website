@@ -10,55 +10,89 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
-  const [imageUrl, setImageUrl] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null); 
 
   useEffect(() => {
     if (isModalOpen) {
       form.resetFields(); // Always reset form when modal opens
-      setImageUrl(null); 
+      setSelectedFile(null);
     }
   }, [isModalOpen]);
 
-  const handleSubmit = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        handleAdd({ ...values, image: imageUrl });
-        toast.success("Thêm sản phẩm mới thành công!");
-        form.resetFields();
-        setImageUrl(null); // Reset image URL after submission
-      })
-      .catch((info) => {
-        console.error("Validation Failed:", info);
-      });
+  const handleUploadImage = ({ file }) => {
+    setSelectedFile(file);
   };
 
-  const handleUpload = async (file) => {
-    setUploading(true);
+  // const handleSubmit = () => {
+  //   form
+  //     .validateFields()
+  //     .then((values) => {
+  //       handleAdd({ ...values});
+  //       toast.success("Thêm sản phẩm mới thành công!");
+  //       form.resetFields();
+  //       // setImageUrl(null); // Reset image URL after submission
+  //     })
+  //     .catch((info) => {
+  //       console.error("Validation Failed:", info);
+  //     });
+  // };
+
+  const handleSubmit = async () => {
     try {
+      const values = await form.validateFields();
       const formData = new FormData();
-      formData.append("image", file);
 
-      const response = await axios.post("https://664dc6deede9a2b55654d26f.mockapi.io/quannvSE172057/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      // Thêm dữ liệu sản phẩm vào formData
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
+      });
 
-      if (response.data.url) {
-        setImageUrl(response.data.url);
-        form.setFieldsValue({ image: response.data.url });
-        toast.success("Tải ảnh lên thành công!");
-      } else {
-        toast.error("Tải ảnh thất bại!");
+      // Nếu có ảnh, thêm vào formData
+      if (selectedFile) {
+        formData.append("AttachmentFile", selectedFile);
       }
 
+      // Gửi dữ liệu về `ManagerProduct`
+      handleAdd(formData);
+      form.resetFields();
+      handleCancel(); // Đóng modal
     } catch (error) {
-      console.error("Lỗi khi tải ảnh:", error);
-      toast.error("Lỗi khi tải ảnh lên!");
+      console.error("Lỗi khi thêm sản phẩm:", error);
     }
-  }
+  };
+
+  // const handleUpload = async (file) => {
+  //   setUploading(true);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("AttachmentFile", file);
+
+  //     const response = await axios.post(
+  //       "https://localhost:7088/api/product/createProduct",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     console.log("Upload Response:", response.data);
+
+  //     if (response.data && response.data.imageUrl) {
+  //       setImageUrl(response.data.imageUrl);
+  //       form.setFieldsValue({ image: response.data.imageUrl });
+  //       toast.success("Tải ảnh lên thành công!");
+  //     } else {
+  //       toast.error("Tải ảnh thất bại! Định dạng phản hồi không đúng.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Lỗi khi tải ảnh:", error.response?.data || error.message);
+  //     toast.error("Lỗi khi tải ảnh lên! Vui lòng kiểm tra API.");
+  //   } finally {
+  //     setUploading(false);
+  //   }
+  // };
 
   return (
     <Modal
@@ -137,25 +171,19 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
 
         <Form.Item
           label="Ảnh sản phẩm"
-          name="image"
-          rules={[{ required: true, message: "Vui lòng tải lên ảnh sản phẩm!" }]}
+          name="AttachmentFile"
+          rules={[
+            { required: true, message: "Vui lòng tải lên ảnh sản phẩm!" },
+          ]}
         >
           <Upload
-            customRequest={({ file }) => handleUpload(file)}
-            showUploadList={false}
+            beforeUpload={() => false}
+            showUploadList={true}
             accept="image/*"
-            disabled={uploading}
+            onChange={handleUploadImage}
           >
-            <Button icon={<FaPlus  />} loading={uploading}>
-              {uploading ? "Đang tải..." : "Tải ảnh lên"}
-            </Button>
+            <Button icon={<FaPlus />}> Chon anh</Button>
           </Upload>
-
-          {imageUrl && (
-            <div style={{ marginTop: 10 }}>
-              <img src={imageUrl} alt="Sản phẩm" style={{ width: "100%", maxHeight: 200 }} />
-            </div>
-          )}
         </Form.Item>
       </Form>
     </Modal>
