@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./SidebarManager.css";
 import { LuLayoutDashboard } from "react-icons/lu";
@@ -10,7 +10,7 @@ import { logout } from "../../../Features/user/authSlice";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../../Api/authApi";
 import useAuth from "../../../Hooks/useAuth";
-import { RiQuestionAnswerLine } from "react-icons/ri";
+import { RiArrowDownSLine, RiArrowUpSLine, RiQuestionAnswerLine } from "react-icons/ri";
 import { BiCategoryAlt } from "react-icons/bi";
 
 function SidebarManager() {
@@ -18,6 +18,8 @@ function SidebarManager() {
   const isActive = (path) => location.pathname === path;
   const dispatch = useDispatch();
   const { avatar, firstName, lastName, roleName } = useAuth();
+
+  const [isManagerOpen, setManagerOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut();
@@ -44,32 +46,37 @@ function SidebarManager() {
         </li>
         <hr />
 
-        {/* Manager product */}
-        <h3 style={{ textAlign: "center", fontSize: "20px" }}>Quản lý</h3>
-        <li className={isActive("/manager/manager-product") ? "active" : ""}>
-          <Link to="/manager/manager-product">
-            Sản phẩm <FaDropbox className="manager-icon" />
-          </Link>
+       {/* Manager Product Dropdown */}
+       <h3 style={{ textAlign: "center", fontSize: "20px" }}>Quản lý</h3>
+        <li onClick={() => setManagerOpen(!isManagerOpen)} className="dropdown-toggle">
+          <span >
+            Quản lý sản phẩm {isManagerOpen ? <RiArrowUpSLine /> : <RiArrowDownSLine />}
+          </span>
         </li>
-        <li className={isActive("/manager/manager-category") ? "active" : ""}>
-          <Link to="/manager/manager-category">
-            Loại sản phẩm <BiCategoryAlt className="manager-icon" />
-          </Link>
-        </li>
-        <li className={isActive("/manager/manager-skinType") ? "active" : ""}>
-          <Link to="/manager/manager-skinType">
-            Loại da <FaDropbox className="manager-icon" />
-          </Link>
-        </li>
-        <li
-          className={
-            isActive("/manager/manager-skinCareRoutines") ? "active" : ""
-          }
-        >
-          <Link to="/manager/manager-skinCareRoutines">
-            Quy trình chăm sóc da <FaDropbox className="manager-icon" />
-          </Link>
-        </li>
+        {isManagerOpen && (
+          <ul className="dropdown-menu">
+            <li className={isActive("/manager/manager-product") ? "active" : ""}>
+              <Link to="/manager/manager-product">
+                Sản phẩm <FaDropbox className="manager-icon" />
+              </Link>
+            </li>
+            <li className={isActive("/manager/manager-category") ? "active" : ""}>
+              <Link to="/manager/manager-category">
+                Loại sản phẩm <BiCategoryAlt className="manager-icon" />
+              </Link>
+            </li>
+            <li className={isActive("/manager/manager-skinType") ? "active" : ""}>
+              <Link to="/manager/manager-skinType">
+                Loại da <FaDropbox className="manager-icon" />
+              </Link>
+            </li>
+            <li className={isActive("/manager/manager-skinCareRoutines") ? "active" : ""}>
+              <Link to="/manager/manager-skinCareRoutines">
+                Quy trình chăm sóc da <FaDropbox className="manager-icon" />
+              </Link>
+            </li>
+          </ul>
+        )}
         <hr />
 
         {/* Manager Skin Type********************************************* */}
