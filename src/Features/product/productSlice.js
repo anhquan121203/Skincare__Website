@@ -34,13 +34,8 @@ export const updateProduct = createAsyncThunk(
   async (product, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        "https://localhost:7088/api/product/updateProduct",
-        product, // Ensure JSON string format
-        {
-          headers: {
-            "Content-Type": "application/json", // Explicitly set JSON format
-          },
-        }
+        `${PRODUCT_API_URL}/updateProduct`,
+        product
       );
       return response.data;
     } catch (error) {
@@ -49,28 +44,11 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
-// export const updateProduct = createAsyncThunk(
-//   "product/updateProduct",
-//   async ({ product }, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.put(
-//         `${PRODUCT_API_URL}/updateProduct`,
-//         product
-//       );
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data || error.message);
-//     }
-//   }
-// );
-
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `${PRODUCT_API_URL}/deleteProduct/${id}`
-      );
+      await axios.delete(`${PRODUCT_API_URL}/deleteProduct/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -104,14 +82,13 @@ const productSlice = createSlice({
         state.products.push(action.payload);
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(
-          (p) => p.id === action.payload.id
+        state.loading = false;
+        state.products = state.products.map((product) =>
+          product.id === action.payload.id ? action.payload : product
         );
-        if (index !== -1) {
-          state.products[index] = action.payload;
-        }
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
         state.products = state.products.filter((p) => p.id !== action.payload);
       });
   },

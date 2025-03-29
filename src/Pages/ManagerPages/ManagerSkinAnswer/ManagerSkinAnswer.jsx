@@ -26,10 +26,6 @@ function ManagerSkinAnswer() {
   //Modal update question
   const [isUpdateAnswerModal, setIsUpdateAnswerModal] = useState(false);
 
-  // Modal delete question
-  const [isDeleteAnswerModal, setIsDeleteAnswerModal] = useState(false);
-  const [answerToDelete, setAnswerToDelete] = useState(null);
-
   const openAddAnswerModal = () => {
     setIsNewAnswerModal(true);
     setSelectAnswer(null);
@@ -60,14 +56,8 @@ function ManagerSkinAnswer() {
     const updatedAnswer = { ...answerData, id: selectAnswer.id };
 
     editSkinAnswer(updatedAnswer); // Ensure the correct format
-    toast.success("Cập nhật câu trả lời thành công!");
+    // toast.success("Cập nhật câu trả lời thành công!");
     setIsUpdateAnswerModal(false);
-  };
-
-  // Open Delete Confirmation Modal
-  const openDeleteAnswerModal = (question) => {
-    setSelectAnswer(question);
-    setIsDeleteAnswerModal(true);
   };
 
   const handleDeleteSkinAnswer = (id) => {
@@ -124,8 +114,12 @@ function ManagerSkinAnswer() {
                   <td>{item.questionText}</td>
                   <td>{item.skinTypeName}</td>
                   <td>
-                    <span className="status-active">
-                      {item.skinAnswerStatus}
+                    <span
+                      className={`status-${item.skinAnswerStatus.toLowerCase()}`}
+                    >
+                      {item.skinAnswerStatus === "Active"
+                        ? "Active"
+                        : "Inactive"}
                     </span>
                   </td>
                   <td>
@@ -136,8 +130,8 @@ function ManagerSkinAnswer() {
                       Cập nhật
                     </Button>
                     <Popconfirm
-                      title="Xóa loại da"
-                      description="Bạn muốn xóa loại da này?"
+                      title="Xóa câu trả lời?"
+                      description="Bạn muốn xóa câu trả lời này không?"
                       onConfirm={() => handleDeleteSkinAnswer(item.id)}
                     >
                       <Button className="btn-removeSkinType">Xóa</Button>
@@ -170,17 +164,6 @@ function ManagerSkinAnswer() {
         updateAnswer={selectAnswer}
       />
 
-      {/* Modal delete */}
-      <Modal
-        title="Xác nhận xóa sản phẩm"
-        open={isDeleteAnswerModal}
-        onOk={handleDeleteSkinAnswer}
-        onCancel={() => setIsDeleteAnswerModal(false)}
-        okText="Xóa"
-        cancelText="Hủy"
-      >
-        <p>Bạn có chắc chắn muốn xóa câu trả lời?</p>
-      </Modal>
     </div>
   );
 }

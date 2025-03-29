@@ -41,7 +41,9 @@ function TabDetails({ productId, product }) {
   if (!product) return <p>Sản phẩm không tồn tại!</p>;
 
   const startIndex = (currentPage - 1) * pageSize;
-  const paginatedComment = comments?.length ? comments.slice(startIndex, startIndex + pageSize) : [];
+  const paginatedComment = comments?.length
+    ? comments.slice(startIndex, startIndex + pageSize)
+    : [];
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -79,7 +81,7 @@ function TabDetails({ productId, product }) {
           className={activeTab === "reviews" ? "tab active" : "tab"}
           onClick={() => setActiveTab("reviews")}
         >
-          Đánh giá ({comments?.length})
+          Đánh giá ({Array.isArray(comments) ? comments.length : 0})
         </button>
       </div>
 
@@ -177,7 +179,8 @@ function TabDetails({ productId, product }) {
                 </div>
               ))} */}
 
-              {Array.isArray(paginatedComment) && paginatedComment.length > 0 ? (
+              {Array.isArray(paginatedComment) &&
+              paginatedComment.length > 0 ? (
                 paginatedComment.map((item, index) => (
                   <Card
                     key={index}
@@ -210,7 +213,7 @@ function TabDetails({ productId, product }) {
                 <p>Chưa có đánh giá nào.</p>
               )}
 
-              {comments?.length > pageSize && (
+              {Array.isArray(comments) && comments.length > pageSize && (
                 <Pagination
                   current={currentPage}
                   pageSize={pageSize}
@@ -219,7 +222,6 @@ function TabDetails({ productId, product }) {
                   style={{ marginTop: "16px", textAlign: "center" }}
                 />
               )}
-
             </div>
 
             <Modal
@@ -228,7 +230,8 @@ function TabDetails({ productId, product }) {
               onOk={handleDeleteComment}
               onCancel={() => setIsDeleteModal(false)}
               okText="Xóa"
-              cancelText="Hủy">
+              cancelText="Hủy"
+            >
               <p>Bạn có chắc chắn muốn xóa đánh giá không?</p>
             </Modal>
           </div>
