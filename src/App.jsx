@@ -40,6 +40,7 @@ import ManagerProfile from "./Pages/ManagerPages/ManagerProfile/ManagerProfile.j
 import ManagerAccount from "./Pages/ManagerPages/ManagerAccount/ManagerAccount.jsx";
 import ManagerSkinQuestion from "./Pages/ManagerPages/ManagerSkinQuestion/ManagerSkinQuestion.jsx";
 import ManagerSkinAnswer from "./Pages/ManagerPages/ManagerSkinAnswer/ManagerSkinAnswer.jsx";
+import ManagerSkincareRoutine from "./Pages/ManagerPages/ManagerSkincareRoutines/ManagerSkincareRoutine.jsx";
 
 function App() {
   return (
@@ -106,8 +107,18 @@ function App() {
 
           <Route path="manager-profile" element={<ManagerProfile />}></Route>
           <Route path="manager-account" element={<ManagerAccount />}></Route>
-          <Route path="manager-skinQuestion" element={<ManagerSkinQuestion />}></Route>
-          <Route path="manager-skinAnswer" element={<ManagerSkinAnswer />}></Route>
+          <Route
+            path="manager-skinQuestion"
+            element={<ManagerSkinQuestion />}
+          ></Route>
+          <Route
+            path="manager-skinAnswer"
+            element={<ManagerSkinAnswer />}
+          ></Route>
+          <Route
+            path="manager-skinCareRoutines"
+            element={<ManagerSkincareRoutine />}
+          ></Route>
         </Route>
 
         {/****************************************************************************/}

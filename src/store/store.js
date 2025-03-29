@@ -13,6 +13,7 @@ import stepRoutineSlide from "../Features/stepRoutine/stepRoutineSlide";
 import accountSlice from "../Features/account/accountSlice";
 import skinQuestionSlice from "../Features/skinQuestion/skinQuestionSlice";
 import skinAnswerSlice from "../Features/skinAnswer/skinAnswerSlice";
+import skincareRoutineSlice from "../Features/skincareRoutine/skincareRoutineSlice";
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ export const store = configureStore({
     stepRoutine: stepRoutineSlide.reducer,
     account: accountSlice.reducer,
     skinQuestion: skinQuestionSlice.reducer,
-    skinAnswer: skinAnswerSlice.reducer
+    skinAnswer: skinAnswerSlice.reducer,
+    skincareRoutine: skincareRoutineSlice.reducer,
   },
 });

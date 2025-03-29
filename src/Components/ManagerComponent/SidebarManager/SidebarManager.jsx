@@ -53,31 +53,45 @@ function SidebarManager() {
         <h3 style={{ textAlign: "center", fontSize: "20px" }}>Quản lý</h3>
         <li className={isActive("/manager/manager-product") ? "active" : ""}>
           <Link to="/manager/manager-product">
-            Sản phẩm <FaDropbox className="manager-icon"/>
+            Sản phẩm <FaDropbox className="manager-icon" />
           </Link>
         </li>
         <li className={isActive("/manager/manager-category") ? "active" : ""}>
           <Link to="/manager/manager-category">
-            Loại sản phẩm <BiCategoryAlt  className="manager-icon"/>
+            Loại sản phẩm <BiCategoryAlt className="manager-icon" />
           </Link>
         </li>
         <li className={isActive("/manager/manager-skinType") ? "active" : ""}>
           <Link to="/manager/manager-skinType">
-            Loại da <FaDropbox className="manager-icon"/>
+            Loại da <FaDropbox className="manager-icon" />
+          </Link>
+        </li>
+        <li
+          className={
+            isActive("/manager/manager-skinCareRoutines") ? "active" : ""
+          }
+        >
+          <Link to="/manager/manager-skinCareRoutines">
+            Quy trình chăm sóc da <FaDropbox className="manager-icon" />
           </Link>
         </li>
         <hr />
 
         {/* Manager Skin Type********************************************* */}
-        <h3 style={{ textAlign: "center", fontSize: "20px" }}>Câu hỏi loại da</h3>
-        <li className={isActive("/manager/manager-skinQuestion") ? "active" : ""}>
+        <h3 style={{ textAlign: "center", fontSize: "20px" }}>
+          Câu hỏi loại da
+        </h3>
+        <li
+          className={isActive("/manager/manager-skinQuestion") ? "active" : ""}
+        >
           <Link to="/manager/manager-skinQuestion">
-            Câu hỏi về da<FaRegQuestionCircle  className="manager-icon"/>
+            Câu hỏi về da
+            <FaRegQuestionCircle className="manager-icon" />
           </Link>
         </li>
         <li className={isActive("/manager/manager-skinAnswer") ? "active" : ""}>
           <Link to="/manager/manager-skinAnswer">
-            Câu trả lời <RiQuestionAnswerLine  className="manager-icon"/>
+            Câu trả lời <RiQuestionAnswerLine className="manager-icon" />
           </Link>
         </li>
 
@@ -86,12 +100,13 @@ function SidebarManager() {
         {/* Manager account **********************************************/}
         <li className={isActive("/manager/manager-account") ? "active" : ""}>
           <Link to="/manager/manager-account">
-            Quản lý tài khoản <MdOutlineManageAccounts className="manager-icon"/>
+            Quản lý tài khoản{" "}
+            <MdOutlineManageAccounts className="manager-icon" />
           </Link>
         </li>
         <li className={isActive("/manager/manager-profile") ? "active" : ""}>
           <Link to="/manager/manager-profile">
-            Hồ sơ <FaRegUser className="manager-icon"/>
+            Hồ sơ <FaRegUser className="manager-icon" />
           </Link>
         </li>
         <hr />
@@ -104,7 +119,7 @@ function SidebarManager() {
           </li> */}
           <li>
             <Link onClick={handleLogout}>
-              Logout <FiLogOut className="manager-icon"/>
+              Logout <FiLogOut className="manager-icon" />
             </Link>
           </li>
         </ul>
