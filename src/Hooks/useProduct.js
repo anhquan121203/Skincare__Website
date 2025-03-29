@@ -26,13 +26,12 @@ const useProduct = () => {
 
   const editProduct = async (product) => {
     try {
-      await dispatch(updateProduct(product)); 
-      dispatch(fetchProducts()); 
+      await dispatch(updateProduct(product));
+      dispatch(fetchProducts());
     } catch (error) {
       console.error("Error updating product:", error);
     }
   };
-  
 
   const removeProduct = async (id) => {
     if (!id) {
