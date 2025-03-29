@@ -4,7 +4,7 @@ import { Button, Image, Input, Modal, Pagination, Popconfirm } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { toast } from "react-toastify";
-import ModalAddProduct from "./ModalNewProduct/ModalAddProduct";
+import ModalAddProduct from "./ModalAddProduct/ModalAddProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdateProduct";
 import ModalDetailProduct from "./ModalDetailProduct/ModalDetailProduct";
 
@@ -44,8 +44,12 @@ function ManagerProduct() {
   };
 
   const handleUpdateProduct = (productData) => {
-    editProduct(selectedProduct.id, productData);
-    toast.success("Cập nhật sản phẩm thành công!");
+    if (!selectedProduct?.id) {
+      toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
+      return;
+    }
+    editProduct({id: selectedProduct.id, productData});
+    // toast.success("Cập nhật sản phẩm thành công!");
     setIsUpdateModalOpen(false);
   };
 
@@ -83,13 +87,13 @@ function ManagerProduct() {
 
   return (
     <div className="managerProduct-container">
-      <h1>Manager Product</h1>
+      <h1>Quản lý sản phẩm</h1>
 
       <div className="content-manager-product">
         <div className="header-manager-product">
           <button className="btn-addProduct" onClick={openAddModal}>
             <FaPlus style={{ marginRight: "8px" }} />
-            Add new product
+            Tạo sản phẩm
           </button>
 
           <div className="search-product">

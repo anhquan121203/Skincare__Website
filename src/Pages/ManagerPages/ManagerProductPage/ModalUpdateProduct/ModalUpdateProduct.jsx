@@ -1,8 +1,18 @@
-import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
-import { useEffect } from "react";
+import {
+  Button,
+  Form,
+  Image,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
+  Upload,
+} from "antd";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
+import { FaPlus } from "react-icons/fa";
 
 const ModalUpdateProduct = ({
   isModalOpen,
@@ -13,6 +23,7 @@ const ModalUpdateProduct = ({
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
+   const [selectedFile, setSelectedFile] = useState(null); 
 
   useEffect(() => {
     if (updateProduct) {
@@ -21,36 +32,55 @@ const ModalUpdateProduct = ({
         CategoryId: updateProduct.CategoryId || null,
         SkinTypeId: updateProduct.SkinTypeId || null,
       });
+      setSelectedFile(null);
     }
   }, [updateProduct, isModalOpen]);
 
-  const handleSubmit = () => {
-    form.validateFields()
-      .then((values) => {
-        handleUpdate(values);
-        toast.success("Cập nhật sản phẩm thành công!");
-      })
-      .catch((info) => {
-        console.error("Validation Failed:", info);
-      });
+  const handleUploadImage = ({ file }) => {
+    setSelectedFile(file);
   };
 
   // const handleSubmit = () => {
   //   form
   //     .validateFields()
   //     .then((values) => {
-  //       const formData = new FormData();
-  //       Object.keys(values).forEach((key) => {
-  //         formData.append(key, values[key]);
-  //       });
-
-  //       handleUpdate(formData);
+  //       handleUpdate(values);
   //       toast.success("Cập nhật sản phẩm thành công!");
   //     })
   //     .catch((info) => {
   //       console.error("Validation Failed:", info);
   //     });
   // };
+
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      const formData = new FormData();
+
+      if (!values.id) {
+        toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
+        return;
+      }
+      formData.append("id", values.id);
+      // Thêm dữ liệu sản phẩm vào formData
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
+      });
+
+      // Nếu có ảnh, thêm vào formData
+      if (selectedFile) {
+        formData.append("AttachmentFile", selectedFile);
+      }
+
+      handleUpdate(formData);
+      form.resetFields();
+      handleCancel();
+      toast.success("Cập nhật sản phẩm thành công!");
+    } catch (error) {
+      console.error("Lỗi khi thêm sản phẩm:", error);
+      toast.error("Lỗi sản phẩm!");
+    }
+  }
 
   return (
     <Modal
@@ -142,12 +172,19 @@ const ModalUpdateProduct = ({
           </Select>
         </Form.Item>
 
+          <Image style={{ width: 100, height: 100, objectFit: "cover" }} />
+
         <Form.Item
-          label="Ảnh sản phẩm"
-          name="image"
-          rules={[{ required: true, message: "Vui lòng nhập URL ảnh!" }]}
+          name="AttachmentFile"
         >
-          <Input />
+          <Upload
+            beforeUpload={() => false}
+            showUploadList={true}
+            accept="image/*"
+            onChange={handleUploadImage}
+          >
+            <Button icon={<FaPlus />}> Chon anh</Button>
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>
