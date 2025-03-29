@@ -3,7 +3,7 @@ import {
   fetchProducts,
   createProduct,
   updateProduct,
-  deleteProduct as removeProduct,
+  deleteProduct,
 } from "../Features/product/productSlice";
 import { useEffect } from "react";
 
@@ -34,9 +34,21 @@ const useProduct = () => {
   };
   
 
-  const deleteProduct = (id) => dispatch(removeProduct(id));
+  const removeProduct = async (id) => {
+    if (!id) {
+      console.error("Error: ID is undefined");
+      return;
+    }
+    try {
+      await dispatch(deleteProduct(id));
+      dispatch(fetchProducts());
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+  
 
-  return { products, loading, error, addProduct, editProduct, deleteProduct };
+  return { products, loading, error, addProduct, editProduct, removeProduct };
 };
 
 export default useProduct;

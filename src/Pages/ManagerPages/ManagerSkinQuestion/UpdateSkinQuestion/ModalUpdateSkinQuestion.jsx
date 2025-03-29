@@ -1,6 +1,7 @@
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import useSkinQuestion from "../../../../Hooks/useSkinQuestion";
 
 const ModalUpdateSkinQuestion = ({
   isModalOpen,
@@ -53,6 +54,18 @@ const ModalUpdateSkinQuestion = ({
         >
           <Input style={{ width: "100%" }} />
         </Form.Item>
+
+        <Form.Item
+          label="Trạng thái"
+          name="skinQuestionStatus"
+          rules={[{ required: true, message: "Vui lòng nhập câu hỏi!" }]}
+        >
+          <Select>
+            <Select.Option value="Active">Active</Select.Option>
+            <Select.Option value="Inactive">Inactive</Select.Option>
+          </Select>
+        </Form.Item>
+
       </Form>
     </Modal>
   );
