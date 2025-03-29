@@ -25,7 +25,7 @@ const ModalUpdateSkinAnswer = ({
       .validateFields()
       .then((values) => {
         handleUpdate(values);
-        toast.success("Cập nhật câu hỏi thành công!");
+        // toast.success("Cập nhật câu hỏi thành công!");
       })
       .catch((info) => {
         console.error("Validation Failed:", info);
@@ -53,7 +53,7 @@ const ModalUpdateSkinAnswer = ({
 
         <Form.Item
           label="Câu hỏi"
-          name="questionText"
+          name="answerText"
           rules={[{ required: true, message: "Vui lòng nhập câu hỏi!" }]}
         >
           <Input style={{ width: "100%" }} />
@@ -76,6 +76,17 @@ const ModalUpdateSkinAnswer = ({
                 {skinType.skinTypeName}
               </Select.Option>
             ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Trạng thái"
+          name="skinAnswerStatus"
+          rules={[{ required: true, message: "Vui lòng nhập trạng thái!" }]}
+        >
+          <Select>
+            <Select.Option value="Active">Active</Select.Option>
+            <Select.Option value="Inactive">Inactive</Select.Option>
           </Select>
         </Form.Item>
       </Form>

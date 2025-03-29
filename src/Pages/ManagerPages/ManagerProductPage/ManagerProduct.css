@@ -86,7 +86,8 @@
 }
 
 .btn-updatePro,
-.btn-removePro {
+.btn-removePro,
+.btn-detailPro {
   border: none;
   margin-right: 5px;
   padding: 6px 12px;
@@ -114,5 +115,15 @@
 
 .btn-removePro:hover {
   background-color: #c82333;
+  transform: scale(1);
+}
+
+.btn-detailPro{
+  background-color: #9c6a0b;
+  color: white;
+}
+
+.btn-detailPro:hover {
+  background-color: #e29911;
   transform: scale(1);
 }

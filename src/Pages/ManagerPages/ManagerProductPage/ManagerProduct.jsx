@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./ManagerProduct.css";
-import { Input, Modal, Pagination } from "antd";
+import { Button, Image, Input, Modal, Pagination, Popconfirm } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { toast } from "react-toastify";
-import ModalAddProduct from "./ModalNewProduct/ModalProduct";
+import ModalAddProduct from "./ModalNewProduct/ModalAddProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdateProduct";
+import ModalDetailProduct from "./ModalDetailProduct/ModalDetailProduct";
 
 function ManagerProduct() {
   const { products, loading, error, addProduct, removeProduct, editProduct } =
@@ -15,15 +16,25 @@ function ManagerProduct() {
 
   // Separate state for each modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  // update modal
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  // Delete modal
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
+  // Detail modal
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   // Open Add Modal
   const openAddModal = () => {
     setSelectedProduct(null);
     setIsAddModalOpen(true);
+  };
+
+  // Handle Add Product
+  const handleAddProduct = (productData) => {
+    addProduct(productData);
+    setIsAddModalOpen(false);
   };
 
   // Open Update Modal
@@ -32,14 +43,6 @@ function ManagerProduct() {
     setIsUpdateModalOpen(true);
   };
 
-  // Handle Add Product
-  const handleAddProduct = (productData) => {
-    addProduct(productData);
-    toast.success("Thêm sản phẩm mới thành công!");
-    setIsAddModalOpen(false);
-  };
-
-  // Handle Update Product
   const handleUpdateProduct = (productData) => {
     editProduct(selectedProduct.id, productData);
     toast.success("Cập nhật sản phẩm thành công!");
@@ -51,11 +54,10 @@ function ManagerProduct() {
     setProductToDelete(product);
     setIsDeleteModalOpen(true);
   };
-  
 
-  // Handle Delete Product
   const handleDeleteProduct = () => {
-    if (productToDelete && productToDelete.id) { // Ensure id is defined
+    if (productToDelete && productToDelete.id) {
+      // Ensure id is defined
       removeProduct(productToDelete.id);
       toast.success("Xóa sản phẩm thành công!");
       setIsDeleteModalOpen(false);
@@ -63,13 +65,21 @@ function ManagerProduct() {
       toast.error("Lỗi: ID sản phẩm không hợp lệ!");
     }
   };
-  
+
+
+
+  // MODAL DETAIL PRODUCT
+  const openDetailModal = (product) => {
+    setSelectedProduct(product);
+    setIsDetailsModalOpen(true);
+  };
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
+
 
   return (
     <div className="managerProduct-container">
@@ -96,7 +106,7 @@ function ManagerProduct() {
               <tr>
                 <th>STT</th>
                 <th style={{ width: "200px" }}>Tên sản phẩm</th>
-                <th style={{ width: "200px" }}>Mô tả</th>
+                {/* <th style={{ width: "200px" }}>Mô tả</th> */}
                 <th>Giá tiền (VND)</th>
                 <th>Số lượng</th>
                 <th style={{ width: "200px" }}>Hình ảnh</th>
@@ -111,24 +121,28 @@ function ManagerProduct() {
                 <tr key={index}>
                   <td>{item.id}</td>
                   <td>{item.productName}</td>
-                  <td>{item.description}</td>
-                  <td>{item.price}</td>
+                  {/* <td>{item.description}</td> */}
+                  <td>{item.price} VND</td>
                   <td>{item.quantity}</td>
                   <td>
-                    <img
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                      }}
-                      src={item.image}
-                      alt={item.productName}
+                    <Image
+                      style={{ width: 100, height: 100, objectFit: "cover" }}
+                      src={item.image || "N/A"}
+                      fallback="https://via.placeholder.com/100"
                     />
                   </td>
                   <td>{item.categoryName}</td>
                   <td>{item.skinTypeName}</td>
+
+                  {/* css in skinQuestion */}
                   <td>
-                    <span className="status-active">{item.productStatus}</span>
+                    <span
+                      className={`status-${item.productStatus.toLowerCase()}`}
+                    >
+                      {item.productStatus === "Available"
+                        ? "Available"
+                        : "Inactive"}
+                    </span>
                   </td>
                   <td className="action-btnPro">
                     <button
@@ -143,6 +157,13 @@ function ManagerProduct() {
                     >
                       Xóa
                     </button>
+                    
+                    <button
+                      className="btn-detailPro"
+                      onClick={() => openDetailModal(item)}
+                    >
+                      Chi tiết
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -155,7 +176,12 @@ function ManagerProduct() {
           pageSize={pageSize}
           total={products.length}
           onChange={(page) => setCurrentPage(page)}
-          style={{ marginTop: "16px", textAlign: "center" }}
+          style={{
+            marginTop: "20px",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
         />
       </div>
 
@@ -188,6 +214,12 @@ function ManagerProduct() {
           <strong>{productToDelete?.productName}</strong>?
         </p>
       </Modal>
+
+      <ModalDetailProduct
+        isModalOpen={isDetailsModalOpen}
+        handleCancel={() => setIsDetailsModalOpen(false)}
+        selectedProduct={selectedProduct}
+      />
     </div>
   );
 }

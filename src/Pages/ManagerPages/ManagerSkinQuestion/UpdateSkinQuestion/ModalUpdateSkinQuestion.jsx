@@ -55,20 +55,8 @@ const ModalUpdateSkinQuestion = ({
           <Input style={{ width: "100%" }} />
         </Form.Item>
 
-        {/* <Form.Item
-          label="Loại da"
-          name="skinQuestionStatus"
-          rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
-        >
-          <Select placeholder="Chọn loại da">
-            <Select.Option value={skinQuestionStatus}>
-              {skinQuestionStatus}
-            </Select.Option>
-          </Select>
-        </Form.Item> */}
-
         <Form.Item
-          label="Câu hỏi"
+          label="Trạng thái"
           name="skinQuestionStatus"
           rules={[{ required: true, message: "Vui lòng nhập câu hỏi!" }]}
         >
@@ -77,6 +65,7 @@ const ModalUpdateSkinQuestion = ({
             <Select.Option value="Inactive">Inactive</Select.Option>
           </Select>
         </Form.Item>
+
       </Form>
     </Modal>
   );

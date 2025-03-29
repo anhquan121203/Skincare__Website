@@ -23,10 +23,6 @@ function ManagerSkinQuestion() {
   //Modal update question
   const [isUpdateQuestionModal, setIsUpdateQuestionModal] = useState(false);
 
-  // Modal delete question
-  const [isDeleteQuestionModal, setIsDeleteQuestionModal] = useState(false);
-  const [productToDelete, setProductToDelete] = useState(null);
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
@@ -60,15 +56,8 @@ function ManagerSkinQuestion() {
     }
     const updatedQuestion = { ...questionData, id: selectQuestion.id };
 
-    editSkinQuestion(updatedQuestion); // Ensure the correct format
-    toast.success("Cập nhật câu hỏi thành công!");
+    editSkinQuestion(updatedQuestion);
     setIsUpdateQuestionModal(false);
-  };
-
-  // Open Delete Confirmation Modal
-  const openDeleteQuestionModal = (question) => {
-    setSelectQuestion(question);
-    setIsDeleteQuestionModal(true);
   };
 
   const handleDeleteSkinQuestion = (id) => {
@@ -89,13 +78,13 @@ function ManagerSkinQuestion() {
     startIndex + pageSize
   );
 
-  //   const activeSkinQuestions = skinQuestion.filter(
-  //     (item) => item.skinQuestionStatus === "Active"
-  //   );
-  //   const paginatedSkinQuestion = activeSkinQuestions.slice(
-  //     startIndex,
-  //     startIndex + pageSize
-  //   );
+    // const activeSkinQuestions = skinQuestion.filter(
+    //   (item) => item.skinQuestionStatus === "Active"
+    // );
+    // const paginatedSkinQuestion = activeSkinQuestions.slice(
+    //   startIndex,
+    //   startIndex + pageSize
+    // );
 
   return (
     <div className="managerSkinQuestion-container">
@@ -149,9 +138,9 @@ function ManagerSkinQuestion() {
                       Cập nhật
                     </Button>
                     <Popconfirm
-                      title="Xóa loại da"
-                      description="Bạn muốn xóa loại da này?"
-                      onConfirm={() => openDeleteQuestionModal(item.id)}
+                      title="Xóa câu hỏi"
+                      description="Bạn muốn xóa câu hỏi này không?"
+                      onConfirm={() => handleDeleteSkinQuestion(item.id)}
                     >
                       <Button className="btn-removeSkinType">Xóa</Button>
                     </Popconfirm>
@@ -183,20 +172,6 @@ function ManagerSkinQuestion() {
         updateQuestion={selectQuestion}
       />
 
-      {/* Modal delete */}
-      <Modal
-        title="Xác nhận xóa sản phẩm"
-        open={isDeleteQuestionModal}
-        onOk={handleDeleteSkinQuestion}
-        onCancel={() => setIsDeleteQuestionModal(false)}
-        okText="Xóa"
-        cancelText="Hủy"
-      >
-        <p>
-          Bạn có chắc chắn muốn xóa câu hỏi{" "}
-          <strong>{productToDelete?.questionText}</strong>?
-        </p>
-      </Modal>
     </div>
   );
 }

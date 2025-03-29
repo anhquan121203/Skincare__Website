@@ -1,60 +1,68 @@
-import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
-import { useEffect } from "react";
+import { Button, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
+import axios from "axios";
+import { FaPlus } from "react-icons/fa";
 
-const ModalUpdateProduct = ({
-  isModalOpen,
-  handleCancel,
-  handleUpdate,
-  updateProduct,
-}) => {
+const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
+  const [imageUrl, setImageUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    if (updateProduct) {
-      form.setFieldsValue({
-        ...updateProduct,
-        CategoryId: updateProduct.CategoryId || null,
-        SkinTypeId: updateProduct.SkinTypeId || null,
-      });
+    if (isModalOpen) {
+      form.resetFields(); // Always reset form when modal opens
+      setImageUrl(null); 
     }
-  }, [updateProduct, isModalOpen]);
+  }, [isModalOpen]);
 
   const handleSubmit = () => {
-    form.validateFields()
+    form
+      .validateFields()
       .then((values) => {
-        handleUpdate(values);
-        toast.success("Cập nhật sản phẩm thành công!");
+        handleAdd({ ...values, image: imageUrl });
+        toast.success("Thêm sản phẩm mới thành công!");
+        form.resetFields();
+        setImageUrl(null); // Reset image URL after submission
       })
       .catch((info) => {
         console.error("Validation Failed:", info);
       });
   };
 
-  // const handleSubmit = () => {
-  //   form
-  //     .validateFields()
-  //     .then((values) => {
-  //       const formData = new FormData();
-  //       Object.keys(values).forEach((key) => {
-  //         formData.append(key, values[key]);
-  //       });
+  const handleUpload = async (file) => {
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
 
-  //       handleUpdate(formData);
-  //       toast.success("Cập nhật sản phẩm thành công!");
-  //     })
-  //     .catch((info) => {
-  //       console.error("Validation Failed:", info);
-  //     });
-  // };
+      const response = await axios.post("https://664dc6deede9a2b55654d26f.mockapi.io/quannvSE172057/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+
+      if (response.data.url) {
+        setImageUrl(response.data.url);
+        form.setFieldsValue({ image: response.data.url });
+        toast.success("Tải ảnh lên thành công!");
+      } else {
+        toast.error("Tải ảnh thất bại!");
+      }
+
+    } catch (error) {
+      console.error("Lỗi khi tải ảnh:", error);
+      toast.error("Lỗi khi tải ảnh lên!");
+    }
+  }
 
   return (
     <Modal
-      title="Cập nhật sản phẩm"
+      title="Tạo sản phẩm mới"
       open={isModalOpen}
       onCancel={handleCancel}
       footer={[
@@ -62,15 +70,11 @@ const ModalUpdateProduct = ({
           Hủy
         </Button>,
         <Button key="submit" type="primary" onClick={handleSubmit}>
-          Cập nhật
+          Tạo sản phẩm
         </Button>,
       ]}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="id" hidden>
-          <Input disabled />
-        </Form.Item>
-
         <Form.Item
           label="Tên sản phẩm"
           name="productName"
@@ -105,7 +109,7 @@ const ModalUpdateProduct = ({
 
         <Form.Item
           label="Loại sản phẩm"
-          name="categoryId"
+          name="CategoryId"
           rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}
         >
           <Select loading={loading} placeholder="Chọn loại sản phẩm">
@@ -119,7 +123,7 @@ const ModalUpdateProduct = ({
 
         <Form.Item
           label="Loại da"
-          name="skinTypeId"
+          name="SkinTypeId"
           rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
         >
           <Select loading={loading} placeholder="Chọn loại da">
@@ -132,26 +136,30 @@ const ModalUpdateProduct = ({
         </Form.Item>
 
         <Form.Item
-          label="Trạng thái"
-          name="productStatus"
-          rules={[{ required: true, message: "Vui lòng nhập câu hỏi!" }]}
-        >
-          <Select>
-            <Select.Option value="Available">Available</Select.Option>
-            <Select.Option value="Inactive">Inactive</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item
           label="Ảnh sản phẩm"
           name="image"
-          rules={[{ required: true, message: "Vui lòng nhập URL ảnh!" }]}
+          rules={[{ required: true, message: "Vui lòng tải lên ảnh sản phẩm!" }]}
         >
-          <Input />
+          <Upload
+            customRequest={({ file }) => handleUpload(file)}
+            showUploadList={false}
+            accept="image/*"
+            disabled={uploading}
+          >
+            <Button icon={<FaPlus  />} loading={uploading}>
+              {uploading ? "Đang tải..." : "Tải ảnh lên"}
+            </Button>
+          </Upload>
+
+          {imageUrl && (
+            <div style={{ marginTop: 10 }}>
+              <img src={imageUrl} alt="Sản phẩm" style={{ width: "100%", maxHeight: 200 }} />
+            </div>
+          )}
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default ModalUpdateProduct;
+export default ModalAddProduct;
