@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStepRoutineId } from "../Features/stepRoutine/stepRoutineSlide";
+import { fetchStepRoutineById } from "../Features/stepRoutine/stepRoutineSlide";
 
 const useStepRoutine = (stepRoutineId) => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const useStepRoutine = (stepRoutineId) => {
 
   useEffect(() => {
     if (stepRoutineId) {
-      dispatch(fetchStepRoutineId(stepRoutineId));
+      dispatch(fetchStepRoutineById(stepRoutineId));
     }
   }, [dispatch, stepRoutineId]);
 
