@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createStepRoutine,
+  deleteStepRoutine,
   fetchStepRoutineId,
   listStepRoutines,
+  updateStepRoutine,
 } from "../Features/stepRoutine/stepRoutineSlice";
 
 const useStepRoutine = (stepRoutineId) => {
@@ -18,14 +20,13 @@ const useStepRoutine = (stepRoutineId) => {
     }
   }, [dispatch, stepRoutineId]);
 
-
   useEffect(() => {
     dispatch(listStepRoutines());
   }, [dispatch]);
 
   const checkStepOfRoutine = (stepNumber, routineId) => {
     if (!stepRoutines || stepRoutines.length === 0) return false;
-  
+
     return stepRoutines.some(
       (step) => step.stepNumber === stepNumber && step.routineId === routineId
     );
@@ -33,13 +34,16 @@ const useStepRoutine = (stepRoutineId) => {
 
   const addNewStepRoutine = async (stepRoutine) => {
     try {
-      const stepExist = checkStepOfRoutine(stepRoutine.stepNumber, stepRoutine.routineId);
+      const stepExist = checkStepOfRoutine(
+        stepRoutine.stepNumber,
+        stepRoutine.routineId
+      );
       if (stepExist) {
         throw new Error(
           "Bước này đã tồn tại trong routine này. Vui lòng nhập email khác!"
         );
       }
-      console.log(checkStepOfRoutine(stepRoutine.stepNumber))
+      console.log(checkStepOfRoutine(stepRoutine.stepNumber));
 
       await dispatch(createStepRoutine(stepRoutine));
       dispatch(listStepRoutines());
@@ -48,12 +52,24 @@ const useStepRoutine = (stepRoutineId) => {
     }
   };
 
+  const editStepRoutine = async (stepRoutine) => {
+    await dispatch(updateStepRoutine(stepRoutine));
+    dispatch(listStepRoutines());
+  };
+
+  const removeStepRoutine = async (id) => {
+    await dispatch(deleteStepRoutine(id));
+    dispatch(listStepRoutines());
+  };
+
   return {
     stepRoutines,
     loading,
     error,
     addNewStepRoutine,
     checkStepOfRoutine,
+    editStepRoutine,
+    removeStepRoutine,
   };
 };
 

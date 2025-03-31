@@ -1,4 +1,13 @@
-import { Button, DatePicker, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
+  Upload,
+} from "antd";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
@@ -6,11 +15,16 @@ import useSkinType from "../../../../Hooks/useSkinType";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 
-const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
+const ModalAddProduct = ({
+  isModalOpen,
+  handleCancel,
+  handleAdd,
+  productNameExist,
+}) => {
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
-  const [selectedFile, setSelectedFile] = useState(null); 
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -52,8 +66,14 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
         formData.append("AttachmentFile", selectedFile);
       }
 
+      const checkProductName = await productNameExist(values.productName);
+      if (checkProductName) {
+        toast.error("Sản phẩm đã tồn tại. Vui lòng nhập sản phẩm khác!");
+        return;
+      }
+
       // Gửi dữ liệu về `ManagerProduct`
-      handleAdd(formData);
+      await handleAdd(formData);
       form.resetFields();
       handleCancel(); // Đóng modal
       toast.success("Tạo sản phẩm thành công");
@@ -148,7 +168,7 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
           name="createdDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
         >
-          <DatePicker placeholder="Ngày sản xuất"/>
+          <DatePicker placeholder="Ngày sản xuất" />
         </Form.Item>
 
         <Form.Item
@@ -156,7 +176,7 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
           name="expiredDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
         >
-          <DatePicker placeholder="Ngày hết hạn"/>
+          <DatePicker placeholder="Ngày hết hạn" />
         </Form.Item>
 
         <Form.Item

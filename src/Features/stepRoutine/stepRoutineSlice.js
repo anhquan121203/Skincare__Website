@@ -38,9 +38,37 @@ export const createStepRoutine = createAsyncThunk(
   async (stepRoutine, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${STEP_ROUTINE_API_URL}/createStepRoutine`, stepRoutine
+        `${STEP_ROUTINE_API_URL}/createStepRoutine`,
+        stepRoutine
       );
       return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const updateStepRoutine = createAsyncThunk(
+  "stepRoutine/updateStepRoutine",
+  async (stepRoutine, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${STEP_ROUTINE_API_URL}/updateStepRoutine`,
+        stepRoutine
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const deleteStepRoutine = createAsyncThunk(
+  "stepRoutine/deleteStepRoutine",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${STEP_ROUTINE_API_URL}/deleteStepRoutine/${id}`);
+      return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -84,8 +112,23 @@ const stepRoutineSlice = createSlice({
 
       // create step routine
       .addCase(createStepRoutine.fulfilled, (state, action) => {
-        state.stepRoutines.push(action.payload)
+        state.stepRoutines.push(action.payload);
       })
+
+      // update stepRoutine
+      .addCase(updateStepRoutine.fulfilled, (state, action) => {
+        state.loading = false;
+        state.stepRoutines = state.stepRoutines.map((stepRoutine) =>
+          stepRoutine.id === action.payload.id ? action.payload : stepRoutine
+        );
+      })
+      // Remove skin question
+      .addCase(deleteStepRoutine.fulfilled, (state, action) => {
+        state.loading = false;
+        state.stepRoutines = state.stepRoutines.filter(
+          (p) => p.id !== action.payload
+        );
+      });
   },
 });
 

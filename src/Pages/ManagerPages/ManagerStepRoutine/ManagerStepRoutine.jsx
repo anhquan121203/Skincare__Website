@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Input, Pagination, Button, Popconfirm, Modal } from "antd";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
+import "./ManagerStepRoutine.css"
 import useStepRoutine from "../../../Hooks/useStepRoutine";
 import ModalAddStepRoutine from "./ModalAddStepRoutine/ModalAddStepRoutine";
+import ModalUpdateStepRoutine from "./ModalUpdateStepRoutine/ModalUpdateStepRoutine";
 
 function ManagerStepRoutine() {
   const {
@@ -12,16 +14,18 @@ function ManagerStepRoutine() {
     error,
     addNewStepRoutine,
     checkStepOfRoutine,
+    editStepRoutine,
+    removeStepRoutine
   } = useStepRoutine();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4;
+  const pageSize = 10;
 
   const [isNewStepRoutineModal, setIsNewStepRoutineModal] = useState(false);
   const [selectStepRoutine, setSelectStepRoutine] = useState(null);
 
   // //Modal update question
-  // const [isUpdateAnswerModal, setIsUpdateAnswerModal] = useState(false);
+  const [isUpdateStepRoutineModal, setIsUpdateStepRoutineModal] = useState(false);
 
   // Modal add step
   const openAddStepRoutineModal = () => {
@@ -48,32 +52,32 @@ function ManagerStepRoutine() {
     }
   };
 
-  // // Open Update Modal
-  // const openUpdateAnswerModal = (answer) => {
-  //   setSelectAnswer(answer);
-  //   setIsUpdateAnswerModal(true);
-  // };
+  // Open Update Modal
+  const openUpdateAnswerModal = (step) => {
+    setSelectStepRoutine(step);
+    setIsUpdateStepRoutineModal(true);
+  };
 
-  // const handleUpdateAnswer = (answerData) => {
-  //   if (!selectAnswer) {
-  //     toast.error("Không tìm thấy câu hỏi để cập nhật!");
-  //     return;
-  //   }
-  //   const updatedAnswer = { ...answerData, id: selectAnswer.id };
+  const handleUpdateStepRoutine = (stepData) => {
+    if (!selectStepRoutine) {
+      toast.error("Không tìm thấy câu hỏi để cập nhật!");
+      return;
+    }
+    const updatedStep = { ...stepData, id: selectStepRoutine.id };
 
-  //   editSkinAnswer(updatedAnswer); // Ensure the correct format
-  //   // toast.success("Cập nhật câu trả lời thành công!");
-  //   setIsUpdateAnswerModal(false);
-  // };
+    editStepRoutine(updatedStep); // Ensure the correct format
+    // toast.success("Cập nhật câu trả lời thành công!");
+    setIsUpdateStepRoutineModal(false);
+  };
 
-  // const handleDeleteSkinAnswer = (id) => {
-  //   if (id) {
-  //     removeSkinAnswer(id);
-  //     toast.success("Xóa câu trả lời thành công!");
-  //   } else {
-  //     toast.error("Xóa câu trả lời thất bại! Vui lòng thử lại.");
-  //   }
-  // };
+  const handleDeleteStepRoutine = (id) => {
+    if (id) {
+      removeStepRoutine(id);
+      toast.success("Xóa thành công!");
+    } else {
+      toast.error("Xóa thất bại! Vui lòng thử lại.");
+    }
+  };
 
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedSkinAnswer = stepRoutines.slice(
@@ -109,7 +113,7 @@ function ManagerStepRoutine() {
               <tr>
                 <th>ID</th>
                 <th>Bước số</th>
-                <th>Mô tả bước</th>
+                <th style={{width: "450px"}}>Mô tả bước</th>
                 <th>Tên routine</th>
                 <th>Id sản phẩm</th>
                 <th>Trạng thái</th>
@@ -138,9 +142,9 @@ function ManagerStepRoutine() {
                       Cập nhật
                     </Button>
                     <Popconfirm
-                      title="Xóa câu trả lời?"
-                      description="Bạn muốn xóa câu trả lời này không?"
-                      onConfirm={() => handleDeleteSkinAnswer(item.id)}
+                      title="Xóa bước routine?"
+                      description="Bạn muốn xóa không?"
+                      onConfirm={() => handleDeleteStepRoutine(item.id)}
                     >
                       <Button className="btn-removeSkinType">Xóa</Button>
                     </Popconfirm>
@@ -166,12 +170,12 @@ function ManagerStepRoutine() {
         checkStepOfRoutine={checkStepOfRoutine}
       />
 
-      {/* <ModalUpdateSkinAnswer
-        isModalOpen={isUpdateAnswerModal}
-        handleCancel={() => setIsUpdateAnswerModal(false)} // Fix
-        handleUpdate={handleUpdateAnswer}
-        updateAnswer={selectAnswer}
-      /> */}
+      <ModalUpdateStepRoutine
+        isModalOpen={isUpdateStepRoutineModal}
+        handleCancel={() => setIsUpdateStepRoutineModal(false)} 
+        handleUpdate={handleUpdateStepRoutine}
+        updateStep={selectStepRoutine}
+      />
     </div>
   );
 }
