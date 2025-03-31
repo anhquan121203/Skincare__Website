@@ -15,8 +15,16 @@ const useProduct = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  const productNameExist = (productName) => {
+    return products.find((product) => product.productName === productName) !== undefined;
+  }
+
   const addProduct = async (product) => {
     try {
+      if(productNameExist(product.productName)){
+        throw new Error("Sản phẩm đã tồn tại. Vui lòng nhập sản phẩm khác!");
+      }
+
       await dispatch(createProduct(product));
       dispatch(fetchProducts());
     } catch (error) {
@@ -47,7 +55,7 @@ const useProduct = () => {
   };
   
 
-  return { products, loading, error, addProduct, editProduct, removeProduct };
+  return { products, loading, error, addProduct, editProduct, removeProduct, productNameExist };
 };
 
 export default useProduct;

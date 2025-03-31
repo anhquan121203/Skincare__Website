@@ -12,7 +12,7 @@ export const fetchSkincareRoutines = createAsyncThunk(
       const response = await axios.get(
         `${SKINCARE_ROUTINE_API_URL}/listSkinCareRoutines`
       );
-      console.log("response", response.data);
+      // console.log("response", response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

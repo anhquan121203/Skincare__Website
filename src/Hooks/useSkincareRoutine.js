@@ -13,7 +13,7 @@ const useSkincareRoutine = () => {
     (state) => state.skincareRoutine
   );
 
-  console.log("skincareRoutine", skincareRoutine);
+  // console.log("skincareRoutine", skincareRoutine);
 
   useEffect(() => {
     dispatch(fetchSkincareRoutines());

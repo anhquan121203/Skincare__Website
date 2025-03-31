@@ -2,7 +2,7 @@
 .managerSkinQuestion-container {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   max-width: 100%;
   padding: 20px;
   overflow: auto;
