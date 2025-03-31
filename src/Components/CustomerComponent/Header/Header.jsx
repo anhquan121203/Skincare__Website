@@ -126,7 +126,7 @@ function Header() {
                   }}
                   onClick={toggleDropdown}
                   className="dropdown-button"
-                  src={avatar ? avatar : "https://via.placeholder.com/50"}
+                  src={avatar}
                   alt=""
                 />
               </div>

@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, Modal, Select, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
@@ -56,8 +56,10 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
       handleAdd(formData);
       form.resetFields();
       handleCancel(); // Đóng modal
+      toast.success("Tạo sản phẩm thành công");
     } catch (error) {
       console.error("Lỗi khi thêm sản phẩm:", error);
+      toast.error("Tạo sản phẩm không thành công!!!");
     }
   };
 
@@ -142,6 +144,22 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
         </Form.Item>
 
         <Form.Item
+          label="Số lượng"
+          name="createdDate"
+          rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
+        >
+          <DatePicker placeholder="Ngày sản xuất"/>
+        </Form.Item>
+
+        <Form.Item
+          label="Số lượng"
+          name="expiredDate"
+          rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
+        >
+          <DatePicker placeholder="Ngày hết hạn"/>
+        </Form.Item>
+
+        <Form.Item
           label="Loại sản phẩm"
           name="CategoryId"
           rules={[{ required: true, message: "Vui lòng chọn loại sản phẩm!" }]}
@@ -182,7 +200,7 @@ const ModalAddProduct = ({ isModalOpen, handleCancel, handleAdd }) => {
             accept="image/*"
             onChange={handleUploadImage}
           >
-            <Button icon={<FaPlus />}> Chon anh</Button>
+            <Button icon={<FaPlus />}> Chọn ảnh </Button>
           </Upload>
         </Form.Item>
       </Form>

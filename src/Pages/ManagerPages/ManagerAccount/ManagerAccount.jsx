@@ -9,7 +9,8 @@ import useAccount from "../../../Hooks/useAccount";
 import ModalAccountStaff from "./ModalAccountStaff/ModalAccountStaff";
 
 function ManagerAccount() {
-  const { account, loading, error, addNewStaff } = useAccount();
+  const { account, loading, error, addNewStaff, checkEmailExists } =
+    useAccount();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
@@ -23,15 +24,27 @@ function ManagerAccount() {
   const paginatedAccount = account.slice(startIndex, startIndex + pageSize);
 
   const openAddStaffModal = () => {
-    setEditCreateStaff(null); 
+    setEditCreateStaff(null);
     setIsStaffModalOpen(true);
   };
 
-    const handleAddStaff = (accountData) => {
-      addNewStaff(accountData);
-      toast.success("Thêm sản phẩm mới thành công!");
+  const handleAddStaff = async (accountData) => {
+    try {
+      // Check email when create account staff
+      const emailExists = await checkEmailExists(accountData.email);
+      if (emailExists) {
+        toast.error("Email đã tồn tại. Vui lòng nhập email khác!");
+        return;
+      }
+
+      // Add new staff
+      await addNewStaff(accountData);
       setIsStaffModalOpen(false);
-    };
+    } catch (error) {
+      toast.error("Lỗi khi tạo tài khoản staff!");
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className="account-container">
@@ -127,8 +140,8 @@ function ManagerAccount() {
         isModalOpen={isStaffModalOpen}
         handleCancel={() => setIsStaffModalOpen(false)}
         handleAdd={handleAddStaff}
+        checkEmailExists={checkEmailExists}
       />
-
     </div>
   );
 }

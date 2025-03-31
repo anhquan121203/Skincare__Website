@@ -141,7 +141,7 @@ function ManagerProduct() {
                   {/* css in skinQuestion */}
                   <td>
                     <span
-                      className={`status-${item.productStatus.toLowerCase()}`}
+                      className={`status-${item.productStatus?.toLowerCase()}`}
                     >
                       {item.productStatus === "Available"
                         ? "Available"

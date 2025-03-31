@@ -81,6 +81,7 @@ function DashboardManager() {
 
   return (
     <div className="dashboard-container">
+      <h1>Doanh so</h1>
       <div className="dashboard-header">
         <div className="dashboard--element">
           <div className="order__modifier">
