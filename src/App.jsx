@@ -41,6 +41,7 @@ import ManagerAccount from "./Pages/ManagerPages/ManagerAccount/ManagerAccount.j
 import ManagerSkinQuestion from "./Pages/ManagerPages/ManagerSkinQuestion/ManagerSkinQuestion.jsx";
 import ManagerSkinAnswer from "./Pages/ManagerPages/ManagerSkinAnswer/ManagerSkinAnswer.jsx";
 import ManagerSkincareRoutine from "./Pages/ManagerPages/ManagerSkincareRoutines/ManagerSkincareRoutine.jsx";
+import ManagerStepRoutine from "./Pages/ManagerPages/ManagerStepRoutine/ManagerStepRoutine.jsx";
 
 function App() {
   return (
@@ -76,7 +77,7 @@ function App() {
           {/* Đúng tên */}
         </Route>
 
-        {/* Staff router */}
+        {/* Staff router ******************************************************/}
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<DashboardManager />}></Route>
           <Route path="Staff-manage-profile" element={<StaffProfile />}></Route>
@@ -94,7 +95,7 @@ function App() {
           ></Route>
         </Route>
 
-        {/* Manager router */}
+        {/* Manager router ***************************************/}
         <Route path="/manager" element={<ManagerLayout />}>
           <Route index element={<DashboardManager />}></Route>
           <Route
@@ -118,6 +119,10 @@ function App() {
           <Route
             path="manager-skinCareRoutines"
             element={<ManagerSkincareRoutine />}
+          ></Route>
+          <Route
+            path="manager-stepRoutine"
+            element={<ManagerStepRoutine />}
           ></Route>
         </Route>
 

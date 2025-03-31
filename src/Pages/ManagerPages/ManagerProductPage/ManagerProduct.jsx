@@ -4,13 +4,20 @@ import { Button, Image, Input, Modal, Pagination, Popconfirm } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useProduct from "../../../Hooks/useProduct";
 import { toast } from "react-toastify";
-import ModalAddProduct from "./ModalNewProduct/ModalAddProduct";
+import ModalAddProduct from "./ModalAddProduct/ModalAddProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct/ModalUpdateProduct";
 import ModalDetailProduct from "./ModalDetailProduct/ModalDetailProduct";
 
 function ManagerProduct() {
-  const { products, loading, error, addProduct, removeProduct, editProduct } =
-    useProduct();
+  const {
+    products,
+    loading,
+    error,
+    addProduct,
+    removeProduct,
+    editProduct,
+    productNameExist,
+  } = useProduct();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 
@@ -32,9 +39,24 @@ function ManagerProduct() {
   };
 
   // Handle Add Product
-  const handleAddProduct = (productData) => {
-    addProduct(productData);
-    setIsAddModalOpen(false);
+  // const handleAddProduct = (productData) => {
+  //   addProduct(productData);
+  //   setIsAddModalOpen(false);
+  // };
+  const handleAddProduct = async (productData) => {
+    try {
+      const checkProductName = await productNameExist(productData.productName);
+      if (checkProductName) {
+        toast.error("Sản phẩm đã tồn tại. Vui lòng nhập sản phẩm khác!");
+        return;
+      }
+
+      await addProduct(productData);
+      setIsAddModalOpen(false);
+    } catch (error) {
+      toast.error("Lỗi khi tạo sản phẩm!");
+      console.error("Error:", error);
+    }
   };
 
   // Open Update Modal
@@ -44,8 +66,12 @@ function ManagerProduct() {
   };
 
   const handleUpdateProduct = (productData) => {
-    editProduct(selectedProduct.id, productData);
-    toast.success("Cập nhật sản phẩm thành công!");
+    if (!selectedProduct?.id) {
+      toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
+      return;
+    }
+    editProduct({ id: selectedProduct.id, productData });
+    // toast.success("Cập nhật sản phẩm thành công!");
     setIsUpdateModalOpen(false);
   };
 
@@ -66,8 +92,6 @@ function ManagerProduct() {
     }
   };
 
-
-
   // MODAL DETAIL PRODUCT
   const openDetailModal = (product) => {
     setSelectedProduct(product);
@@ -80,16 +104,15 @@ function ManagerProduct() {
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedProducts = products.slice(startIndex, startIndex + pageSize);
 
-
   return (
     <div className="managerProduct-container">
-      <h1>Manager Product</h1>
+      <h1>Quản lý sản phẩm</h1>
 
       <div className="content-manager-product">
         <div className="header-manager-product">
           <button className="btn-addProduct" onClick={openAddModal}>
             <FaPlus style={{ marginRight: "8px" }} />
-            Add new product
+            Tạo sản phẩm
           </button>
 
           <div className="search-product">
@@ -128,7 +151,6 @@ function ManagerProduct() {
                     <Image
                       style={{ width: 100, height: 100, objectFit: "cover" }}
                       src={item.image || "N/A"}
-                      fallback="https://via.placeholder.com/100"
                     />
                   </td>
                   <td>{item.categoryName}</td>
@@ -137,7 +159,7 @@ function ManagerProduct() {
                   {/* css in skinQuestion */}
                   <td>
                     <span
-                      className={`status-${item.productStatus.toLowerCase()}`}
+                      className={`status-${item.productStatus?.toLowerCase()}`}
                     >
                       {item.productStatus === "Available"
                         ? "Available"
@@ -157,7 +179,7 @@ function ManagerProduct() {
                     >
                       Xóa
                     </button>
-                    
+
                     <button
                       className="btn-detailPro"
                       onClick={() => openDetailModal(item)}
@@ -190,6 +212,7 @@ function ManagerProduct() {
         isModalOpen={isAddModalOpen}
         handleCancel={() => setIsAddModalOpen(false)}
         handleAdd={handleAddProduct}
+        productNameExist={productNameExist}
       />
 
       {/* Update Product Modal */}

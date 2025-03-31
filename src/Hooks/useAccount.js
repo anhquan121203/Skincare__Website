@@ -14,9 +14,20 @@ const useAccount = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const addNewStaff = async (account) => {
+
+  const checkEmailExists = (email) => {
+    return account.find((user) => user.email === email) !== undefined;
+  }
+
+  const addNewStaff = async (newAccount) => {
     try {
-      await dispatch(createStaffAccount(account));
+
+      // check  email
+      if (checkEmailExists(newAccount.email)) {
+        throw new Error("Email đã tồn tại. Vui lòng nhập email khác!");
+      }
+
+      await dispatch(createStaffAccount(newAccount));
       dispatch(getAllUsers());
     } catch (error) {
       console.error("Error create Staff");
@@ -26,7 +37,7 @@ const useAccount = () => {
   const depositWallet = (money) => {
     dispatch(updateWallet(money));
   };
-  return { account, loading, error, addNewStaff, depositWallet };
+  return { account, loading, error, addNewStaff, depositWallet, checkEmailExists };
 };
 
 export default useAccount;

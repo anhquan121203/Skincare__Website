@@ -6,6 +6,7 @@ import useSkinType from "../../../../Hooks/useSkinType";
 import useProduct from "../../../../Hooks/useProduct";
 import { FaStar } from "react-icons/fa";
 import "./SkincareRoutine.css";
+import useSkincareRoutine from "../../../../Hooks/useSkincareRoutine";
 
 const SkincareRoutine = () => {
   const navigate = useNavigate();
@@ -18,21 +19,49 @@ const SkincareRoutine = () => {
 
   // Fetch dữ liệu từ hooks
   const {
+    skincareRoutine,
+    loading: loadingSkincareRoutine,
+    error: errorSkincareRoutine,
+  } = useSkincareRoutine();
+  const {
     stepRoutines,
     loading: loadingSteps,
     error: errorSteps,
   } = useStepRoutine(id);
-  const { skinTypes, loading: loadingSkinTypes } = useSkinType();
-  const { products, loading: loadingProducts } = useProduct();
+
+  const {
+    skinTypes,
+    loading: loadingSkinTypes,
+    error: errorSkinTypes,
+  } = useSkinType();
+
+  const {
+    products,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useProduct();
 
   // Kiểm tra nếu dữ liệu chưa load
-  if (loadingSkinTypes || loadingProducts || loadingSteps) {
+  if (
+    loadingSkinTypes ||
+    loadingProducts ||
+    loadingSteps ||
+    loadingSkincareRoutine
+  ) {
     return <div className="loading">Đang tải dữ liệu...</div>;
   }
 
-  if (errorSteps) {
-    return <div className="error">Lỗi khi tải quy trình: {errorSteps}</div>;
+  if (errorSteps || errorSkincareRoutine || errorSkinTypes || errorProducts) {
+    return <div className="error">Lỗi khi tải quy trình</div>;
   }
+
+  // const skincareRoutineActive = skincareRoutine.filter(
+  //   (skincareRoutine) =>
+  //     skincareRoutine.skinTypeId === Number(id) &&
+  //     skincareRoutine.status === "Active"
+  // );
+
+  // console.log("skincareRoutineActive", skincareRoutineActive);
 
   // Lọc loại da đang Active
   const skintypeActive = skinTypes.filter(
