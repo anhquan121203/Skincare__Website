@@ -5,8 +5,8 @@ import {
   STEP_ROUTINE_API_URL,
 } from "../../Constants/stepRoutineConstant";
 
-export const fetchStepRoutineId = createAsyncThunk(
-  "commnet/fetchStepRoutineId",
+export const fetchStepRoutineById = createAsyncThunk(
+  "commnet/fetchStepRoutineById",
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(
@@ -85,14 +85,14 @@ const stepRoutineSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchStepRoutineId.pending, (state) => {
+      .addCase(fetchStepRoutineById.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchStepRoutineId.fulfilled, (state, action) => {
+      .addCase(fetchStepRoutineById.fulfilled, (state, action) => {
         state.loading = false;
         state.stepRoutines = action.payload;
       })
-      .addCase(fetchStepRoutineId.rejected, (state, action) => {
+      .addCase(fetchStepRoutineById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
