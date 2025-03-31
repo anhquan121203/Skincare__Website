@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Button, Spin, Alert, Popconfirm } from "antd";
+import { Table, Button, Alert, Popconfirm } from "antd";
 import useCategory from "../../../Hooks/useCategory";
 import "./ManagerCategory.css";
 import ModalCategory from "./modalNewProduct/ModalCategory";
@@ -20,7 +20,7 @@ function ManagerCategory() {
     deleteCategory,
   } = useCategory();
 
-  if (loading) return <Spin size="large" className="loading-spinner" />;
+  if (loading) return <p>loading.....</p>;
   if (error)
     return <Alert message="Error" description={error} type="error" showIcon />;
 

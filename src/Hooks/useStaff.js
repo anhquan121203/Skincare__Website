@@ -6,7 +6,9 @@ function useStaff() {
   const { staffs, loading, error } = useSelector((state) => state.staff);
 
   const editStaff = async (staffInfo) => {
+    console.log("staffInfo", staffInfo);
     await dispatch(updateStaffProfile(staffInfo));
+    // dispatch(fetchStaffs());
   };
 
   return { staffs, loading, error, editStaff };

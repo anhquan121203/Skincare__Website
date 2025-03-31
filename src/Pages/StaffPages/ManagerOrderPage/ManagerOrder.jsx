@@ -6,8 +6,10 @@ import useAuth from "../../../Hooks/useAuth";
 import { toast } from "react-toastify";
 import ModalOrder from "./ModalOrder/ModalOrder";
 import ViewOrderDetail from "../../CustormerPages/HistoryPage/ModalViewOrderDetail/ViewOrderDetail";
+import useAccount from "../../../Hooks/useAccount";
 
 function StaffOrderManager() {
+  const { account, loading: accountLoading } = useAccount();
   const { orders, loading, error, editOrder } = useOrder();
   const [searchText, setSearchText] = useState("");
 
@@ -124,6 +126,11 @@ function StaffOrderManager() {
 
   if (loading) return <p>Đang tải đơn hàng...</p>;
   if (error) return <p>Lỗi khi tải đơn hàng: {error}</p>;
+
+  if (accountLoading) {
+    return <div>Loading...</div>;
+  }
+  console.log("account", account);
 
   return (
     <div>

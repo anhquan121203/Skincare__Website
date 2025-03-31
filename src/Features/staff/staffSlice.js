@@ -7,20 +7,26 @@ import {
 
 export const updateStaffProfile = createAsyncThunk(
   "staff/UpdateUserProfile",
-  async ({ staff, token }, { rejectWithValue }) => {
+  async ({ staff }, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        return rejectWithValue("No token found, authentication failed.");
+      }
+
       const response = await axios.put(
         `${FETCH_STAFF_PROFILE_API_URL}/UpdateUserProfile`,
-        staff,
+        staff, // Ensure `staff` is properly formatted JSON
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", // Adjust if needed
             Authorization: `Bearer ${token}`,
           },
         }
       );
       return response.data;
     } catch (error) {
+      console.error("Error updating staff profile:", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -36,13 +42,18 @@ const staffSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-
-      // Update skin type
+      .addCase(updateStaffProfile.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(updateStaffProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.staffs = state.staffs.map((staff) =>
           staff.id === action.payload.id ? action.payload : staff
         );
+      })
+      .addCase(updateStaffProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Something went wrong";
       });
   },
 });

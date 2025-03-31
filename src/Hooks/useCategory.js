@@ -15,9 +15,11 @@ const useCategory = () => {
     dispatch(fetchCategory());
   }, [dispatch]);
 
-  const addCategory = (category) => {
-    dispatch(createCategory({ category }));
+  const addCategory = async (category) => {
+    await dispatch(createCategory({ category }));
+    dispatch(fetchCategory());
   };
+
   const editCategory = async (category) => {
     await dispatch(updateCategory({ category }));
     dispatch(fetchCategory()); // Fetch lại danh sách danh mục sau khi cập nhật

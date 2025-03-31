@@ -62,11 +62,6 @@ function ModalStaffProfile({
               <Input />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="roleName" label="Chức vụ">
-              <Input disabled />
-            </Form.Item>
-          </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>

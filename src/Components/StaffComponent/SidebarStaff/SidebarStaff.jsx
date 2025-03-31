@@ -11,7 +11,6 @@ import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../Features/user/authSlice";
 import { signOut } from "../../../Api/authApi";
-import useAuth from "../../../Hooks/useAuth";
 
 const { Sider } = Layout;
 
@@ -33,8 +32,6 @@ const items = [
 const SidebarStaff = ({ collapsed, setCollapsed }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { lastName, firstName } = useAuth();
 
   const handleLogout = async () => {
     await signOut();
@@ -68,7 +65,7 @@ const SidebarStaff = ({ collapsed, setCollapsed }) => {
           <div
             style={{ textAlign: "center", marginTop: "10px", color: "white" }}
           >
-            <div>{firstName + " " + lastName}</div>
+            {/* <div>{firstName + " " + lastName}</div> */}
             <div style={{ fontSize: "12px", opacity: 0.7 }}>
               Vị trí: Nhân viên
             </div>

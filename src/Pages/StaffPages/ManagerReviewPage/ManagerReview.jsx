@@ -7,7 +7,8 @@ import { toast } from "react-toastify"; // Import Modal cập nhật
 import ModalProduct from "./ModalProduct/ModalProduct";
 
 function StaffProductManager() {
-  const { products, loading, error, editProduct, deleteProduct } = useProduct();
+  const { products, loading, error, editProduct, removeProduct } = useProduct();
+  console.log("products", products);
   const [searchText, setSearchText] = useState("");
   const { userId } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -136,7 +137,7 @@ function StaffProductManager() {
   ];
 
   const handleDelete = (id) => {
-    deleteProduct(id);
+    removeProduct(id);
     toast.success("Xóa sản phẩm thành công.");
   };
 
@@ -154,7 +155,8 @@ function StaffProductManager() {
       </Space>
       <Table
         dataSource={filteredProducts
-          .filter((item) => item.productStatus === "Available") // Chỉ hiển thị sản phẩm Available
+          .filter((item) => String(item.productStatus) === "Available")
+          // Chỉ hiển thị sản phẩm Available
           .map((item) => ({ ...item, key: item.id }))
           .filter((item) => String(item.staffId) === String(userId))}
         columns={columns}

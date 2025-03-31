@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./StaffProfile.css";
 import {
   Button,
@@ -10,41 +10,76 @@ import {
   Input,
   Typography,
   Upload,
-  message,
+  Skeleton,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import useAuth from "../../../Hooks/useAuth";
-import useStaff from "../../../Hooks/useStaff";
 import ModalStaffProfile from "./modalStaffProfile/ModalStaffProfile";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { FETCH_STAFF_PROFILE_API_URL } from "../../../Constants/staffContant";
 
 const { Title, Text } = Typography;
 
 function StaffProfile() {
-  const {
-    avatar,
-    userId,
-    firstName,
-    lastName,
-    phoneNumber,
-    birthday,
-    email,
-    address,
-    roleName,
-  } = useAuth();
-  const { editStaff } = useStaff();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [staffData, setStaffData] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const token = localStorage.getItem("accessToken");
+
+  // Fetch dữ liệu khi trang load
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `${FETCH_STAFF_PROFILE_API_URL}/GetUserProfile`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Lỗi khi tải dữ liệu:", error);
+      }
+    };
+    fetchUserData();
+  }, [token]);
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
   const handleConfirmUpdate = async (updatedData) => {
-    await editStaff(updatedData);
-    toast.success("Cập nhật thông tin nhân viên thành công!");
-    setIsModalOpen(false);
+    try {
+      await axios.put(
+        `${FETCH_STAFF_PROFILE_API_URL}/UpdateUserProfile`,
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Cập nhật hồ sơ thành công!");
+
+      // Fetch lại dữ liệu sau khi cập nhật
+      const response = await axios.get(
+        `${FETCH_STAFF_PROFILE_API_URL}/GetUserProfile`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUserData(response.data);
+
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error("Cập nhật không thành công!");
+    }
   };
+
+  if (!userData) {
+    return <Skeleton active />;
+  }
 
   return (
     <div className="user-profile container mt-5 p-4">
@@ -56,47 +91,46 @@ function StaffProfile() {
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Họ">
-                    <Input value={firstName} disabled />
+                    <Input value={userData.firstName} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
                   <Form.Item label="Tên">
-                    <Input value={lastName} disabled />
+                    <Input value={userData.lastName} disabled />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Sinh Nhật">
-                    <Input value={birthday} disabled />
+                    <Input value={userData.birthday} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
                   <Form.Item label="Chức vụ">
-                    <Input value={roleName} disabled />
+                    <Input value={userData.roleName} disabled />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Email">
-                    <Input value={email} disabled />
+                    <Input value={userData.email} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
                   <Form.Item label="Số điện thoại">
-                    <Input value={phoneNumber} disabled />
+                    <Input value={userData.phoneNumber} disabled />
                   </Form.Item>
                 </Col>
               </Row>
               <Form.Item label="Địa chỉ">
-                <Input value={address} disabled />
+                <Input value={userData.address} disabled />
               </Form.Item>
             </Form>
           </Card>
         </Col>
 
-        {/* Cột phải - Avatar và nút cập nhật */}
         <Col md={8} sm={24}>
           <Card
             className="p-4 shadow-sm text-center"
@@ -111,17 +145,17 @@ function StaffProfile() {
                 borderRadius: "50%",
               }}
               src={
-                avatar ||
+                userData.avatar ||
                 "https://dragonball.guru/wp-content/uploads/2021/01/goku-dragon-ball-guru.jpg"
               }
               alt="User Avatar"
               preview={false}
             />
             <Title level={5} className="mt-3">
-              {firstName} {lastName}
+              {userData.firstName} {userData.lastName}
             </Title>
-            <Text type="secondary">{email}</Text>
-            <p>{phoneNumber}</p>
+            <Text type="secondary">{userData.email}</Text>
+            <p>{userData.phoneNumber}</p>
             <Upload showUploadList={false} beforeUpload={() => false}>
               <Button icon={<UploadOutlined />} style={{ margin: "10px 0" }}>
                 Thay ảnh đại diện
@@ -131,13 +165,12 @@ function StaffProfile() {
               type="primary"
               onClick={() => {
                 setStaffData({
-                  firstName,
-                  lastName,
-                  birthday,
-                  email,
-                  phoneNumber,
-                  address,
-                  roleName,
+                  firstName: userData.firstName,
+                  lastName: userData.lastName,
+                  birthday: userData.birthday,
+                  email: userData.email,
+                  phoneNumber: userData.phoneNumber,
+                  address: userData.address,
                 });
                 setIsModalOpen(true);
               }}
@@ -148,12 +181,11 @@ function StaffProfile() {
         </Col>
       </Row>
 
-      {/* Modal Update Profile */}
       <ModalStaffProfile
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         handleConfirmUpdate={handleConfirmUpdate}
-        valuesFromParent={staffData} // Truyền dữ liệu vào modal
+        valuesFromParent={staffData}
       />
     </div>
   );
