@@ -17,6 +17,11 @@ function ModalProduct({
   const [form] = Form.useForm();
   console.log("product: ", editingProduct);
 
+  //  const [selectedFile, setSelectedFile] = useState(null);
+  //   const [previewImage, setPreviewImage] = useState(
+  //     updateProduct?.image
+  //   );
+
   useEffect(() => {
     if (editingProduct) {
       form.setFieldsValue(editingProduct);

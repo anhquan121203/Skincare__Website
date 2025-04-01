@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ManagerAccount.css";
-import { Input, Pagination, Button, Popconfirm } from "antd";
+import { Input, Pagination, Button, Popconfirm, Switch } from "antd";
 import { FaPlus } from "react-icons/fa";
 import useSkinType from "../../../Hooks/useSkinType";
 // import ModalSkinTypes from "./ModalNewSkinType/ModalSkinType";
@@ -16,6 +16,8 @@ function ManagerAccount() {
   const pageSize = 5;
   const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
   const [editCreateStaff, setEditCreateStaff] = useState(null);
+
+  const onChange = account.filter((acc) => acc.status === true ? "Active" : "Inactive")
 
   if (loading) return <p>Loading skin types...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -105,7 +107,7 @@ function ManagerAccount() {
                   </td>
                   <td>{item.roleName}</td>
                   <td>
-                    <span className="status-active">Active</span>
+                  <Switch defaultChecked onChange={onChange} />
                   </td>
                   <td>
                     <Button
