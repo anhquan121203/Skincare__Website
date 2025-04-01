@@ -64,7 +64,7 @@ function StaffOrderManager() {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      render: (price) => `$${price}`,
+      render: (price) => `${price}đ`,
       sorter: (a, b) => a.totalPrice - b.totalPrice,
     },
     {
@@ -82,12 +82,14 @@ function StaffOrderManager() {
           Confirmed: "blue",
           Processing: "purple",
           Completed: "green",
+          Canceled: "red",
         };
         const statusLabels = {
           Pending: "Chờ xử lý",
           Confirmed: "Đã xác nhận",
           Processing: "Đang xử lý",
           Completed: "Đã nhận hàng",
+          Canceled: "Đã hủy đơn hàng",
         };
 
         return <Tag color={statusColors[status]}>{statusLabels[status]}</Tag>;

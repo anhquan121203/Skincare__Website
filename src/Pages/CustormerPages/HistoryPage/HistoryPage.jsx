@@ -1,23 +1,40 @@
+import { useEffect, useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import useOrder from "../../../Hooks/useOrder";
+import useCart from "../../../Hooks/useCart";
 import { Button, Table, Tag } from "antd";
+import { toast } from "react-toastify";
 import ViewOrderDetail from "./ModalViewOrderDetail/ViewOrderDetail";
-import { useState } from "react";
 
 function HistoryPage() {
-  // Đóng mở modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [localOrders, setLocalOrders] = useState([]);
 
-  // Gọi API
   const { userId } = useAuth();
-  const { orders, loading, error, deleteOrder } = useOrder();
+  const { orders, loading, error } = useOrder();
+  const { canceledOrder } = useCart();
+
+  useEffect(() => {
+    if (orders) {
+      setLocalOrders(orders.filter((order) => order.customerId === userId));
+    }
+  }, [orders, userId]);
 
   if (loading) return <p>Đang tải đơn hàng...</p>;
   if (error) return <p>Lỗi khi tải đơn hàng: {error}</p>;
 
-  // Lịch sử đơn hàng của người dùng
-  const orderHistory = orders?.filter((order) => order.customerId === userId);
+  const handleCancelOrder = async (orderId) => {
+    await canceledOrder(orderId);
+    toast.success("Hủy đơn hàng thành công!!!");
+
+    // Cập nhật trạng thái đơn hàng ngay trên giao diện
+    setLocalOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, orderStatus: "Canceled" } : order
+      )
+    );
+  };
 
   const columns = [
     {
@@ -37,7 +54,7 @@ function HistoryPage() {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      render: (price) => `$${price.toLocaleString()}`,
+      render: (price) => `${price.toLocaleString()}đ`,
       sorter: (a, b) => a.totalPrice - b.totalPrice,
     },
     {
@@ -47,19 +64,17 @@ function HistoryPage() {
       render: (status) => {
         const statusColors = {
           Pending: "orange",
-          Processing: "blue",
-          Shipped: "purple",
-          Delivered: "green",
-          Cancelled: "red",
-          Cart: "volcano",
+          Confirmed: "blue",
+          Processing: "purple",
+          Completed: "green",
+          Canceled: "red",
         };
         const statusLabels = {
           Pending: "Chờ xử lý",
+          Confirmed: "Đã xác nhận",
           Processing: "Đang xử lý",
-          Shipped: "Đã giao hàng",
-          Delivered: "Đã nhận hàng",
-          Cancelled: "Đã hủy",
-          Cart: "Đã trả hàng",
+          Completed: "Đã nhận hàng",
+          Canceled: "Đã hủy đơn hàng",
         };
         return <Tag color={statusColors[status]}>{statusLabels[status]}</Tag>;
       },
@@ -69,15 +84,26 @@ function HistoryPage() {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
-        <Button
-          type="primary"
-          onClick={() => {
-            setIsModalOpen(true);
-            setSelectedOrder(record); // Truyền toàn bộ order
-          }}
-        >
-          Xem chi tiết đơn hàng
-        </Button>
+        <>
+          <Button
+            type="primary"
+            onClick={() => {
+              setIsModalOpen(true);
+              setSelectedOrder(record);
+            }}
+          >
+            Xem chi tiết
+          </Button>
+          {record.orderStatus === "Pending" && (
+            <Button
+              danger
+              style={{ marginLeft: 10 }}
+              onClick={() => handleCancelOrder(record.id)}
+            >
+              Hủy đơn hàng
+            </Button>
+          )}
+        </>
       ),
     },
   ];
@@ -85,12 +111,12 @@ function HistoryPage() {
   return (
     <div>
       <h1>Lịch sử mua hàng</h1>
-      <Table dataSource={orderHistory} columns={columns} rowKey="id" />
+      <Table dataSource={localOrders} columns={columns} rowKey="id" />
       {selectedOrder && (
         <ViewOrderDetail
           isModalOpen={isModalOpen}
           handleCancel={() => setIsModalOpen(false)}
-          selectedOrder={selectedOrder} // Truyền toàn bộ order
+          selectedOrder={selectedOrder}
         />
       )}
     </div>
