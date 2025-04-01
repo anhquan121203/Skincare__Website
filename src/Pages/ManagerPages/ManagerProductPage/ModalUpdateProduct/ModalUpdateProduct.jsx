@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
 import { FaPlus } from "react-icons/fa";
+import moment from "moment";
 
 const ModalUpdateProduct = ({
   isModalOpen,
@@ -25,6 +26,9 @@ const ModalUpdateProduct = ({
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(
+    updateProduct?.image || null
+  );
 
   // useEffect(() => {
   //   if (updateProduct) {
@@ -39,97 +43,33 @@ const ModalUpdateProduct = ({
 
   useEffect(() => {
     if (updateProduct) {
+      setPreviewImage(updateProduct.image);
       form.setFieldsValue({
         ...updateProduct,
         CategoryId: updateProduct.CategoryId || null,
         SkinTypeId: updateProduct.SkinTypeId || null,
         // Format dates to moment if needed
-        createdDate: updateProduct.CreatedDate ? moment(updateProduct.CreatedDate) : null,
-        expiredDate: updateProduct.ExpiredDate ? moment(updateProduct.ExpiredDate) : null,
+        createdDate: updateProduct.createdDate
+          ? moment(updateProduct.createdDate)
+          : null,
+        expiredDate: updateProduct.expiredDate
+          ? moment(updateProduct.expiredDate)
+          : null,
       });
       setSelectedFile(null);
     }
   }, [updateProduct, isModalOpen]);
-  
 
   const handleUploadImage = ({ file }) => {
     setSelectedFile(file);
+    setPreviewImage(URL.createObjectURL(file));
   };
-
-  // const handleSubmit = () => {
-  //   form
-  //     .validateFields()
-  //     .then((values) => {
-  //       handleUpdate(values);
-  //       toast.success("Cập nhật sản phẩm thành công!");
-  //     })
-  //     .catch((info) => {
-  //       console.error("Validation Failed:", info);
-  //     });
-  // };
-
-  // const handleSubmit = async () => {
-  //   try {
-  //     const values = await form.validateFields();
-  
-  //     // Prepare FormData to send to the API
-  //     const formData = new FormData();
-  //     console.log(values);
-  
-  //     // If the ID is missing, show an error message
-  //     if (!values.id) {
-  //       toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
-  //       return;
-  //     }
-  
-  //     // Append form data to FormData object
-  //     formData.append("id", values.id);
-  
-  //     // Format CreatedDate and ExpiredDate to string($date-time) if provided
-  //     if (values.createdDate) {
-  //       formData.append("createdDate", values.createdDate.format("YYYY-MM-DDTHH:mm:ss"));
-  //     }
-  //     if (values.expiredDate) {
-  //       formData.append("expiredDate", values.expiredDate.format("YYYY-MM-DDTHH:mm:ss"));
-  //     }
-  
-  //     // Append other product data
-  //     formData.append("productName", values.productName);
-  //     formData.append("description", values.description);
-  //     formData.append("price", values.price);
-  //     formData.append("quantity", values.quantity);
-  //     formData.append("productStatus", values.productStatus);
-  //     formData.append("categoryId", values.categoryId);
-  //     formData.append("skinTypeId", values.skinTypeId);
-  
-  //     // Append the image if provided
-  //     if (selectedFile) {
-  //       formData.append("AttachmentFile", selectedFile);
-  //     }
-  
-  //     // If there's an image URL, append it as well
-  //     if (values.image) {
-  //       formData.append("image", values.image);
-  //     }
-  
-  //     // Call the handleUpdate function to update the product
-  //     handleUpdate(formData);
-  //     console.log(formData)
-  //     form.resetFields();
-  //     handleCancel();
-  //     toast.success("Cập nhật sản phẩm thành công!");
-  //   } catch (error) {
-  //     console.error("Lỗi khi thêm sản phẩm:", error);
-  //     toast.error("Lỗi sản phẩm!");
-  //   }
-  // };
-  
 
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
       const formData = new FormData();
-      console.log(values)
+      console.log(values);
 
       if (!values.id) {
         toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
@@ -158,7 +98,7 @@ const ModalUpdateProduct = ({
       console.error("Lỗi khi thêm sản phẩm:", error);
       toast.error("Lỗi sản phẩm!");
     }
-  }
+  };
 
   return (
     <Modal
@@ -216,7 +156,7 @@ const ModalUpdateProduct = ({
           name="createdDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
         >
-          <Input type="date"/>
+          <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item
@@ -224,7 +164,7 @@ const ModalUpdateProduct = ({
           name="expiredDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
         >
-          <Input type="date"/>
+          <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item
@@ -266,7 +206,6 @@ const ModalUpdateProduct = ({
           </Select>
         </Form.Item>
 
-
         {/* <Form.Item
           label="Hình ảnh"
           name="image"
@@ -275,9 +214,20 @@ const ModalUpdateProduct = ({
           <Image style={{ width: 100, height: 100, objectFit: "cover" }} />
         </Form.Item> */}
 
-        <Form.Item
-          name="AttachmentFile"
-        >
+        <Form.Item label="Hình ảnh" name="AttachmentFile">
+          {previewImage && (
+            <Image
+              src={previewImage}
+              alt="Product Image"
+              style={{
+                width: 100,
+                height: 100,
+                objectFit: "cover",
+                marginBottom: 10,
+              }}
+            />
+          )}
+
           <Upload
             beforeUpload={() => false}
             showUploadList={true}
