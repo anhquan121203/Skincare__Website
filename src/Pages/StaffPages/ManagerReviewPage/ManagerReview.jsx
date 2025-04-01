@@ -24,13 +24,15 @@ function StaffProductManager() {
   };
 
   // Xử lý xác nhận cập nhật
-  const handleConfirmUpdate = (updatedProduct) => {
-    console.log("Updated Product:", updatedProduct);
-
-    editProduct(updatedProduct);
-    toast.success("Cập nhật sản phẩm thành công!");
-    setIsModalOpen(false);
-    setEditingProduct(null);
+  const handleConfirmUpdate = async (formData) => {
+    try {
+      await editProduct(formData); // Gửi formData trực tiếp
+      toast.success("Cập nhật sản phẩm thành công!");
+      setIsModalOpen(false);
+      setEditingProduct(null);
+    } catch (error) {
+      toast.error("Cập nhật thất bại. Vui lòng thử lại!");
+    }
   };
 
   const handleCancel = () => {
