@@ -40,12 +40,14 @@ function StaffOrderManager() {
     setSearchText(e.target.value.toLowerCase());
   };
 
-  const filteredOrders = orders.filter(
-    (item) =>
-      item.staffId === userId &&
-      (item.id.toString().includes(searchText) ||
-        item.orderStatus.toLowerCase().includes(searchText))
-  );
+  const filteredOrders = orders
+    .filter(
+      (item) =>
+        item.staffId === userId &&
+        (item.id.toString().includes(searchText) ||
+          item.orderStatus.toLowerCase().includes(searchText))
+    )
+    .filter((order) => order.orderStatus !== "Cart");
 
   const columns = [
     {
