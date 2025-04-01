@@ -100,15 +100,17 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
             className="card-product"
           // onClick={() => navigate(`/product-details/${item.id}`)}
           >
-            <img
-              className="card-image"
-              src={item.image}
-              alt={item.productName}
-            />
+            <Link to={`/product-details/${item.id}`}>
+              <img
+                className="card-image"
+                src={item.image}
+                alt={item.productName}
+              />
+            </Link>
             <div className="card-content">
               <span className="card-name">{item.productName}</span>
               {/* <h2 className="card-description">{item.description}</h2> */}
-             
+
               <div className="tag-category">
                 <div className="tag-cateName">{item.categoryName}</div>
                 <div className="tag-skinType">{item.skinTypeName}</div>
@@ -120,6 +122,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                 <div className="btn-addToCard">
                   <Link to={`/product-details/${item.id}`}>Chi tiet</Link>
                 </div>
+
               </div>
             </div>
             <button onClick={() => handleCompare(item.id)}>So sánh</button>
@@ -182,7 +185,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                   product1: comparisonResult.product1.categoryName,
                   product2: comparisonResult.product2.categoryName,
                 }
-                
+
               ]}
               columns={[
                 {
