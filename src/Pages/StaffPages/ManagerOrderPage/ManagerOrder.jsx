@@ -25,7 +25,9 @@ function StaffOrderManager() {
     setIsEditModalOpen(false);
     console.log("Updated Order:", newOrder);
 
-    await editOrder(newOrder);
+    const updatedOrder = { ...newOrder, staffId: userId };
+
+    await editOrder(updatedOrder);
     toast.success("Cập nhật đơn hàng thành công");
     setEditingOrder(null);
   };
