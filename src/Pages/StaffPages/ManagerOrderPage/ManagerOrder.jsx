@@ -23,6 +23,8 @@ function StaffOrderManager() {
 
   const handleOk = async (newOrder) => {
     setIsEditModalOpen(false);
+    console.log("Updated Order:", newOrder);
+
     await editOrder(newOrder);
     toast.success("Cập nhật đơn hàng thành công");
     setEditingOrder(null);
@@ -77,20 +79,17 @@ function StaffOrderManager() {
       render: (status) => {
         const statusColors = {
           Pending: "orange",
-          Processing: "blue",
-          Shipped: "purple",
-          Delivered: "green",
-          Cancelled: "red",
-          Cart: "volcano",
+          Confirmed: "blue",
+          Processing: "purple",
+          Completed: "green",
         };
         const statusLabels = {
           Pending: "Chờ xử lý",
+          Confirmed: "Đã xác nhận",
           Processing: "Đang xử lý",
-          Shipped: "Đã giao hàng",
-          Delivered: "Đã nhận hàng",
-          Cancelled: "Đã hủy",
-          Cart: "Đã trả hàng",
+          Completed: "Đã nhận hàng",
         };
+
         return <Tag color={statusColors[status]}>{statusLabels[status]}</Tag>;
       },
       sorter: (a, b) => a.orderStatus.localeCompare(b.orderStatus),

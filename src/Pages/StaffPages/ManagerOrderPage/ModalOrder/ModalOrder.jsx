@@ -50,11 +50,9 @@ function ModalOrder({ isModalOpen, handleCancel, handleOk, editingOrder }) {
         >
           <Select>
             <Select.Option value="Pending">Chờ xử lý</Select.Option>
+            <Select.Option value="Confirmed">Đã xác nhận</Select.Option>
             <Select.Option value="Processing">Đang xử lý</Select.Option>
-            <Select.Option value="Shipped">Đã giao hàng</Select.Option>
-            <Select.Option value="Delivered">Đã nhận hàng</Select.Option>
-            <Select.Option value="Cancelled">Đã hủy</Select.Option>
-            <Select.Option value="Cart">Đã trả hàng</Select.Option>
+            <Select.Option value="Completed">Đã nhận hàng</Select.Option>
           </Select>
         </Form.Item>
       </Form>

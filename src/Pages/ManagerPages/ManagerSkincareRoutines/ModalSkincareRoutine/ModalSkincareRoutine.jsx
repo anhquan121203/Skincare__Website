@@ -8,6 +8,7 @@ function ModalSkincareRoutine({
   onSubmit,
   skinTypes,
   initialData,
+  skincareRoutine, // Thêm prop danh sách quy trình chăm sóc da
 }) {
   const [form] = Form.useForm();
 
@@ -33,6 +34,13 @@ function ModalSkincareRoutine({
         console.log("Validate Failed:", errorInfo);
       });
   };
+
+  // Lọc ra những loại da chưa có quy trình chăm sóc
+  const usedSkinTypeIds = skincareRoutine.map((routine) => routine.skinTypeId);
+  const availableSkinTypes = skinTypes.filter(
+    (type) =>
+      initialData?.skinTypeId === type.id || !usedSkinTypeIds.includes(type.id)
+  );
 
   return (
     <Modal
@@ -69,7 +77,7 @@ function ModalSkincareRoutine({
           rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
         >
           <Select placeholder="Chọn loại da">
-            {skinTypes.map((type) => (
+            {availableSkinTypes.map((type) => (
               <Select.Option key={type.id} value={type.id}>
                 {type.skinTypeName}
               </Select.Option>
