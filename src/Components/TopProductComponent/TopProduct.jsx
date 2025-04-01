@@ -24,11 +24,8 @@ function TopProduct() {
             <img className="card-image" src={item.image} alt={item.productName} />
             <div className="card-content">
               <span className="card-name">{item.productName}</span>
-              <h2 className="card-description">{item.description}</h2>
-              <div className="card-rating">
-                <FaStar className="star-icon" />
-                <span>{item.rating}</span>
-              </div>
+              {/* <h2 className="card-description">{item.description}</h2> */}
+              
               <div className="card-footer">
                 <span>
                   <span className="card-price">{item.price.toLocaleString("vi-VN")}0 </span>VND

@@ -60,6 +60,7 @@
 .card-name {
   font-size: 20px;
   margin: auto 50px;
+  font-weight: bold;
 }
 
 .card-description {

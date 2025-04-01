@@ -51,6 +51,7 @@ function ManagerStepRoutine() {
       console.error("Error adding question:", error);
     }
   };
+ 
 
   // Open Update Modal
   const openUpdateAnswerModal = (step) => {
@@ -113,7 +114,7 @@ function ManagerStepRoutine() {
               <tr>
                 <th>ID</th>
                 <th>Bước số</th>
-                <th style={{width: "450px"}}>Mô tả bước</th>
+                <th style={{ width: "450px" }}>Mô tả bước</th>
                 <th>Tên routine</th>
                 <th>Id sản phẩm</th>
                 <th>Trạng thái</th>
@@ -129,7 +130,7 @@ function ManagerStepRoutine() {
                   <td>{item.routineName}</td>
                   <td>{item.productId}</td>
                   <td>
-                    <span className={`status-${item.status.toLowerCase()}`}>
+                    <span className={`status-${item.status?.toLowerCase()}`}>
                       {item.status === "Active" ? "Active" : "Inactive"}
                     </span>
                   </td>
@@ -172,7 +173,7 @@ function ManagerStepRoutine() {
 
       <ModalUpdateStepRoutine
         isModalOpen={isUpdateStepRoutineModal}
-        handleCancel={() => setIsUpdateStepRoutineModal(false)} 
+        handleCancel={() => setIsUpdateStepRoutineModal(false)}
         handleUpdate={handleUpdateStepRoutine}
         updateStep={selectStepRoutine}
       />

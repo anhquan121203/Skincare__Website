@@ -65,15 +65,25 @@ function ManagerProduct() {
     setIsUpdateModalOpen(true);
   };
 
-  const handleUpdateProduct = (productData) => {
-    if (!selectedProduct?.id) {
-      toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
-      return;
+  const handleUpdateProduct = async (productData) => {
+    try {
+      await editProduct({ id: selectedProduct.id, productData });
+      setIsAddModalOpen(false);
+    } catch (error) {
+      toast.error("Lỗi khi tạo sản phẩm!");
+      console.error("Error:", error);
     }
-    editProduct({ id: selectedProduct.id, productData });
-    // toast.success("Cập nhật sản phẩm thành công!");
-    setIsUpdateModalOpen(false);
   };
+
+  // const handleUpdateProduct = (productData) => {
+  //   if (!selectedProduct?.id) {
+  //     toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
+  //     return;
+  //   }
+  //   editProduct({ id: selectedProduct.id, productData });
+  //   // toast.success("Cập nhật sản phẩm thành công!");
+  //   setIsUpdateModalOpen(false);
+  // };
 
   // Open Delete Confirmation Modal
   const openDeleteModal = (product) => {
