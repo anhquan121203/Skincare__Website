@@ -17,7 +17,11 @@ function HistoryPage() {
 
   useEffect(() => {
     if (orders) {
-      setLocalOrders(orders.filter((order) => order.customerId === userId));
+      setLocalOrders(
+        orders
+          .filter((order) => order.customerId === userId)
+          .filter((order) => order.orderStatus !== "Cart")
+      );
     }
   }, [orders, userId]);
 
