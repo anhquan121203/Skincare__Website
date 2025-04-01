@@ -118,12 +118,15 @@ function ProfileUser() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Số điẹn thoại">
-                    <Input value={phoneNumber} disabled />
+                  <Form.Item label="Số điện thoại">
+                    <Input
+                      value={phoneNumber}
+                      disabled
+                      className="custom-input"
+                    />
                   </Form.Item>
                 </Col>
               </Row>
-              <h4>Địa chỉ</h4>
               <Form.Item label="Địa chỉ">
                 <Input value={address} disabled />
               </Form.Item>

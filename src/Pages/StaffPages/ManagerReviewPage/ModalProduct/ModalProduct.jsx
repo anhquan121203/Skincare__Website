@@ -1,16 +1,7 @@
 import { useEffect } from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  DatePicker,
-  Select,
-  Image,
-  Upload,
-  Space,
-} from "antd";
-import dayjs from "dayjs";
+import { Modal, Form, Input, InputNumber, Select, Image, Upload } from "antd";
+import useCategory from "../../../../Hooks/useCategory";
+import useSkinType from "../../../../Hooks/useSkinType";
 
 const { Option } = Select;
 
@@ -20,6 +11,9 @@ function ModalProduct({
   handleConfirmUpdate,
   editingProduct,
 }) {
+  const { categories, loading: loadingCategory } = useCategory();
+  const { skinTypes, loading: loadingSkin } = useSkinType();
+
   const [form] = Form.useForm();
   console.log("product: ", editingProduct);
 
@@ -36,79 +30,15 @@ function ModalProduct({
     }
   }, [editingProduct, form]);
 
+  if (loadingCategory || loadingSkin) {
+    return <div>Loading...</div>;
+  }
+
   const handleSubmit = () => {
     form.validateFields().then((values) => {
       handleConfirmUpdate(values);
       handleCancel(); // Đóng modal sau khi cập nhật
     });
-  };
-
-  //  useEffect(() => {
-  //     if (updateProduct) {
-  //       setPreviewImage(updateProduct.image);
-  //       form.setFieldsValue({
-  //         ...updateProduct,
-  //         CategoryId: updateProduct.CategoryId || null,
-  //         SkinTypeId: updateProduct.SkinTypeId || null,
-  //         // Format dates to moment if needed
-  //         createdDate: updateProduct.createdDate
-  //           ? moment(updateProduct.createdDate)
-  //           : null,
-  //         expiredDate: updateProduct.expiredDate
-  //           ? moment(updateProduct.expiredDate)
-  //           : null,
-  //       });
-  //       setSelectedFile(null);
-  //     }
-  //   }, [updateProduct, isModalOpen]);
-
-  //   const handleUploadImage = ({ file }) => {
-  //     setSelectedFile(file);
-  //     setPreviewImage(URL.createObjectURL(file));
-  //   };
-
-  
-  // const handleSubmit = async () => {
-  //     try {
-  //       const values = await form.validateFields();
-  //       const formData = new FormData();
-  //       console.log(values);
-
-  //       if (!values.id) {
-  //         toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
-  //         return;
-  //       }
-  //       const { createdDate, expiredDate, ...restValues } = values;
-  //       if (createdDate) {
-  //         formData.append("createdDate", moment(createdDate).format("YYYY-MM-DDTHH:mm:ss"));
-  //       }
-  //       if (expiredDate) {
-  //         formData.append("expiredDate", moment(expiredDate).format("YYYY-MM-DDTHH:mm:ss"));
-  //       }
-
-  //       formData.append("id", values.id);
-  //       // Thêm dữ liệu sản phẩm vào formData
-  //       Object.keys(restValues).forEach((key) => {
-  //         formData.append(key, restValues[key]);
-  //       });
-
-  //       // Nếu có ảnh, thêm vào formData
-  //       if (selectedFile) {
-  //         formData.append("AttachmentFile", selectedFile);
-  //       }
-
-  //       handleUpdate(formData);
-  //       form.resetFields();
-  //       handleCancel();
-  //       toast.success("Cập nhật sản phẩm thành công!");
-  //     } catch (error) {
-  //       console.error("Lỗi khi thêm sản phẩm:", error);
-  //       toast.error("Lỗi sản phẩm!");
-  //     }
-  //   };
-
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
   };
 
   return (
@@ -206,7 +136,13 @@ function ModalProduct({
           label="Danh mục"
           rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
         >
-          <InputNumber style={{ width: "100%" }} min={1} />
+          <Select>
+            {categories.map((category) => (
+              <Option key={category.id} value={category.id}>
+                {category.categoryName}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
@@ -214,7 +150,13 @@ function ModalProduct({
           label="Loại da"
           rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
         >
-          <InputNumber style={{ width: "100%" }} min={1} />
+          <Select>
+            {skinTypes.map((skinType) => (
+              <Option key={skinType.id} value={skinType.id}>
+                {skinType.skinTypeName}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

@@ -155,7 +155,6 @@ function StaffProductManager() {
       </Space>
       <Table
         dataSource={filteredProducts
-          .filter((item) => String(item.productStatus) === "Available")
           // Chỉ hiển thị sản phẩm Available
           .map((item) => ({ ...item, key: item.id }))
           .filter((item) => String(item.staffId) === String(userId))}

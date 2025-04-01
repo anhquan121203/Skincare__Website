@@ -1,7 +1,6 @@
 import {
   Form,
   Input,
-  Checkbox,
   Button,
   Card,
   Typography,
@@ -10,7 +9,6 @@ import {
   Image,
   Modal,
 } from "antd";
-import { LockOutlined } from "@ant-design/icons";
 
 import useAuth from "../../../Hooks/useAuth";
 import "./checkoutPage.css";
@@ -28,15 +26,13 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   // const [paymentMethod, setPaymentMethod] = useState(null);
 
-  const { carts, loading, error, payment } = useCart();
+  const { carts, loading, payment } = useCart();
 
   const { wallet } = useWallet();
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  console.log(carts);
   const handleCheckout = async () => {
     const orderDetailsIds = carts.map((item) => item.id);
     const totalPrice = carts.reduce(
@@ -59,8 +55,6 @@ const CheckoutPage = () => {
     try {
       const response = await payment(orderDetailsIds, totalPrice); // Gửi cả orderDetailsIds và totalPrice
 
-      console.log("Kết quả thanh toán:", response);
-
       if (response === 200) {
         toast.success("Thanh toán thành công!");
         navigate("/order-confirmation");
@@ -78,7 +72,6 @@ const CheckoutPage = () => {
         toast.error("Có lỗi xảy ra khi thanh toán.");
       }
     } catch (error) {
-      console.error("Lỗi khi thanh toán:", error);
       toast.error("Có lỗi xảy ra khi thanh toán.");
     }
   };
