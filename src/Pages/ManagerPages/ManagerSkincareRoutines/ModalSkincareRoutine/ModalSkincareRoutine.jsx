@@ -71,6 +71,16 @@ function ModalSkincareRoutine({
         >
           <Input.TextArea />
         </Form.Item>
+
+        <Form.Item
+          label="Trạng Thái"
+          name="status"
+          rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
+        >
+          <Select>
+            <Select.Option value="active">Active</Select.Option>
+          </Select>
+        </Form.Item>
         <Form.Item
           label="Loại da"
           name="skinTypeId"

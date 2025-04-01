@@ -16,19 +16,20 @@
   margin-bottom: 30px;
 }
 
-/* Categories */
+/* Categories - Hiển thị 4 ô trên một hàng, nếu nhiều hơn thì xuống hàng */
 .categories {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap; /* Cho phép xuống hàng khi vượt quá giới hạn */
   gap: 15px;
-  margin-bottom: 30px;
+  justify-content: center; /* Căn giữa nội dung */
 }
 
 .category {
-  flex: 1;
+  flex: 1 1 calc(25% - 15px); /* Chia thành 4 cột, trừ khoảng cách */
+  min-width: 200px; /* Đảm bảo không quá nhỏ */
+  height: 160px;
   text-align: center;
   color: #6c7ee2;
-  height: 160px;
   border-radius: 10px;
   font-size: 24px;
   font-weight: bold;
@@ -41,6 +42,20 @@
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Khi màn hình nhỏ hơn 900px, chỉ hiển thị 2 ô trên một hàng */
+@media (max-width: 900px) {
+  .category {
+    flex: 1 1 calc(50% - 15px); /* Chia thành 2 cột */
+  }
+}
+
+/* Khi màn hình nhỏ hơn 600px, hiển thị 1 ô trên một hàng */
+@media (max-width: 600px) {
+  .category {
+    flex: 1 1 100%; /* Chia thành 1 cột */
+  }
 }
 
 .category:hover {

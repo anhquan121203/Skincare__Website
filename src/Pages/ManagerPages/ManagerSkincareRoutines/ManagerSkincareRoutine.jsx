@@ -127,7 +127,7 @@ function ManagerSkincareRoutine() {
       {error && <p className="error">Lỗi: {error}</p>}
       <Table
         className="skincare-table"
-        dataSource={skincareRoutine.filter((item) => item.status === "Active")}
+        dataSource={skincareRoutine}
         columns={columns}
         rowKey="id"
       />

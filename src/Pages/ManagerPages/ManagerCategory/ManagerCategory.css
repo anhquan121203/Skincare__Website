@@ -83,6 +83,18 @@ h1 {
   min-width: 80px;
 }
 
+.status-inactive {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: red; /* Xanh lá nổi bật */
+  border-radius: 6px;
+  text-align: center;
+  min-width: 80px;
+}
+
 /* Nếu vẫn chưa căn giữa, thử thêm flexbox */
 .ant-table-thead > tr > th .ant-table-cell {
   display: flex;

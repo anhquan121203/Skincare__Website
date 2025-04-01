@@ -65,7 +65,11 @@ function ManagerSkinType() {
       dataIndex: "skinTypeStatus",
       key: "skinTypeStatus",
       render: (text) => (
-        <span className={text === "Active" ? "status-active" : ""}>{text}</span>
+        <span
+          className={text === "Active" ? "status-active" : "status-inactive"}
+        >
+          {text}
+        </span>
       ),
     },
     {
@@ -104,9 +108,7 @@ function ManagerSkinType() {
 
         <Table
           columns={columns}
-          dataSource={skinTypes.filter(
-            (item) => item.skinTypeStatus === "Active"
-          )}
+          dataSource={skinTypes}
           loading={loading}
           rowKey="id"
           pagination={{

@@ -40,7 +40,11 @@ function ManagerCategory() {
       dataIndex: "categoryStatus",
       key: "categoryStatus",
       render: (text) => (
-        <span className={text === "Active" ? "status-active" : ""}>{text}</span>
+        <span
+          className={text === "Active" ? "status-active" : "status-inactive"}
+        >
+          {text}
+        </span>
       ),
     },
 
@@ -88,7 +92,9 @@ function ManagerCategory() {
       editCategory(newCategory);
       toast.success("Cập nhật danh mục thành công");
     } else {
+      console.log("newCategory", newCategory);
       addCategory(newCategory);
+
       toast.success("Thêm danh mục thành công");
     }
 
@@ -107,9 +113,7 @@ function ManagerCategory() {
         Thêm loại sản phẩm
       </Button>
       <Table
-        dataSource={categories.filter(
-          (item) => item.categoryStatus === "Active"
-        )}
+        dataSource={categories}
         columns={columns}
         rowKey="id"
         pagination={{
