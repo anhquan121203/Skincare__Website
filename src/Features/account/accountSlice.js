@@ -65,6 +65,24 @@ export const updateWallet = createAsyncThunk(
   }
 );
 
+export const updateUserStatus = createAsyncThunk(
+  "account/UpdateUserStatus",
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axios.put(`${ACCOUNT_API_URL}/UpdateUserStatus`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const accountSlice = createSlice({
   name: ACCOUNT,
   initialState: {
@@ -97,6 +115,17 @@ const accountSlice = createSlice({
           state.account = state.account.map((user) =>
             user.id === action.payload.id
               ? { ...user, wallet: action.payload.wallet }
+              : user
+          );
+        }
+      })
+      .addCase(updateUserStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        // update wallet
+        if (action.payload && state.account.length) {
+          state.account = state.account.map((user) =>
+            user.id === action.payload.id
+              ? { ...user, status: action.payload.status }
               : user
           );
         }

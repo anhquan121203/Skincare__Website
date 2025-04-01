@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import {
   createStaffAccount,
   getAllUsers,
+  updateUserStatus,
   updateWallet,
 } from "../Features/account/accountSlice";
 
@@ -37,6 +38,10 @@ const useAccount = () => {
   const depositWallet = (money) => {
     dispatch(updateWallet(money));
   };
+
+  const banUser = async (userId, status) => {
+    await updateUserStatus(use)
+  }
   return { account, loading, error, addNewStaff, depositWallet, checkEmailExists };
 };
 

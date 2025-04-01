@@ -65,14 +65,23 @@ function ManagerProduct() {
     setIsUpdateModalOpen(true);
   };
 
-  const handleUpdateProduct = async (productData) => {
-    try {
-      await editProduct({ id: selectedProduct.id, productData });
-      setIsAddModalOpen(false);
-    } catch (error) {
-      toast.error("Lỗi khi tạo sản phẩm!");
-      console.error("Error:", error);
-    }
+  // const handleUpdateProduct = async (productData) => {
+  //   try {
+  //     await editProduct({ id: selectedProduct.id, productData });
+  //     setIsAddModalOpen(false);
+  //   } catch (error) {
+  //     toast.error("Lỗi khi tạo sản phẩm!");
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+  const handleUpdateProduct = (updatedProduct) => {
+    console.log("Updated Product:", updatedProduct);
+
+    editProduct(updatedProduct);
+    toast.success("Cập nhật sản phẩm thành công!");
+    setIsUpdateModalOpen(false);
+    setSelectedProduct(null);
   };
 
   // const handleUpdateProduct = (productData) => {

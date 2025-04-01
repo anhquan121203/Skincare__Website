@@ -27,7 +27,7 @@ const ModalUpdateProduct = ({
   const { skinTypes, loading } = useSkinType();
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(
-    updateProduct?.image || null
+    updateProduct?.image 
   );
 
   // useEffect(() => {
@@ -65,6 +65,17 @@ const ModalUpdateProduct = ({
     setPreviewImage(URL.createObjectURL(file));
   };
 
+  // const handleSubmit = () => {
+  //   form.validateFields().then((values) => {
+  //     if (selectedFile) {
+  //       formData.append("AttachmentFile", selectedFile);
+  //     }
+
+  //     handleUpdate(values);
+  //     handleCancel(); // Đóng modal sau khi cập nhật
+  //   });
+  // };
+
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
@@ -76,8 +87,12 @@ const ModalUpdateProduct = ({
         return;
       }
       const { createdDate, expiredDate, ...restValues } = values;
-      formData.append("createdDate", createdDate);
-      formData.append("expiredDate", expiredDate);
+      if (createdDate) {
+        formData.append("createdDate", moment(createdDate).format("YYYY-MM-DDTHH:mm:ss"));
+      }
+      if (expiredDate) {
+        formData.append("expiredDate", moment(expiredDate).format("YYYY-MM-DDTHH:mm:ss"));
+      }
 
       formData.append("id", values.id);
       // Thêm dữ liệu sản phẩm vào formData
@@ -156,7 +171,8 @@ const ModalUpdateProduct = ({
           name="createdDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
         >
-          <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
+           <DatePicker showTime format="YYYY-MM-DDTHH:mm:ss" style={{ width: "100%" }} />
+         
         </Form.Item>
 
         <Form.Item
@@ -164,7 +180,7 @@ const ModalUpdateProduct = ({
           name="expiredDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
         >
-          <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
+           <DatePicker showTime format="YYYY-MM-DDTHH:mm:ss" style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item
