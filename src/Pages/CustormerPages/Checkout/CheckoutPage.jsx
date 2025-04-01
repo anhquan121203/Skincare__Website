@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Image,
+  Modal,
 } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 
@@ -64,9 +65,15 @@ const CheckoutPage = () => {
         toast.success("Thanh toán thành công!");
         navigate("/order-confirmation");
       } else if (response === "Out of stock") {
-        toast.error("Sản phẩm không đủ hàng!!!!");
+        Modal.error({
+          title: "Lỗi thanh toán",
+          content: "Sản phẩm không đủ hàng!!!",
+        });
       } else if (response === "Not enough money in wallet") {
-        toast.error("Bạn không đủ tiền. Vui lòng nạp tiền!!!");
+        Modal.error({
+          title: "Lỗi thanh toán",
+          content: "Bạn không đủ tiền. Vui lòng nạp thêm tiền!!!",
+        });
       } else {
         toast.error("Có lỗi xảy ra khi thanh toán.");
       }
