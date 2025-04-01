@@ -18,12 +18,7 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { roleName, avatar, firstName, lastName, wallet } = useAuth();
-  // console.log(avatar)
-  const money = wallet?.toLocaleString("vi-VN", {
-    style: "currency",});
-
-  // console.log(roleName)
+  const { roleName, avatar, firstName, lastName, wallet } = useAuth(); 
 
   const [isOpen, setIsOpen] = useState();
 
@@ -138,7 +133,7 @@ function Header() {
                       <a href="/profile-user">
                         {firstName} {lastName}
                       </a>
-                      <a href="/wallet-customer">{money}</a>
+                      <a href="/wallet-customer">{wallet}</a>
                       <a href="/history">Lịch sử mua hàng</a>
                     </>
                   ) : roleName === "Staff" ? (

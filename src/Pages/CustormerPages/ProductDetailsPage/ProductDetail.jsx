@@ -93,7 +93,7 @@ function ProductDetail() {
                 <div className="details-skinType">{product.skinTypeName}</div>
               </div>
             </p>
-            <p className="details-description">{product.description}</p>
+            {/* <p className="details-description">{product.description}</p> */}
 
             <div className="add-to-card-details">
               <input
