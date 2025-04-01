@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import useDashboard from "../../../Hooks/useDashboard";
 
 // Register Chart.js components
 ChartJS.register(
@@ -23,6 +24,9 @@ ChartJS.register(
 );
 
 function DashboardManager() {
+  const {dashboardOrders, totalDashboardData} = useDashboard();
+  // for()
+  
   const data = {
     labels: [
       "Jan",
@@ -39,10 +43,7 @@ function DashboardManager() {
     datasets: [
       {
         label: "Doanh thu (VNĐ)",
-        data: [
-          120000000, 150000000, 170000000, 140000000, 180000000, 160000000,
-          170000000, 140000000, 180000000, 160000000,
-        ],
+        data: dashboardOrders,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(255, 159, 64, 0.2)",
@@ -81,25 +82,25 @@ function DashboardManager() {
 
   return (
     <div className="dashboard-container">
-      <h1>Doanh so</h1>
+      <h1>Doanh số</h1>
       <div className="dashboard-header">
         <div className="dashboard--element">
           <div className="order__modifier">
-            <span>5090 đơn</span>
+            <span>{totalDashboardData.totalOrder}</span>
             <p>Số lượng đơn hàng</p>
           </div>
           <FaBoxOpen className="icon-dashboard" />
         </div>
         <div className="dashboard--element">
           <div className="order__modifier">
-            <span style={{ color: "red" }}>150.432.000 VNĐ</span>
-            <p>Số lượng đơn hàng</p>
+            <span style={{ color: "red" }}>{totalDashboardData.totalRevenue?.toLocaleString("vi-VN")}</span>
+            <p>Tổng tiền đơn hàng</p>
           </div>
           <FaChartLine className="icon-dashboard" />
         </div>
         <div className="dashboard--element">
           <div className="order__modifier">
-            <span>200.000 người</span>
+            <span>{totalDashboardData.totalCustomer}</span>
             <p>Số lượng người dùng</p>
           </div>
           <FaUserTag className="icon-dashboard" />

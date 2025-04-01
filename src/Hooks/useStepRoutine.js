@@ -25,11 +25,23 @@ const useStepRoutine = (stepRoutineId) => {
   }, [dispatch]);
 
   const checkStepOfRoutine = (stepNumber, routineId) => {
-    if (!stepRoutines || stepRoutines.length === 0) return false;
+    if (stepRoutines.status === "Active") {
+      return;
+    }
 
-    return stepRoutines.some(
-      (step) => step.stepNumber === stepNumber && step.routineId === routineId
-    );
+    let exists = false;
+
+    stepRoutines.forEach((step) => {
+      if (
+        step.routineId == routineId &&
+        step.stepNumber == stepNumber &&
+        step.status === "Active"
+      ) {
+        exists = true;
+      }
+    });
+    // debugger
+    return exists;
   };
 
   const addNewStepRoutine = async (stepRoutine) => {
@@ -40,10 +52,9 @@ const useStepRoutine = (stepRoutineId) => {
       );
       if (stepExist) {
         throw new Error(
-          "Bước này đã tồn tại trong routine này. Vui lòng nhập email khác!"
+          `Bước ${stepRoutine.stepNumber} đã tồn tại trong routine ${stepRoutine.routineId}. Vui lòng chọn số bước khác!`
         );
       }
-      console.log(checkStepOfRoutine(stepRoutine.stepNumber));
 
       await dispatch(createStepRoutine(stepRoutine));
       dispatch(listStepRoutines());

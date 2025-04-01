@@ -30,20 +30,6 @@ const ModalAddStepRoutine = ({
     }
   }, [isModalOpen]);
 
-  //   const handleSubmit = () => {
-  //     form
-  //       .validateFields()
-  //       .then((values) => {
-  //         handleAdd(values);
-  //         toast.success("Thêm các bước thành công!");
-  //         form.resetFields();
-  //       })
-  //       .catch((info) => {
-  //         console.error("Validation Failed:", info);
-  //         toast.success("Thêm không thành công!");
-  //       });
-  //   };
-
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -88,7 +74,7 @@ const ModalAddStepRoutine = ({
           name="stepNumber"
           rules={[{ required: true, message: "Vui lòng nhập thứ tự bước!" }]}
         >
-          <Input id="Câu hỏi" type="number" />
+          <Input type="number" />
         </Form.Item>
 
         <Form.Item
@@ -96,7 +82,7 @@ const ModalAddStepRoutine = ({
           name="stepDescription"
           rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}
         >
-          <Input.TextArea id="Câu hỏi" type="number" />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item

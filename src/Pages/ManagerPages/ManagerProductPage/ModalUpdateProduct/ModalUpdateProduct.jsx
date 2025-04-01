@@ -1,5 +1,6 @@
 import {
   Button,
+  DatePicker,
   Form,
   Image,
   Input,
@@ -23,7 +24,18 @@ const ModalUpdateProduct = ({
   const [form] = Form.useForm();
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
-   const [selectedFile, setSelectedFile] = useState(null); 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // useEffect(() => {
+  //   if (updateProduct) {
+  //     form.setFieldsValue({
+  //       ...updateProduct,
+  //       CategoryId: updateProduct.CategoryId || null,
+  //       SkinTypeId: updateProduct.SkinTypeId || null,
+  //     });
+  //     setSelectedFile(null);
+  //   }
+  // }, [updateProduct, isModalOpen]);
 
   useEffect(() => {
     if (updateProduct) {
@@ -31,10 +43,14 @@ const ModalUpdateProduct = ({
         ...updateProduct,
         CategoryId: updateProduct.CategoryId || null,
         SkinTypeId: updateProduct.SkinTypeId || null,
+        // Format dates to moment if needed
+        createdDate: updateProduct.CreatedDate ? moment(updateProduct.CreatedDate) : null,
+        expiredDate: updateProduct.ExpiredDate ? moment(updateProduct.ExpiredDate) : null,
       });
       setSelectedFile(null);
     }
   }, [updateProduct, isModalOpen]);
+  
 
   const handleUploadImage = ({ file }) => {
     setSelectedFile(file);
@@ -52,19 +68,81 @@ const ModalUpdateProduct = ({
   //     });
   // };
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     const values = await form.validateFields();
+  
+  //     // Prepare FormData to send to the API
+  //     const formData = new FormData();
+  //     console.log(values);
+  
+  //     // If the ID is missing, show an error message
+  //     if (!values.id) {
+  //       toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
+  //       return;
+  //     }
+  
+  //     // Append form data to FormData object
+  //     formData.append("id", values.id);
+  
+  //     // Format CreatedDate and ExpiredDate to string($date-time) if provided
+  //     if (values.createdDate) {
+  //       formData.append("createdDate", values.createdDate.format("YYYY-MM-DDTHH:mm:ss"));
+  //     }
+  //     if (values.expiredDate) {
+  //       formData.append("expiredDate", values.expiredDate.format("YYYY-MM-DDTHH:mm:ss"));
+  //     }
+  
+  //     // Append other product data
+  //     formData.append("productName", values.productName);
+  //     formData.append("description", values.description);
+  //     formData.append("price", values.price);
+  //     formData.append("quantity", values.quantity);
+  //     formData.append("productStatus", values.productStatus);
+  //     formData.append("categoryId", values.categoryId);
+  //     formData.append("skinTypeId", values.skinTypeId);
+  
+  //     // Append the image if provided
+  //     if (selectedFile) {
+  //       formData.append("AttachmentFile", selectedFile);
+  //     }
+  
+  //     // If there's an image URL, append it as well
+  //     if (values.image) {
+  //       formData.append("image", values.image);
+  //     }
+  
+  //     // Call the handleUpdate function to update the product
+  //     handleUpdate(formData);
+  //     console.log(formData)
+  //     form.resetFields();
+  //     handleCancel();
+  //     toast.success("Cập nhật sản phẩm thành công!");
+  //   } catch (error) {
+  //     console.error("Lỗi khi thêm sản phẩm:", error);
+  //     toast.error("Lỗi sản phẩm!");
+  //   }
+  // };
+  
+
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
       const formData = new FormData();
+      console.log(values)
 
       if (!values.id) {
         toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
         return;
       }
+      const { createdDate, expiredDate, ...restValues } = values;
+      formData.append("createdDate", createdDate);
+      formData.append("expiredDate", expiredDate);
+
       formData.append("id", values.id);
       // Thêm dữ liệu sản phẩm vào formData
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key]);
+      Object.keys(restValues).forEach((key) => {
+        formData.append(key, restValues[key]);
       });
 
       // Nếu có ảnh, thêm vào formData
@@ -104,7 +182,7 @@ const ModalUpdateProduct = ({
         <Form.Item
           label="Tên sản phẩm"
           name="productName"
-          rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm!" }]}
+          // rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm!" }]}
         >
           <Input />
         </Form.Item>
@@ -131,6 +209,22 @@ const ModalUpdateProduct = ({
           rules={[{ required: true, message: "Vui lòng nhập số lượng!" }]}
         >
           <InputNumber style={{ width: "100%" }} />
+        </Form.Item>
+
+        <Form.Item
+          label="Ngày sản xuất"
+          name="createdDate"
+          rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
+        >
+          <Input type="date"/>
+        </Form.Item>
+
+        <Form.Item
+          label="Ngày hết hạn"
+          name="expiredDate"
+          rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
+        >
+          <Input type="date"/>
         </Form.Item>
 
         <Form.Item
@@ -172,7 +266,14 @@ const ModalUpdateProduct = ({
           </Select>
         </Form.Item>
 
+
+        {/* <Form.Item
+          label="Hình ảnh"
+          name="image"
+          rules={[{ required: true, message: "Vui lòng nhập câu hỏi!" }]}
+        >
           <Image style={{ width: 100, height: 100, objectFit: "cover" }} />
+        </Form.Item> */}
 
         <Form.Item
           name="AttachmentFile"

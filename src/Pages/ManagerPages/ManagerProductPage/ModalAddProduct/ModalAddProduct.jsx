@@ -164,7 +164,7 @@ const ModalAddProduct = ({
         </Form.Item>
 
         <Form.Item
-          label="Số lượng"
+          label="Ngày sản xuất"
           name="createdDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
         >
@@ -172,7 +172,7 @@ const ModalAddProduct = ({
         </Form.Item>
 
         <Form.Item
-          label="Số lượng"
+          label="Ngày hết hạn"
           name="expiredDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
         >
