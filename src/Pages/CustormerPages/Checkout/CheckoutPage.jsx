@@ -34,9 +34,6 @@ const CheckoutPage = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   console.log(carts);
   const handleCheckout = async () => {
@@ -66,8 +63,12 @@ const CheckoutPage = () => {
       if (response === 200) {
         toast.success("Thanh toán thành công!");
         navigate("/order-confirmation");
+      } else if (response === "Out of stock") {
+        toast.error("Sản phẩm không đủ hàng!!!!");
+      } else if (response === "Not enough money in wallet") {
+        toast.error("Bạn không đủ tiền. Vui lòng nạp tiền!!!");
       } else {
-        toast.error("Thanh toán thất bại! Vui lòng thử lại.");
+        toast.error("Có lỗi xảy ra khi thanh toán.");
       }
     } catch (error) {
       console.error("Lỗi khi thanh toán:", error);
