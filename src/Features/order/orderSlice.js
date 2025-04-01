@@ -80,7 +80,6 @@ const orderSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateOrder.fulfilled, (state, action) => {
-        state.loading = false;
         state.orders = state.orders.map((order) =>
           order.id === action.payload.id ? action.payload : order
         );
