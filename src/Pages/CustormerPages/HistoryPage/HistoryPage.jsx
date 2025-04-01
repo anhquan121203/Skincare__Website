@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import useOrder from "../../../Hooks/useOrder";
 import useCart from "../../../Hooks/useCart";
-import { Button, Table, Tag } from "antd";
+import { Button, Popconfirm, Table, Tag } from "antd";
 import { toast } from "react-toastify";
 import ViewOrderDetail from "./ModalViewOrderDetail/ViewOrderDetail";
 
@@ -24,8 +24,8 @@ function HistoryPage() {
   if (loading) return <p>Đang tải đơn hàng...</p>;
   if (error) return <p>Lỗi khi tải đơn hàng: {error}</p>;
 
-  const handleCancelOrder = async (orderId) => {
-    await canceledOrder(orderId);
+  const handleCancelOrder = async (orderId, totalPrice, status) => {
+    await canceledOrder(orderId, totalPrice, status);
     toast.success("Hủy đơn hàng thành công!!!");
 
     // Cập nhật trạng thái đơn hàng ngay trên giao diện
@@ -95,13 +95,21 @@ function HistoryPage() {
             Xem chi tiết
           </Button>
           {record.orderStatus === "Pending" && (
-            <Button
-              danger
-              style={{ marginLeft: 10 }}
-              onClick={() => handleCancelOrder(record.id)}
+            <Popconfirm
+              title="Xóa loại sản phẩm"
+              description="Bạn muốn xóa loại sản phẩm này?"
+              onConfirm={() =>
+                handleCancelOrder(
+                  record.id,
+                  record.totalPrice,
+                  record.orderStatus
+                )
+              }
             >
-              Hủy đơn hàng
-            </Button>
+              <Button danger style={{ marginLeft: 10 }}>
+                Hủy đơn hàng
+              </Button>
+            </Popconfirm>
           )}
         </>
       ),

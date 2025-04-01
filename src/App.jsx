@@ -79,7 +79,7 @@ function App() {
 
         {/* Staff router ******************************************************/}
         <Route path="/staff" element={<StaffLayout />}>
-          <Route index element={<DashboardManager />}></Route>
+          <Route index element={<StaffProfile />}></Route>
           <Route path="Staff-manage-profile" element={<StaffProfile />}></Route>
           <Route
             path="Staff-manage-order"
