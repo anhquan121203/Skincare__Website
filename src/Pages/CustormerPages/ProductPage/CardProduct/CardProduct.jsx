@@ -2,16 +2,36 @@ import React, { useState } from "react";
 import "./CardProduct.css";
 import { FaStar } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { BsCart4 } from "react-icons/bs";
 import useProduct from "../../../../Hooks/useProduct";
-import { Pagination } from "antd";
+import { Button, Image, Modal, Pagination, Table } from "antd";
 
 function CardProduct({ sortProduct, searchTerm, filters }) {
   const { priceRange, selectedCategories } = filters;
-  const { products, loading, error } = useProduct();
+  const { products, loading, error, compareProducts } = useProduct();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(9);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showCompareModal = () => setIsModalVisible(true);
+  const handleCloseModal = () => { setIsModalVisible(false), setCompareIds([]) };
+  const [compareIds, setCompareIds] = useState([]);
+
+
+  const handleCompare = (id) => {
+    setCompareIds((prev) => {
+      const newIds = prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id];
+
+      if (newIds.length === 2) {
+        showCompareModal(); // Hiển thị modal khi đủ 2 sản phẩm
+      }
+
+      return newIds.slice(-2);
+    });
+  };
+
+  const comparisonResult = compareIds.length === 2 ? compareProducts(compareIds[0], compareIds[1]) : null;
+
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -34,7 +54,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
       }
     }
 
-    if(product.productStatus === "Inactive") {
+    if (product.productStatus === "Inactive") {
       return false;
     }
 
@@ -70,7 +90,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
     setPageSize(pageSize);
   };
 
-  
+
   return (
     <div className="card-container">
       <div className="card-grid">
@@ -78,7 +98,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
           <div
             key={index}
             className="card-product"
-            onClick={() => navigate(`/product-details/${item.id}`)}
+          // onClick={() => navigate(`/product-details/${item.id}`)}
           >
             <img
               className="card-image"
@@ -88,9 +108,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
             <div className="card-content">
               <span className="card-name">{item.productName}</span>
               {/* <h2 className="card-description">{item.description}</h2> */}
-              <div className="card-rating">
-                <FaStar className="star-icon" />
-              </div>
+             
               <div className="tag-category">
                 <div className="tag-cateName">{item.categoryName}</div>
                 <div className="tag-skinType">{item.skinTypeName}</div>
@@ -100,10 +118,12 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                   <span className="card-price">{item.price.toLocaleString("vi-VN")} VND</span>
                 </span>
                 <div className="btn-addToCard">
-                  <Link>Chi tiet</Link>
+                  <Link to={`/product-details/${item.id}`}>Chi tiet</Link>
                 </div>
               </div>
             </div>
+            <button onClick={() => handleCompare(item.id)}>So sánh</button>
+
           </div>
         ))}
       </div>
@@ -116,6 +136,77 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
         showSizeChanger
         onShowSizeChange={handlePageChange}
       />
+
+      <Modal
+        title="So sánh sản phẩm"
+        visible={isModalVisible}
+        onCancel={handleCloseModal}
+        footer={[
+          <Button key="close" onClick={handleCloseModal}>
+            Đóng
+          </Button>,
+        ]}
+      >
+        {comparisonResult && (
+          <div className="comparison-table">
+            <Table
+              dataSource={[
+
+                {
+                  key: "1",
+                  feature: "Tên sản phẩm",
+                  product1: <Image src={comparisonResult.product1.image} alt="Product 1" style={{ width: 50, height: 50 }} />,
+                  product2: <Image src={comparisonResult.product2.image} alt="Product 2" style={{ width: 50, height: 50 }} />,
+                },
+                {
+                  key: "2",
+                  feature: "Tên sản phẩm",
+                  product1: comparisonResult.product1.productName,
+                  product2: comparisonResult.product2.productName,
+                },
+                {
+                  key: "3",
+                  feature: "Giá tiền",
+                  product1: `${comparisonResult.product1.price.toLocaleString("vi-VN")} VND`,
+                  product2: `${comparisonResult.product2.price.toLocaleString("vi-VN")} VND`,
+                },
+                {
+                  key: "4",
+                  feature: "Loại da",
+                  product1: comparisonResult.product1.skinTypeName,
+                  product2: comparisonResult.product2.skinTypeName,
+                },
+                {
+                  key: "5",
+                  feature: "Loại sản phẩm",
+                  product1: comparisonResult.product1.categoryName,
+                  product2: comparisonResult.product2.categoryName,
+                }
+                
+              ]}
+              columns={[
+                {
+                  title: "Thông tin",
+                  dataIndex: "feature",
+                  key: "feature",
+                },
+                {
+                  title: "Sản phẩm 1",
+                  dataIndex: "product1",
+                  key: "product1",
+                },
+                {
+                  title: "Sản phẩm 2",
+                  dataIndex: "product2",
+                  key: "product2",
+                },
+              ]}
+              pagination={false}
+            />
+          </div>
+        )}
+      </Modal>
+
     </div>
   );
 }

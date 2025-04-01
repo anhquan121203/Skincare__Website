@@ -53,9 +53,22 @@ const useProduct = () => {
       console.error("Error deleting product:", error);
     }
   };
-  
 
-  return { products, loading, error, addProduct, editProduct, removeProduct, productNameExist };
+  const compareProducts = (id1, id2) => {
+    const product1 = products.find((product) => product.id === id1);
+    const product2 = products.find((product) => product.id === id2);
+  
+    if (!product1 || !product2) {
+      return { error: "Một hoặc cả hai sản phẩm không tồn tại" };
+    }
+  
+    return {
+      product1,
+      product2,
+    };
+  };
+
+  return { products, loading, error, addProduct, editProduct, removeProduct, productNameExist, compareProducts };
 };
 
 export default useProduct;
