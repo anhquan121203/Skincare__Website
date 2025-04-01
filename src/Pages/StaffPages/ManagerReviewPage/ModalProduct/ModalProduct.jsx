@@ -1,16 +1,7 @@
 import { useEffect } from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  DatePicker,
-  Select,
-  Image,
-  Upload,
-  Space,
-} from "antd";
-import dayjs from "dayjs";
+import { Modal, Form, Input, InputNumber, Select, Image, Upload } from "antd";
+import useCategory from "../../../../Hooks/useCategory";
+import useSkinType from "../../../../Hooks/useSkinType";
 
 const { Option } = Select;
 
@@ -20,6 +11,9 @@ function ModalProduct({
   handleConfirmUpdate,
   editingProduct,
 }) {
+  const { categories, loading: loadingCategory } = useCategory();
+  const { skinTypes, loading: loadingSkin } = useSkinType();
+
   const [form] = Form.useForm();
   console.log("product: ", editingProduct);
 
@@ -31,15 +25,15 @@ function ModalProduct({
     }
   }, [editingProduct, form]);
 
+  if (loadingCategory || loadingSkin) {
+    return <div>Loading...</div>;
+  }
+
   const handleSubmit = () => {
     form.validateFields().then((values) => {
       handleConfirmUpdate(values);
       handleCancel(); // Đóng modal sau khi cập nhật
     });
-  };
-
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
   };
 
   return (
@@ -137,7 +131,13 @@ function ModalProduct({
           label="Danh mục"
           rules={[{ required: true, message: "Vui lòng chọn danh mục!" }]}
         >
-          <InputNumber style={{ width: "100%" }} min={1} />
+          <Select>
+            {categories.map((category) => (
+              <Option key={category.id} value={category.id}>
+                {category.categoryName}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
@@ -145,7 +145,13 @@ function ModalProduct({
           label="Loại da"
           rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
         >
-          <InputNumber style={{ width: "100%" }} min={1} />
+          <Select>
+            {skinTypes.map((skinType) => (
+              <Option key={skinType.id} value={skinType.id}>
+                {skinType.skinTypeName}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

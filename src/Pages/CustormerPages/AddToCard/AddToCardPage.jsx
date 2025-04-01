@@ -57,8 +57,6 @@ const AddToCardPage = () => {
     });
   };
 
-  console.log(carts);
-
   const removeProduct = (id) => {
     deleteCart(id);
     // setSelectedProducts((prevSelected) =>
@@ -88,7 +86,6 @@ const AddToCardPage = () => {
   //   // setSelectedProducts([]);
   //   deleteCart(id);
   // };
-
 
   const columns = [
     // {
