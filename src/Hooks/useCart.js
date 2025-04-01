@@ -5,6 +5,7 @@ import {
   fetchCartProduct,
   removeProductFromCart,
   checkout,
+  canceled,
 } from "../Features/cart/cartSlice";
 
 const useCart = () => {
@@ -44,7 +45,27 @@ const useCart = () => {
     }
   };
 
-  return { carts, loading, error, addToCartfromProduct, deleteCart, payment };
+  const canceledOrder = async (orderId, totalPrice, status) => {
+    try {
+      const resultAction = await dispatch(
+        canceled({ orderId, totalPrice, status })
+      ); // Gửi cả ID sách thông và tổng tiền
+      return resultAction.payload; // Trả về phản hồi từ API
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      return null;
+    }
+  };
+
+  return {
+    carts,
+    loading,
+    error,
+    addToCartfromProduct,
+    deleteCart,
+    payment,
+    canceledOrder,
+  };
 };
 
 export default useCart;

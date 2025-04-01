@@ -53,7 +53,6 @@ export const createProductIntoCart = createAsyncThunk(
         error.response?.data || error.message
       );
       return rejectWithValue("Vui lòng đăng nhập");
-      
     }
   }
 );
@@ -134,6 +133,36 @@ export const checkout = createAsyncThunk(
   }
 );
 
+export const canceled = createAsyncThunk(
+  "CanceledOrder/Canceled",
+  async ({ orderId, totalPrice, status }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      if (!token) {
+        return rejectWithValue("Unauthorized: No token found");
+      }
+
+      const response = await axios.put(
+        `${CART_API_URL}/CanceledOrder?orderId=${orderId}&totalPrice=${totalPrice}&status=${status}`,
+        null, // Không có body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Hủy đơn hàng thành công, mã phản hồi:", response.status);
+      return response.status; // Trả về HTTP status
+    } catch (error) {
+      console.error("Lỗi khi hủy đơn hàng:", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: CART,
   initialState: {
@@ -176,6 +205,12 @@ const cartSlice = createSlice({
         state.paymentResponse = action.payload; // Lưu dữ liệu từ API vào state
       })
       .addCase(checkout.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(canceled.fulfilled, (state, action) => {
+        state.canceledResponse = action.payload;
+      })
+      .addCase(canceled.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

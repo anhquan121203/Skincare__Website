@@ -55,50 +55,45 @@ const SkincareRoutine = () => {
     return <div className="error">Lỗi khi tải quy trình</div>;
   }
 
-  // const skincareRoutineActive = skincareRoutine.filter(
-  //   (skincareRoutine) =>
-  //     skincareRoutine.skinTypeId === Number(id) &&
-  //     skincareRoutine.status === "Active"
-  // );
-
-  // console.log("skincareRoutineActive", skincareRoutineActive);
-
-  // Lọc loại da đang Active
-  const skintypeActive = skinTypes.filter(
-    (skintype) => skintype.skinTypeStatus === "Active"
+  // Lọc skincareRoutine theo skinTypeId
+  const activeSkincareRoutine = skincareRoutine.find(
+    (routine) => routine.skinTypeId == id
   );
 
-  // Tìm loại da có id trùng với id trên URL
-  const selectedSkinType = skintypeActive.find((skintype) => skintype.id == id);
-
-  if (!selectedSkinType) {
-    return <div className="error">Không tìm thấy loại da phù hợp.</div>;
+  if (!activeSkincareRoutine) {
+    return <div className="error">Không tìm thấy quy trình phù hợp.</div>;
   }
 
-  // Lọc sản phẩm theo skinTypeName
-  const productActive = products.filter(
-    (product) => product.productStatus === "Available"
-  );
-  const selectedProduct = productActive.filter(
-    (product) => product.skinTypeName === selectedSkinType.skinTypeName
+  // Lấy thông tin skincareRoutine
+  const { routineName, description, totalSteps, skinTypeId, skinTypeName } =
+    activeSkincareRoutine;
+
+  // Lọc stepRoutines theo routineId
+  const filteredStepRoutines = stepRoutines.filter(
+    (step) => step.routineId == activeSkincareRoutine.id
   );
 
-  // Phân trang: Cắt danh sách sản phẩm theo trang hiện tại
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedProducts = selectedProduct.slice(
-    startIndex,
-    startIndex + itemsPerPage
+  const selectedProduct = products.filter(
+    (product) => product.skinTypeId === skinTypeId
   );
 
   return (
     <div className="skincare-container">
-      <h1 className="skincare-title">
-        Quy trình chăm sóc {selectedSkinType.skinTypeName}
-      </h1>
+      {/* Thay thế h1 bằng thông tin từ skincareRoutine */}
+      <h1 className="skincare-title"> {routineName}</h1>
 
+      {/* Hiển thị mô tả quy trình */}
+      <p className="routine-description">{description}</p>
+
+      {/* Hiển thị số bước nếu có, hoặc thông báo không có bước */}
+      <p className="total-steps">
+        Tổng số bước: {totalSteps > 0 ? totalSteps : "Không có bước nào hết"}
+      </p>
+
+      {/* Danh sách các bước */}
       <ul className="skincare-list">
-        {Array.isArray(stepRoutines) &&
-          stepRoutines.map((step) => (
+        {Array.isArray(filteredStepRoutines) &&
+          filteredStepRoutines.map((step) => (
             <li key={step.id} className="skincare-step">
               <h2 className="step-title">Bước {step.stepNumber}</h2>
               <p className="step-description">{step.stepDescription}</p>
@@ -113,15 +108,16 @@ const SkincareRoutine = () => {
       >
         {showProducts
           ? "Ẩn sản phẩm"
-          : `Các sản phẩm phù hợp với ${selectedSkinType.skinTypeName}`}
+          : `Các sản phẩm phù hợp với ${skinTypeName}`}
       </button>
 
       {/* Danh sách sản phẩm - Ẩn nếu `showProducts` = false */}
       {showProducts && (
         <div>
           <div className="card-grid">
-            {paginatedProducts.length > 0 ? (
-              paginatedProducts.map((item) => (
+            {/* Lọc sản phẩm */}
+            {selectedProduct.length > 0 ? (
+              selectedProduct.map((item) => (
                 <div
                   key={item.id}
                   className="card-product"
@@ -159,7 +155,7 @@ const SkincareRoutine = () => {
           {/* Phân trang */}
           <Pagination
             current={currentPage}
-            total={selectedProduct.length}
+            total={products.length}
             pageSize={itemsPerPage}
             onChange={(page) => setCurrentPage(page)}
             className="pagination"

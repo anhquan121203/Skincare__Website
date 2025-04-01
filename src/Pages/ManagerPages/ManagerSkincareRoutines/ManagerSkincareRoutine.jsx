@@ -15,6 +15,7 @@ function ManagerSkincareRoutine() {
     editSkincareRoutine,
     removeSkincareRoutine,
   } = useSkincareRoutine();
+  console.log("skincareRoutine", skincareRoutine);
 
   const {
     skinTypes,
@@ -137,6 +138,7 @@ function ManagerSkincareRoutine() {
         onSubmit={handleSubmit}
         skinTypes={skinTypeActive}
         initialData={editingRoutine}
+        skincareRoutine={skincareRoutine} // Truyền danh sách quy trình hiện có
       />
     </div>
   );

@@ -25,7 +25,7 @@ export const createSkincareRoutine = createAsyncThunk(
   async (skincareRoutine, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${SKINCARE_ROUTINE_API_URL}/createSkinCareRoutin`,
+        `${SKINCARE_ROUTINE_API_URL}/createSkinCareRoutine`,
         skincareRoutine
       );
 
@@ -41,7 +41,7 @@ export const updateSkincareRoutine = createAsyncThunk(
   async (skincareRoutine, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${SKINCARE_ROUTINE_API_URL}/updateSkinCareRoutin`,
+        `${SKINCARE_ROUTINE_API_URL}/updateSkinCareRoutine`,
         skincareRoutine
       );
       return response.data;
@@ -56,7 +56,7 @@ export const deleteSkincareRoutine = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       await axios.delete(
-        `${SKINCARE_ROUTINE_API_URL}/deleteSkinCareRoutin/${id}`
+        `${SKINCARE_ROUTINE_API_URL}/deleteSkinCareRoutine/${id}`
       );
       return id;
     } catch (error) {
