@@ -6,6 +6,7 @@ import { Button, Card, Col, Form, Image, Row, Input } from "antd";
 import useAuth from "../../../../Hooks/useAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { ACCOUNT_API_URL } from "../../../../Constants/accountConstant";
 
 function EditProfileUser() {
   const {
@@ -36,6 +37,7 @@ function EditProfileUser() {
     firstName: firstName || "",
     lastName: lastName || "",
     phoneNumber: phoneNumber || "",
+    email: email || "",
     address: address || "",
     birthday: birthday ? new Date(birthday).toISOString().split("T")[0] : "",
   });
@@ -45,10 +47,11 @@ function EditProfileUser() {
       firstName: firstName || "",
       lastName: lastName || "",
       phoneNumber: phoneNumber || "",
+      email: email || "",
       address: address || "",
       birthday: birthday ? new Date(birthday).toISOString().split("T")[0] : "",
     });
-  }, [firstName, lastName, phoneNumber, address, birthday]);
+  }, [firstName, lastName, phoneNumber, email, address, birthday]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,9 +59,8 @@ function EditProfileUser() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
     try {
-      await axios.put(`${PROFILE_API_URL}/UpdateUserProfile`, editUser, {
+      await axios.put(`${ACCOUNT_API_URL}/UpdateUserProfile`, editUser, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -122,7 +124,8 @@ function EditProfileUser() {
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Email">
-                    <Input value={email} disabled />
+                    <Input value={email} disabled 
+                    onChange={handleChange}/>
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -170,8 +173,8 @@ function EditProfileUser() {
               style={{
                 border: "5px solid #22a8e7",
                 objectFit: "cover",
-                width: "100%",
-                height: "280px",
+                width: "300px",
+                height: "300px",
                 borderRadius: "50%",
               }}
               src={avatar}
@@ -184,19 +187,7 @@ function EditProfileUser() {
             <p>{phoneNumber}</p>
 
             <Row gutter={16} justify="center">
-              <Col>
-                <Button
-                  onClick={() => document.getElementById("fileInput").click()}
-                >
-                  Thay ảnh đại diện
-                </Button>
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept=".jpg"
-                  style={{ display: "none" }}
-                />
-              </Col>
+            
               <Col>
                 <Link to="/profile-user">
                   <Button>Quay lại</Button>

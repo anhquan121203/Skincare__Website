@@ -14,13 +14,16 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showCompareModal = () => setIsModalVisible(true);
-  const handleCloseModal = () => { setIsModalVisible(false), setCompareIds([]) };
+  const handleCloseModal = () => {
+    setIsModalVisible(false), setCompareIds([]);
+  };
   const [compareIds, setCompareIds] = useState([]);
-
 
   const handleCompare = (id) => {
     setCompareIds((prev) => {
-      const newIds = prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id];
+      const newIds = prev.includes(id)
+        ? prev.filter((i) => i !== id)
+        : [...prev, id];
 
       if (newIds.length === 2) {
         showCompareModal(); // Hiển thị modal khi đủ 2 sản phẩm
@@ -30,8 +33,10 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
     });
   };
 
-  const comparisonResult = compareIds.length === 2 ? compareProducts(compareIds[0], compareIds[1]) : null;
-
+  const comparisonResult =
+    compareIds.length === 2
+      ? compareProducts(compareIds[0], compareIds[1])
+      : null;
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -44,7 +49,6 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
       if (product.price < minPrice || product.price > maxPrice) {
         return false;
       }
-
     }
 
     // Lọc theo loại sản phẩm
@@ -55,6 +59,10 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
     }
 
     if (product.productStatus === "Inactive") {
+      return false;
+    }
+
+    if (product.quantity <= 0) {
       return false;
     }
 
@@ -90,7 +98,6 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
     setPageSize(pageSize);
   };
 
-
   return (
     <div className="card-container">
       <div className="card-grid">
@@ -98,7 +105,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
           <div
             key={index}
             className="card-product"
-          // onClick={() => navigate(`/product-details/${item.id}`)}
+            // onClick={() => navigate(`/product-details/${item.id}`)}
           >
             <Link to={`/product-details/${item.id}`}>
               <img
@@ -107,6 +114,12 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                 alt={item.productName}
               />
             </Link>
+            <button
+              className="button-compare"
+              onClick={() => handleCompare(item.id)}
+            >
+              So sánh
+            </button>
             <div className="card-content">
               <span className="card-name">{item.productName}</span>
               {/* <h2 className="card-description">{item.description}</h2> */}
@@ -117,16 +130,15 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
               </div>
               <div className="card-footer">
                 <span>
-                  <span className="card-price">{item.price.toLocaleString("vi-VN")} VND</span>
+                  <span className="card-price">
+                    {item.price.toLocaleString("vi-VN")} VND
+                  </span>
                 </span>
                 <div className="btn-addToCard">
                   <Link to={`/product-details/${item.id}`}>Chi tiet</Link>
                 </div>
-
               </div>
             </div>
-            <button onClick={() => handleCompare(item.id)}>So sánh</button>
-
           </div>
         ))}
       </div>
@@ -154,12 +166,23 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
           <div className="comparison-table">
             <Table
               dataSource={[
-
                 {
                   key: "1",
                   feature: "Tên sản phẩm",
-                  product1: <Image src={comparisonResult.product1.image} alt="Product 1" style={{ width: 50, height: 50 }} />,
-                  product2: <Image src={comparisonResult.product2.image} alt="Product 2" style={{ width: 50, height: 50 }} />,
+                  product1: (
+                    <Image
+                      src={comparisonResult.product1.image}
+                      alt="Product 1"
+                      style={{ width: 50, height: 50 }}
+                    />
+                  ),
+                  product2: (
+                    <Image
+                      src={comparisonResult.product2.image}
+                      alt="Product 2"
+                      style={{ width: 50, height: 50 }}
+                    />
+                  ),
                 },
                 {
                   key: "2",
@@ -170,8 +193,12 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                 {
                   key: "3",
                   feature: "Giá tiền",
-                  product1: `${comparisonResult.product1.price.toLocaleString("vi-VN")} VND`,
-                  product2: `${comparisonResult.product2.price.toLocaleString("vi-VN")} VND`,
+                  product1: `${comparisonResult.product1.price.toLocaleString(
+                    "vi-VN"
+                  )} VND`,
+                  product2: `${comparisonResult.product2.price.toLocaleString(
+                    "vi-VN"
+                  )} VND`,
                 },
                 {
                   key: "4",
@@ -184,8 +211,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                   feature: "Loại sản phẩm",
                   product1: comparisonResult.product1.categoryName,
                   product2: comparisonResult.product2.categoryName,
-                }
-
+                },
               ]}
               columns={[
                 {
@@ -209,7 +235,6 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
           </div>
         )}
       </Modal>
-
     </div>
   );
 }
