@@ -110,7 +110,18 @@ function SidebarManager() {
         </li>
 
         <hr />
-
+{/* Manager order */}
+        <h3 style={{ textAlign: "center", fontSize: "20px" }}>
+          Quản lý order
+        </h3>
+        <li
+          className={isActive("/manager/manager-order") ? "active" : ""}
+        >
+          <Link to="/manager/manager-order">
+            <FaRegQuestionCircle className="manager-icon" /> Quản lý order
+          </Link>
+        </li>
+        
         
       </ul>
     </div>

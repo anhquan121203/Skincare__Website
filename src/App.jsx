@@ -42,6 +42,7 @@ import ManagerSkinQuestion from "./Pages/ManagerPages/ManagerSkinQuestion/Manage
 import ManagerSkinAnswer from "./Pages/ManagerPages/ManagerSkinAnswer/ManagerSkinAnswer.jsx";
 import ManagerSkincareRoutine from "./Pages/ManagerPages/ManagerSkincareRoutines/ManagerSkincareRoutine.jsx";
 import ManagerStepRoutine from "./Pages/ManagerPages/ManagerStepRoutine/ManagerStepRoutine.jsx";
+import ManagerOrder from "./Pages/ManagerPages/ManagerOrder/ManagerOrder.jsx";
 
 function App() {
   return (
@@ -123,6 +124,10 @@ function App() {
           <Route
             path="manager-stepRoutine"
             element={<ManagerStepRoutine />}
+          ></Route>
+          <Route
+            path="manager-order"
+            element={<ManagerOrder />}
           ></Route>
         </Route>
 
