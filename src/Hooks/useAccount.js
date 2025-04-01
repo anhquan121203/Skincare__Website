@@ -35,13 +35,19 @@ const useAccount = () => {
     }
   };
 
-  const depositWallet = (money) => {
-    dispatch(updateWallet(money));
+  const depositWallet = async (money) => {
+    try {
+      await dispatch(updateWallet(money));
+      dispatch(getAllUsers()); 
+    } catch (error) {
+      console.error("Lỗi cập nhật ví:", error);
+    }
   };
+  
 
-  const banUser = async (userId, status) => {
-    await updateUserStatus(use)
-  }
+  // const banUser = async (userId, status) => {
+  //   await updateUserStatus(use)
+  // }
   return { account, loading, error, addNewStaff, depositWallet, checkEmailExists };
 };
 

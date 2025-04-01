@@ -185,3 +185,7 @@
 .button-compare:hover {
   background-color: #e84118;
 }
+
+.btn-addToCard a{
+  font-size: 17px;
+}

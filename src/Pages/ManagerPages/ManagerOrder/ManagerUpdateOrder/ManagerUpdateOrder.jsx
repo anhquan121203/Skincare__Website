@@ -73,7 +73,7 @@ const ModalUpdateOrder = ({
           rules={[{ required: true, message: "Vui lòng nhập câu hỏi!" }]}
         >
           <Select>
-            <Select.Option value="Pedding">Pedding</Select.Option>
+            <Select.Option value="Pending">Pending</Select.Option>
             <Select.Option value="Confirmed">Confirmed</Select.Option>
             <Select.Option value="Processing">Processing</Select.Option>
             <Select.Option value="Completed">Completed</Select.Option>

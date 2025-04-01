@@ -184,7 +184,7 @@ function TabDetails({ productId, product }) {
                 paginatedComment.map((item, index) => (
                   <Card
                     key={index}
-                    title={item.firstName}
+                    title={item.lastName + " " + item.firstName}
                     // extra={
                     //   <div className="btn-card-comment">
                     //     <Button

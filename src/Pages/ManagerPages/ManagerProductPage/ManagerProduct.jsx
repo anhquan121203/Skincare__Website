@@ -79,7 +79,7 @@ function ManagerProduct() {
     console.log("Updated Product:", updatedProduct);
 
     editProduct(updatedProduct);
-    toast.success("Cập nhật sản phẩm thành công!");
+    // toast.success("Cập nhật sản phẩm thành công!");
     setIsUpdateModalOpen(false);
     setSelectedProduct(null);
   };
