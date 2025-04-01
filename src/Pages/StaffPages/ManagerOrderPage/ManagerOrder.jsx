@@ -24,7 +24,6 @@ function StaffOrderManager() {
   const handleOk = async (newOrder) => {
     setIsEditModalOpen(false);
     console.log("Updated Order:", newOrder);
-
     const updatedOrder = { ...newOrder, staffId: userId };
 
     await editOrder(updatedOrder);
@@ -101,29 +100,39 @@ function StaffOrderManager() {
     {
       title: "Hành động",
       key: "action",
-      render: (_, record) => (
-        <div style={{ display: "flex", gap: "8px" }}>
-          <Button
-            type="primary"
-            onClick={() => {
-              setEditingOrder(record);
-              setIsEditModalOpen(true);
-            }}
-          >
-            Chỉnh sửa
-          </Button>
+      render: (_, record) => {
+        const isDisabled =
+          record.orderStatus === "Completed" ||
+          record.orderStatus === "Canceled";
 
-          <Button
-            type="default"
-            onClick={() => {
-              setSelectedOrder(record);
-              setIsViewModalOpen(true);
-            }}
-          >
-            Xem chi tiết đơn hàng
-          </Button>
-        </div>
-      ),
+        return (
+          <div style={{ display: "flex", gap: "8px" }}>
+            <Button
+              type="primary"
+              onClick={() => {
+                if (!isDisabled) {
+                  // Ngăn không cho mở modal nếu bị disable
+                  setEditingOrder(record);
+                  setIsEditModalOpen(true);
+                }
+              }}
+              disabled={isDisabled} // Vô hiệu hóa nút nếu trạng thái là Completed hoặc Canceled
+            >
+              Chỉnh sửa
+            </Button>
+
+            <Button
+              type="default"
+              onClick={() => {
+                setSelectedOrder(record);
+                setIsViewModalOpen(true);
+              }}
+            >
+              Xem chi tiết đơn hàng
+            </Button>
+          </div>
+        );
+      },
     },
   ];
 
