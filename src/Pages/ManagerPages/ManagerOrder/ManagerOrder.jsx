@@ -18,23 +18,6 @@ function ManagerOrder() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-//   // Open Add Modal
-//   const openAddQuestionModal = () => {
-//     setIsNewQuestionModal(true);
-//     setSelectQuestion(null);
-//   };
-
-//   const handleAddQuestion = async (questionData) => {
-//     try {
-//       await addNewSkinQuestion(questionData);
-//       toast.success("Thêm câu hỏi thành công!");
-//       setIsNewQuestionModal(false);
-//     } catch (error) {
-//       toast.error("Thêm câu hỏi thất bại! Vui lòng thử lại.");
-//       console.error("Error adding question:", error);
-//     }
-//   };
-
 //   // Open Update Modal
   const openUpdateOrder = (order) => {
     setSelectOrder(order);
@@ -52,14 +35,6 @@ function ManagerOrder() {
     setIsUpdateOrderModal(false);
   };
 
-//   const handleDeleteSkinQuestion = (id) => {
-//     if (id) {
-//       removeSkinQuestion(id);
-//       toast.success("Xóa câu hỏi thành công!");
-//     } else {
-//       toast.error("Xóa câu hỏi thất bại! Vui lòng thử lại.");
-//     }
-//   };
 
   if (loading) return <p>Loading skin question...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -80,7 +55,7 @@ function ManagerOrder() {
 
   return (
     <div className="managerSkinQuestion-container">
-      <h1>Quản lý câu hỏi</h1>
+      <h1>Quản lý Order</h1>
       <div className="content-manager-skinQuestion">
        
 
@@ -114,13 +89,7 @@ function ManagerOrder() {
                     >
                       Cập nhật
                     </Button>
-                    <Popconfirm
-                      title="Xóa câu hỏi"
-                      description="Bạn muốn xóa câu hỏi này không?"
-                    //   onConfirm={() => handleDeleteSkinQuestion(item.id)}
-                    >
-                      <Button className="btn-removeSkinType">Xóa</Button>
-                    </Popconfirm>
+                    
                   </td>
                 </tr>
               ))}

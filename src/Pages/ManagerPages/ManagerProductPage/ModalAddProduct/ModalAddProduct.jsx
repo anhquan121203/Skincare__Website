@@ -14,6 +14,7 @@ import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
+import useAccount from "../../../../Hooks/useAccount";
 
 const ModalAddProduct = ({
   isModalOpen,
@@ -26,6 +27,9 @@ const ModalAddProduct = ({
   const { skinTypes, loading } = useSkinType();
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const {account} = useAccount();
+  const staffOptions = account.filter((staff) => staff.roleName === "Staff");
+
   useEffect(() => {
     if (isModalOpen) {
       form.resetFields(); // Always reset form when modal opens
@@ -36,20 +40,6 @@ const ModalAddProduct = ({
   const handleUploadImage = ({ file }) => {
     setSelectedFile(file);
   };
-
-  // const handleSubmit = () => {
-  //   form
-  //     .validateFields()
-  //     .then((values) => {
-  //       handleAdd({ ...values});
-  //       toast.success("Thêm sản phẩm mới thành công!");
-  //       form.resetFields();
-  //       // setImageUrl(null); // Reset image URL after submission
-  //     })
-  //     .catch((info) => {
-  //       console.error("Validation Failed:", info);
-  //     });
-  // };
 
   const handleSubmit = async () => {
     try {
@@ -83,38 +73,6 @@ const ModalAddProduct = ({
     }
   };
 
-  // const handleUpload = async (file) => {
-  //   setUploading(true);
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("AttachmentFile", file);
-
-  //     const response = await axios.post(
-  //       "https://localhost:7088/api/product/createProduct",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-
-  //     console.log("Upload Response:", response.data);
-
-  //     if (response.data && response.data.imageUrl) {
-  //       setImageUrl(response.data.imageUrl);
-  //       form.setFieldsValue({ image: response.data.imageUrl });
-  //       toast.success("Tải ảnh lên thành công!");
-  //     } else {
-  //       toast.error("Tải ảnh thất bại! Định dạng phản hồi không đúng.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Lỗi khi tải ảnh:", error.response?.data || error.message);
-  //     toast.error("Lỗi khi tải ảnh lên! Vui lòng kiểm tra API.");
-  //   } finally {
-  //     setUploading(false);
-  //   }
-  // };
 
   return (
     <Modal
@@ -202,6 +160,20 @@ const ModalAddProduct = ({
             {skinTypes.map((skinType) => (
               <Select.Option key={skinType.id} value={skinType.id}>
                 {skinType.skinTypeName}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Người quản lí"
+          name="staffId"
+          rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
+        >
+          <Select placeholder="Chọn loại da">
+            {staffOptions.map((staff) => (
+              <Select.Option key={staff.id} value={staff.id}>
+                {staff.email}
               </Select.Option>
             ))}
           </Select>
