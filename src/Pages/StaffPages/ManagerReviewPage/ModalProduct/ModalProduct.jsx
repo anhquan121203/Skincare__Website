@@ -23,6 +23,11 @@ function ModalProduct({
   const [form] = Form.useForm();
   console.log("product: ", editingProduct);
 
+  //  const [selectedFile, setSelectedFile] = useState(null);
+  //   const [previewImage, setPreviewImage] = useState(
+  //     updateProduct?.image
+  //   );
+
   useEffect(() => {
     if (editingProduct) {
       form.setFieldsValue(editingProduct);
@@ -37,6 +42,70 @@ function ModalProduct({
       handleCancel(); // Đóng modal sau khi cập nhật
     });
   };
+
+  //  useEffect(() => {
+  //     if (updateProduct) {
+  //       setPreviewImage(updateProduct.image);
+  //       form.setFieldsValue({
+  //         ...updateProduct,
+  //         CategoryId: updateProduct.CategoryId || null,
+  //         SkinTypeId: updateProduct.SkinTypeId || null,
+  //         // Format dates to moment if needed
+  //         createdDate: updateProduct.createdDate
+  //           ? moment(updateProduct.createdDate)
+  //           : null,
+  //         expiredDate: updateProduct.expiredDate
+  //           ? moment(updateProduct.expiredDate)
+  //           : null,
+  //       });
+  //       setSelectedFile(null);
+  //     }
+  //   }, [updateProduct, isModalOpen]);
+
+  //   const handleUploadImage = ({ file }) => {
+  //     setSelectedFile(file);
+  //     setPreviewImage(URL.createObjectURL(file));
+  //   };
+
+  
+  // const handleSubmit = async () => {
+  //     try {
+  //       const values = await form.validateFields();
+  //       const formData = new FormData();
+  //       console.log(values);
+
+  //       if (!values.id) {
+  //         toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
+  //         return;
+  //       }
+  //       const { createdDate, expiredDate, ...restValues } = values;
+  //       if (createdDate) {
+  //         formData.append("createdDate", moment(createdDate).format("YYYY-MM-DDTHH:mm:ss"));
+  //       }
+  //       if (expiredDate) {
+  //         formData.append("expiredDate", moment(expiredDate).format("YYYY-MM-DDTHH:mm:ss"));
+  //       }
+
+  //       formData.append("id", values.id);
+  //       // Thêm dữ liệu sản phẩm vào formData
+  //       Object.keys(restValues).forEach((key) => {
+  //         formData.append(key, restValues[key]);
+  //       });
+
+  //       // Nếu có ảnh, thêm vào formData
+  //       if (selectedFile) {
+  //         formData.append("AttachmentFile", selectedFile);
+  //       }
+
+  //       handleUpdate(formData);
+  //       form.resetFields();
+  //       handleCancel();
+  //       toast.success("Cập nhật sản phẩm thành công!");
+  //     } catch (error) {
+  //       console.error("Lỗi khi thêm sản phẩm:", error);
+  //       toast.error("Lỗi sản phẩm!");
+  //     }
+  //   };
 
   const onChange = (date, dateString) => {
     console.log(date, dateString);
