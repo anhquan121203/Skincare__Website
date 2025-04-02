@@ -26,7 +26,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
         : [...prev, id];
 
       if (newIds.length === 2) {
-        showCompareModal(); // Hiển thị modal khi đủ 2 sản phẩm
+        showCompareModal(); 
       }
 
       return newIds.slice(-2);

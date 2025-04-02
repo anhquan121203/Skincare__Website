@@ -31,7 +31,7 @@ function TopProduct() {
                   <span className="card-price">{item.price.toLocaleString("vi-VN")}0 </span>VND
                 </span>
                 <div className="btn-addToCard">
-                  <button className="addToCard">
+                  <button className="detail-homepage">
                    <Link>Chi tiết</Link>
                   </button>
                 </div>

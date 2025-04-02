@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ProductPage.css";
 import { Select, Input } from "antd";
 import FilterProduct from "../../../Components/FilterProduct/FilterProduct";
-import CardComponent from "../ProductPage/CardProduct/CardProduct";
+import CardProduct from "../ProductPage/CardProduct/CardProduct";
 
 const { Option } = Select;
 
@@ -27,6 +27,7 @@ function ProductPage() {
             defaultValue="all"
             className="sort-select"
             onChange={setSortProduct}
+            style={{height: 40, width: 240}}                                  
           >
             <Option value="all">Tất cả</Option>
             <Option value="low-to-high">Giá: từ thấp đến cao</Option>
@@ -47,7 +48,7 @@ function ProductPage() {
             <FilterProduct setFilters={setFilters} />
           </div>
 
-          <CardComponent
+          <CardProduct
             sortProduct={sortProduct}
             searchTerm={searchTerm}
             filters={filters}

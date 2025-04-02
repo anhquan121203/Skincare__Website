@@ -128,7 +128,7 @@
   font-size: 25px;
 }
 
-.addToCard {
+.detail-homepage {
   border-radius: 15px;
   background-color: #124841;
   height: 40px;
@@ -138,7 +138,13 @@
   border: none;
 }
 
-.addToCard:hover {
+.detail-homepage a {
+  color: white;
+  text-decoration: none;
+
+}
+
+.detail-homepage:hover {
   background-color: #047c91;
 }
 

@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./SidebarManager.css";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { FaDropbox, FaRegQuestionCircle, FaRegUser } from "react-icons/fa";
+import {
+  FaDropbox,
+  FaRegQuestionCircle,
+  FaRegUser,
+  FaShoppingCart,
+} from "react-icons/fa";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -17,6 +22,7 @@ import {
 } from "react-icons/ri";
 import { BiCategoryAlt } from "react-icons/bi";
 import ManagerHeader from "../ManagerHeader/ManagerHeader";
+import { AiOutlineDeliveredProcedure } from "react-icons/ai";
 
 function SidebarManager() {
   const location = useLocation(); // Get current route
@@ -43,7 +49,7 @@ function SidebarManager() {
 
       <ul className="sidebar-menu">
         {/* <hr /> */}
-        <h3 style={{textAlign: "center"}}>Doanh số</h3>
+        <h3 style={{ textAlign: "center" }}>Doanh số</h3>
         <li className={isActive("/manager") ? "active" : ""}>
           <Link to="/manager">
             <LuLayoutDashboard className="manager-icon" /> Doanh thu
@@ -76,13 +82,11 @@ function SidebarManager() {
             }
           >
             <Link to="/manager/manager-skinCareRoutines">
-              <FaDropbox className="manager-icon" /> Quy trình chăm sóc da
+              <AiOutlineDeliveredProcedure  className="manager-icon" /> Quy trình chăm sóc da
             </Link>
           </li>
           <li
-            className={
-              isActive("/manager/manager-stepRoutine") ? "active" : ""
-            }
+            className={isActive("/manager/manager-stepRoutine") ? "active" : ""}
           >
             <Link to="/manager/manager-stepRoutine">
               <FaDropbox className="manager-icon" /> Các bước chăm sóc da
@@ -110,19 +114,13 @@ function SidebarManager() {
         </li>
 
         <hr />
-{/* Manager order */}
-        <h3 style={{ textAlign: "center", fontSize: "20px" }}>
-          Quản lý order
-        </h3>
-        <li
-          className={isActive("/manager/manager-order") ? "active" : ""}
-        >
+        {/* Manager order */}
+        <h3 style={{ textAlign: "center", fontSize: "20px" }}>Quản lý order</h3>
+        <li className={isActive("/manager/manager-order") ? "active" : ""}>
           <Link to="/manager/manager-order">
-            <FaRegQuestionCircle className="manager-icon" /> Quản lý order
+            <FaShoppingCart className="manager-icon" /> Quản lý order
           </Link>
         </li>
-        
-        
       </ul>
     </div>
   );

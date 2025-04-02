@@ -8,6 +8,7 @@ import { logout } from "../../../Features/user/authSlice";
 import { FaRegUserCircle } from "react-icons/fa";
 import { SiAwssecretsmanager } from "react-icons/si";
 import { CiLogout } from "react-icons/ci";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 function ManagerHeader() {
   const { avatar, firstName, lastName } = useAuth();
@@ -41,6 +42,7 @@ function ManagerHeader() {
             <span>
               {firstName} {lastName}
             </span>
+            <IoMdArrowDropdown style={{fontSize:30, color: "white", marginLeft: -10}} />
           </div>
 
           <div className={`dropdown-dashboard__main ${isOpen ? "show" : ""}`}>

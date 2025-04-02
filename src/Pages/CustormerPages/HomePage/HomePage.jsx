@@ -25,7 +25,7 @@ function HomePage() {
     autoplaySpeed: 1000,
     cssEase: "linear",
     arrows: false,
-  }
+  };
 
   const slider = [
     { id: 1, url: brand1, alt: "Image 1" },
@@ -33,12 +33,10 @@ function HomePage() {
     { id: 3, url: brand3, alt: "Image 3" },
     { id: 4, url: brand4, alt: "Image 3" },
     { id: 5, url: brand5, alt: "Image 3" },
-  ]
-
+  ];
 
   return (
     <div className="homepage">
-
       {/* Banner */}
       <Banner />
       <div className="homepage-content">
@@ -98,12 +96,11 @@ function HomePage() {
             ))}
           </Slider>
         </div>
-
+        <h1 style={{fontSize: "40px"}}>Top sản phẩm bán chạy nhất</h1>
         <div className="top-product">
-          <TopProduct/>
+          <TopProduct />
         </div>
       </div>
-
     </div>
   );
 }

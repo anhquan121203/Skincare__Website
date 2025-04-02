@@ -73,7 +73,7 @@ function Header() {
       <nav className="header-end">
         <ul>
           {/* Seacher */}
-          <ul className="search-bar-container">
+          <ul className="search-bar-container" onClick={() => navigate(`/product`)}>
             <Dropdown overlay={categoriesMenu} trigger={["click"]}>
               <button className="categories-btn">
                 <MdOutlineDashboardCustomize className="categories-icon" />

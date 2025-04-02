@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
     // Bất kì mã trạng thái nào lọt ra ngoài tầm 2xx đều khiến hàm này được trigger
     if (error.response && error.response.status === 401) {
       try {
-        // Gọi API refresh token với phương thức GET, kèm theo token cũ trong header
+        // kiểm tra refereshToken
         const refreshToken = localStorage.getItem("refreshToken");
         if (!refreshToken) {
           throw new Error("No refresh token available");
