@@ -135,7 +135,7 @@ function CardProduct({ sortProduct, searchTerm, filters }) {
                   </span>
                 </span>
                 <div className="btn-addToCard">
-                  <Link to={`/product-details/${item.id}`}>Chi tiet</Link>
+                  <Link to={`/product-details/${item.id}`}>Chi tiết</Link>
                 </div>
               </div>
             </div>

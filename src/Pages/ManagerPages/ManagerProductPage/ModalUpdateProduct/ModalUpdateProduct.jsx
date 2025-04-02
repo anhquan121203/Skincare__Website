@@ -15,6 +15,7 @@ import useCategory from "../../../../Hooks/useCategory";
 import useSkinType from "../../../../Hooks/useSkinType";
 import { FaPlus } from "react-icons/fa";
 import moment from "moment";
+import useAccount from "../../../../Hooks/useAccount";
 
 const ModalUpdateProduct = ({
   isModalOpen,
@@ -29,6 +30,9 @@ const ModalUpdateProduct = ({
   const [previewImage, setPreviewImage] = useState(
     updateProduct?.image 
   );
+
+  const {account} = useAccount();
+  const staffOptions = account.filter((staff) => staff.roleName === "Staff");
 
   // useEffect(() => {
   //   if (updateProduct) {
@@ -80,7 +84,7 @@ const ModalUpdateProduct = ({
     try {
       const values = await form.validateFields();
       const formData = new FormData();
-      console.log(values);
+      // console.log(values);
 
       if (!values.id) {
         toast.error("Lỗi: Không tìm thấy ID sản phẩm!");
@@ -219,6 +223,20 @@ const ModalUpdateProduct = ({
           <Select>
             <Select.Option value="Available">Available</Select.Option>
             <Select.Option value="Inactive">Inactive</Select.Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Người quản lí"
+          name="staffId"
+          rules={[{ required: true, message: "Vui lòng chọn loại da!" }]}
+        >
+          <Select placeholder="Chọn loại da">
+            {staffOptions.map((staff) => (
+              <Select.Option key={staff.id} value={staff.id}>
+                {staff.email}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
 

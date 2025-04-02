@@ -25,7 +25,7 @@ ChartJS.register(
 
 function DashboardManager() {
   const {dashboardOrders, totalDashboardData} = useDashboard();
-  // for()
+
   
   const data = {
     labels: [
@@ -40,6 +40,7 @@ function DashboardManager() {
       "Oct",
       "Dec",
     ],
+
     datasets: [
       {
         label: "Doanh thu (VNĐ)",
