@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Col, Form, Image, Row, Input } from "antd";
 import useAuth from "../../../Hooks/useAuth";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ function ManagerProfile() {
     email,
     address,
     roleName,
+    wallet,
     updateAvatar,
   } = useAuth();
   const [error, setError] = useState(null);
@@ -23,7 +24,7 @@ function ManagerProfile() {
   const token = localStorage.getItem("accessToken");
 
   const formatDate = (dateString) => {
-    if (!dateString) return "N/A"; // ✅ Kiểm tra null tránh lỗi
+    if (!dateString) return "N/A"; // Kiểm tra null tránh lỗi
     const date = new Date(dateString);
     return `${String(date.getDate()).padStart(2, "0")}/${String(
       date.getMonth() + 1
@@ -75,34 +76,37 @@ function ManagerProfile() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="user-profile container mt-4">
       <Row gutter={[16, 16]}>
         {/* Left Column - Form */}
         <Col md={16}>
           <Card className="p-4 mb-4">
-            <h4>Admin Information</h4>
+            <h4>Thông tin người dùng</h4>
             <Form layout="vertical">
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item label="First Name">
+                  <Form.Item label="Tên">
                     <Input value={firstName} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Last Name">
+                  <Form.Item label="Họ">
                     <Input value={lastName} disabled />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item label="Birthday">
+                  <Form.Item label="Ngày sinh">
                     <Input value={formatDate(birthday)} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Role">
-                    <Input value={roleName} disabled />
+                  <Form.Item label="Ví tiền">
+                    <Input
+                      value={(Number(wallet) || 0).toLocaleString("vi-VN")}
+                      disabled
+                    />
                   </Form.Item>
                 </Col>
               </Row>
@@ -113,13 +117,16 @@ function ManagerProfile() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Phone">
-                    <Input value={phoneNumber} disabled />
+                  <Form.Item label="Số điện thoại">
+                    <Input
+                      value={phoneNumber}
+                      disabled
+                      className="custom-input"
+                    />
                   </Form.Item>
                 </Col>
               </Row>
-              <h4>Address</h4>
-              <Form.Item label="Address">
+              <Form.Item label="Địa chỉ">
                 <Input value={address} disabled />
               </Form.Item>
             </Form>
@@ -151,7 +158,7 @@ function ManagerProfile() {
                 <Button
                   onClick={() => document.getElementById("fileInput").click()}
                 >
-                  Change Image
+                  Thay ảnh đại diện
                 </Button>
                 <input
                   type="file"
@@ -162,7 +169,9 @@ function ManagerProfile() {
                 />
               </Col>
               <Col>
-                <Button>Update Profile</Button>
+                <Link to="/editProfile-user">
+                  <Button>Cập nhật hồ sơ</Button>
+                </Link>
               </Col>
             </Row>
           </Card>

@@ -27,7 +27,9 @@ const ModalAddProduct = ({
   const { skinTypes, loading } = useSkinType();
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const {account} = useAccount();
+  const { account } = useAccount();
+  console.log("account", account);
+
   const staffOptions = account.filter((staff) => staff.roleName === "Staff");
 
   useEffect(() => {
@@ -72,7 +74,6 @@ const ModalAddProduct = ({
       toast.error("Tạo sản phẩm không thành công!!!");
     }
   };
-
 
   return (
     <Modal

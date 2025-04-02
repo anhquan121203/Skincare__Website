@@ -25,7 +25,9 @@ const useCategory = () => {
     dispatch(fetchCategory()); // Fetch lại danh sách danh mục sau khi cập nhật
   };
 
-  const deleteCategory = (id) => dispatch(removeCategory(id));
+  const deleteCategory = async (id) => {
+    await dispatch(removeCategory(id)), dispatch(fetchCategory());
+  };
 
   return {
     categories,

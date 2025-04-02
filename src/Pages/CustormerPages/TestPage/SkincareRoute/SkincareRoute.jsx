@@ -61,7 +61,7 @@ const SkincareRoutine = () => {
   );
 
   if (!activeSkincareRoutine) {
-    return <div className="error">Không tìm thấy quy trình phù hợp.</div>;
+    return <div className="error">Không tìm thấy quy trình</div>;
   }
 
   // Lấy thông tin skincareRoutine

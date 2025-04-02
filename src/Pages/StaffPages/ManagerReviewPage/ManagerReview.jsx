@@ -26,7 +26,10 @@ function StaffProductManager() {
   // Xử lý xác nhận cập nhật
   const handleConfirmUpdate = async (formData) => {
     try {
-      await editProduct(formData); // Gửi formData trực tiếp
+      // Thêm staffId vào formData
+      formData.append("staffId", userId);
+
+      await editProduct(formData); // Gửi formData đã bổ sung staffId
       toast.success("Cập nhật sản phẩm thành công!");
       setIsModalOpen(false);
       setEditingProduct(null);
