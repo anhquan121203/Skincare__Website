@@ -4,11 +4,15 @@ import useSkinQuestion from "../../../../Hooks/useSkinQuestion";
 import useSkinAnswer from "../../../../Hooks/useSkinAnswer";
 import { useNavigate } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import useSkinTest from "../../../../Hooks/useSkinTest";
+import { useDispatch } from "react-redux";
 
 function TestSkinType() {
   const { skinQuestion, loading, error } = useSkinQuestion();
   const { skinAnswer } = useSkinAnswer();
   const naviagte = useNavigate();
+  const {skinTest, addNewSkinTest} = useSkinTest();
+  const dispatch = useDispatch();
 
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [resultSkin, setResultSkin] = useState(null);
@@ -53,6 +57,7 @@ function TestSkinType() {
     )?.skinTypeName;
 
     setResultSkin(skinTypeName || "Không xác định");
+    addNewSkinTest(mostCommonSkinType)
   };
 
   const handleSkinRoutine = () => {
@@ -71,6 +76,10 @@ function TestSkinType() {
       naviagte("/test-skintype"); 
     }
   };
+
+  // const handleCreateSkinTest = (skinTest) => {
+    
+  // }
   
   return (
     <div className="quiz-container">
