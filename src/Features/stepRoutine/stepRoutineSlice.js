@@ -10,7 +10,8 @@ export const fetchStepRoutineById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${STEP_ROUTINE_API_URL}/getStepRoutineByRoutineId/${id}`
+        `${STEP_ROUTINE_API_URL}/getStepRoutineByRoutineId/${id}`,
+      
       );
       return response.data;
     } catch (error) {
@@ -24,7 +25,8 @@ export const listStepRoutines = createAsyncThunk(
   async (stepRoutine, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${STEP_ROUTINE_API_URL}/listStepRoutines`
+        `${STEP_ROUTINE_API_URL}/listStepRoutines`,
+        
       );
       return response.data;
     } catch (error) {
@@ -37,9 +39,16 @@ export const createStepRoutine = createAsyncThunk(
   "stepRoutine/createStepRoutine",
   async (stepRoutine, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.post(
         `${STEP_ROUTINE_API_URL}/createStepRoutine`,
-        stepRoutine
+        stepRoutine,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -52,9 +61,16 @@ export const updateStepRoutine = createAsyncThunk(
   "stepRoutine/updateStepRoutine",
   async (stepRoutine, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.put(
         `${STEP_ROUTINE_API_URL}/updateStepRoutine`,
-        stepRoutine
+        stepRoutine,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -67,7 +83,13 @@ export const deleteStepRoutine = createAsyncThunk(
   "stepRoutine/deleteStepRoutine",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${STEP_ROUTINE_API_URL}/deleteStepRoutine/${id}`);
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`${STEP_ROUTINE_API_URL}/deleteStepRoutine/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

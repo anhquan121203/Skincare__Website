@@ -6,7 +6,8 @@ export const fetchSkinType = createAsyncThunk(
   "skinType/fetchSkinType",
   async (skinType, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${SKINTYPE_API_URL}/listSkinType`);
+
+      const response = await axios.get(`${SKINTYPE_API_URL}/listSkinType`,);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -18,9 +19,15 @@ export const createNewSkinType = createAsyncThunk(
   "skinType/addNewSkinType",
   async (skinType, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem('accessToken')
       const response = await axios.post(
         `${SKINTYPE_API_URL}/createSkinType`,
-        skinType
+        skinType,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -33,9 +40,15 @@ export const updateSkinType = createAsyncThunk(
   "skinType/updateSkinType",
   async (skinType, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken")
       const response = await axios.put(
         `${SKINTYPE_API_URL}/updateSkinType`,
-        skinType
+        skinType, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -48,7 +61,13 @@ export const removeSkinType = createAsyncThunk(
   "skinType/removeSkinType",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${SKINTYPE_API_URL}/deleteSkinType/${id}`);
+      const token = localStorage.getItem("accessToken")
+      await axios.delete(`${SKINTYPE_API_URL}/deleteSkinType/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

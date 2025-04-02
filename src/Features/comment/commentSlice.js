@@ -47,7 +47,13 @@ export const removeComment = createAsyncThunk(
   "comment/removeComment",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${COMMENT_API_URL}/deleteComment/${id}`);
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`${COMMENT_API_URL}/deleteComment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

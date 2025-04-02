@@ -53,7 +53,8 @@ h3{
 .wallet-footer{
     padding: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    /* margin-left: 100px; */
 }
 
 .wallet-footer button{
@@ -62,6 +63,7 @@ h3{
     height: 60px;
     border: none;
     border-radius: 9px;
+   
 }
 
 .wallet-footer button:hover{
