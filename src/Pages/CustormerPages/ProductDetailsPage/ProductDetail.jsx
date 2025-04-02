@@ -37,8 +37,8 @@ function ProductDetail() {
       return;
     }
   
-    if (product.stock < quantity) {
-      toast.error(`Chỉ còn ${product.stock} sản phẩm trong kho!`);
+    if (product.quantity < quantity) {
+      toast.error(`Chỉ còn ${product.quantity} sản phẩm trong kho!`);
       return;
     }
   
