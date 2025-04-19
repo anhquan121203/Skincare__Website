@@ -85,7 +85,7 @@ A comprehensive skincare platform designed to provide personalized skincare solu
 
 # ScreenShot
 
-## **1. GUI**
+## **1. User Page**
 
 ### **Home Page**
 
@@ -98,5 +98,66 @@ A comprehensive skincare platform designed to provide personalized skincare solu
 
 ### **Product List**
 
-![Product List](images/productList.png)
-![Product List](images/productList2.png)
+![Product List](/src/assets/screenShot/viewproduct1.png)
+![Product List](/src/assets/screenShot/viewproduct2.png)
+
+### **Product Detail**
+
+![Product Detail](/src/assets/screenShot/productDetail.png)
+![Product Detail](/src/assets/screenShot/productDetai2.png)
+![Product Detail](/src/assets/screenShot/productDetail3.png)
+
+### **Shopping Cart**
+
+![Shopping Cart](/src/assets/screenShot/shoppingCart.png)
+![Product Payment](/src/assets/screenShot/thanhToan.png)
+![Confirm Screen](/src/assets/screenShot/xacNhanDonHang.png)
+
+### **Blog**
+
+![Blog Page](/src/assets/screenShot/blog.png)
+
+### **Take A Skin Type Test**
+
+![Test Skin Type](/src/assets/screenShot/testSkinType1.png)
+![Test Skin Type](/src/assets/screenShot/testSkinType2.png)
+
+### **Skin Care Routine**
+
+![Skin Care Routine](/src/assets/screenShot/skinCareRoutine1.png)
+
+### **User: Profile**
+
+![Skin Care Routine](/src/assets/screenShot/profile.png)
+
+### **User: History**
+
+![Skin Care Routine](/src/assets/screenShot/history.png)
+
+## **2. Admin page**
+
+![Admin Product Management](/src/assets/screenShot/admin1.png)
+![Admin Product Management](/src/assets/screenShot/admin2.png)
+![Admin Product Management](/src/assets/screenShot/admin3.png)
+![Admin Product Management](/src/assets/screenShot/admin4.png)
+![Admin Product Management](/src/assets/screenShot/admin5.png)
+![Admin Product Management](/src/assets/screenShot/admin6.png)
+![Admin Product Management](/src/assets/screenShot/admin7.png)
+![Admin Product Management](/src/assets/screenShot/admin8.png)
+![Admin Product Management](/src/assets/screenShot/admin9.png)
+![Admin Product Management](/src/assets/screenShot/admin10.png)
+
+## **3. Staff page**
+
+![Staff Management](/src/assets/screenShot/staff1.png)
+![Staff Management](/src/assets/screenShot/staff2.png)
+![Staff Management](/src/assets/screenShot/staff3.png)
+
+## **4. Database ERD**
+
+![Database ERD](/src/assets/screenShot/erd.png)
+
+# **Project Structure**
+
+![Database ERD](/src/assets/screenShot/structure1.png)
+![Database ERD](/src/assets/screenShot/structure2.png)
