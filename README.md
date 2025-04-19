@@ -82,3 +82,21 @@ A comprehensive skincare platform designed to provide personalized skincare solu
 
 - **FE-21**: Skin Test Management  
   _Description_: Managers can update or manage the questions and logic of the skin test.
+
+# ScreenShot
+
+## **1. GUI**
+
+### **Home Page**
+
+![Home Page](/src/assets/screenShot/homePage.png)
+
+### **Login & Register Page**
+
+![Login Page](/src/assets/screenShot/login.png)
+![Register Page](/src/assets/screenShot/register.png)
+
+### **Product List**
+
+![Product List](images/productList.png)
+![Product List](images/productList2.png)
