@@ -27,11 +27,9 @@ const ModalUpdateProduct = ({
   const { categories } = useCategory();
   const { skinTypes, loading } = useSkinType();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(
-    updateProduct?.image 
-  );
+  const [previewImage, setPreviewImage] = useState(updateProduct?.image);
 
-  const {account} = useAccount();
+  const { account } = useAccount();
   const staffOptions = account.filter((staff) => staff.roleName === "Staff");
 
   // useEffect(() => {
@@ -92,10 +90,16 @@ const ModalUpdateProduct = ({
       }
       const { createdDate, expiredDate, ...restValues } = values;
       if (createdDate) {
-        formData.append("createdDate", moment(createdDate).format("YYYY-MM-DDTHH:mm:ss"));
+        formData.append(
+          "createdDate",
+          moment(createdDate).format("YYYY-MM-DDTHH:mm:ss")
+        );
       }
       if (expiredDate) {
-        formData.append("expiredDate", moment(expiredDate).format("YYYY-MM-DDTHH:mm:ss"));
+        formData.append(
+          "expiredDate",
+          moment(expiredDate).format("YYYY-MM-DDTHH:mm:ss")
+        );
       }
 
       formData.append("id", values.id);
@@ -175,8 +179,11 @@ const ModalUpdateProduct = ({
           name="createdDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày sản xuất!" }]}
         >
-           <DatePicker showTime format="YYYY-MM-DDTHH:mm:ss" style={{ width: "100%" }} />
-         
+          <DatePicker
+            showTime
+            format="YYYY-MM-DDTHH:mm:ss"
+            style={{ width: "100%" }}
+          />
         </Form.Item>
 
         <Form.Item
@@ -184,7 +191,11 @@ const ModalUpdateProduct = ({
           name="expiredDate"
           rules={[{ required: true, message: "Vui lòng nhập ngày hết hạn!" }]}
         >
-           <DatePicker showTime format="YYYY-MM-DDTHH:mm:ss" style={{ width: "100%" }} />
+          <DatePicker
+            showTime
+            format="YYYY-MM-DDTHH:mm:ss"
+            style={{ width: "100%" }}
+          />
         </Form.Item>
 
         <Form.Item

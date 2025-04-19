@@ -4,13 +4,19 @@ import {
   ORDER_DETAILS,
   ORDER_DETAILS_API_URL,
 } from "../../Constants/orderDetailsConstant";
-
+const token = localStorage.getItem("accessToken");
 // Async thunks
 export const fetchOrderDetails = createAsyncThunk(
   "orderDetails/fetchOrderDetails",
   async () => {
     const response = await axios.get(
-      `${ORDER_DETAILS_API_URL}/ListOrderDetails`
+      `${ORDER_DETAILS_API_URL}/ListOrderDetails`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return response.data;
   }

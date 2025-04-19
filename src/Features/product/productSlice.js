@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { PRODUCT_API_URL, PRODUCT } from "../../Constants/productConstant";
 
+const token = localStorage.getItem("accessToken");
+
 export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
   async (_, { rejectWithValue }) => {
@@ -22,7 +24,10 @@ export const createProduct = createAsyncThunk(
         `${PRODUCT_API_URL}/createProduct`,
         product,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       return response.data;
@@ -40,7 +45,10 @@ export const updateProduct = createAsyncThunk(
         `${PRODUCT_API_URL}/updateProduct`,
         product,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       return response.data;
@@ -49,8 +57,6 @@ export const updateProduct = createAsyncThunk(
     }
   }
 );
-
-
 
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",

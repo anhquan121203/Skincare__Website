@@ -1,10 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ORDER, ORDER_API_URL } from "../../Constants/orderContant";
-
+const token = localStorage.getItem("accessToken");
 // Fetch all orders
 export const fetchOrder = createAsyncThunk("order/fetchOrder", async () => {
-  const response = await axios.get(`${ORDER_API_URL}/ListOrders`);
+  const response = await axios.get(`${ORDER_API_URL}/ListOrders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 });
 

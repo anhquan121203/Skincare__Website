@@ -2,12 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { CATEGORY, CATEGORY_API_URL } from "../../Constants/categoryConstant";
 
+const token = localStorage.getItem("accessToken");
+
 // Async thunks
 export const fetchCategory = createAsyncThunk(
   "category/fetchCategory",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${CATEGORY_API_URL}/getCategories`);
+      const response = await axios.get(`${CATEGORY_API_URL}/getCategories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -21,7 +28,13 @@ export const createCategory = createAsyncThunk(
     try {
       const response = await axios.post(
         `${CATEGORY_API_URL}/createCategory`,
-        category
+        category,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -36,7 +49,13 @@ export const updateCategory = createAsyncThunk(
     try {
       const response = await axios.put(
         `${CATEGORY_API_URL}/updateCategory`,
-        category
+        category,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -49,7 +68,12 @@ export const removeCategory = createAsyncThunk(
   "category/removeCategory",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${CATEGORY_API_URL}/deleteCategory/${id}`);
+      await axios.delete(`${CATEGORY_API_URL}/deleteCategory/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
