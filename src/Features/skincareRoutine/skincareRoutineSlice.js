@@ -24,9 +24,16 @@ export const createSkincareRoutine = createAsyncThunk(
   "skincareRoutine/createSkincareRoutine",
   async (skincareRoutine, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.post(
         `${SKINCARE_ROUTINE_API_URL}/createSkinCareRoutine`,
-        skincareRoutine
+        skincareRoutine,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       return response.data;
@@ -40,9 +47,16 @@ export const updateSkincareRoutine = createAsyncThunk(
   "skincareRoutine/updateSkincareRoutine",
   async (skincareRoutine, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.put(
         `${SKINCARE_ROUTINE_API_URL}/updateSkinCareRoutine`,
-        skincareRoutine
+        skincareRoutine,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -55,8 +69,15 @@ export const deleteSkincareRoutine = createAsyncThunk(
   "skincareRoutine/deleteSkincareRoutine",
   async (id, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       await axios.delete(
-        `${SKINCARE_ROUTINE_API_URL}/deleteSkinCareRoutine/${id}`
+        `${SKINCARE_ROUTINE_API_URL}/deleteSkinCareRoutine/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return id;
     } catch (error) {

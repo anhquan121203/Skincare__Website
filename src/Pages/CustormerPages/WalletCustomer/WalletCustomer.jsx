@@ -56,10 +56,10 @@ function WalletCustomer() {
           </button>
         </div>
         <div className="wallet-footer">
-          <div>
+          {/* <div>
             {" "}
             <input type="radio" /> Tôi đồng ý
-          </div>
+          </div> */}
 
           <button type="submit">Nạp tiền ngay</button>
         </div>

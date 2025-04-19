@@ -4,6 +4,7 @@ import { ORDER, ORDER_API_URL } from "../../Constants/orderContant";
 const token = localStorage.getItem("accessToken");
 // Fetch all orders
 export const fetchOrder = createAsyncThunk("order/fetchOrder", async () => {
+  const token = localStorage.getItem("accessToken");
   const response = await axios.get(`${ORDER_API_URL}/ListOrders`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -17,8 +18,15 @@ export const fetchOrder = createAsyncThunk("order/fetchOrder", async () => {
 export const fetchOrderById = createAsyncThunk(
   "order/fetchOrderById",
   async (orderId) => {
+    const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      `${ORDER_API_URL}/getOrderById/${orderId}`
+      `${ORDER_API_URL}/getOrderById/${orderId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return response.data;
   }
@@ -28,11 +36,15 @@ export const fetchOrderById = createAsyncThunk(
 export const updateOrder = createAsyncThunk(
   "order/updateOrder",
   async (orderData) => {
+    const token = localStorage.getItem("accessToken");
     const response = await axios.put(
       `${ORDER_API_URL}/updateOrder`,
       orderData,
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
     return response;
@@ -43,7 +55,13 @@ export const updateOrder = createAsyncThunk(
 export const deleteOrder = createAsyncThunk(
   "order/deleteOrder",
   async (orderId) => {
-    await axios.delete(`${ORDER_API_URL}/deleteOrder/${orderId}`);
+    const token = localStorage.getItem("accessToken");
+    await axios.delete(`${ORDER_API_URL}/deleteOrder/${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     return orderId;
   }
 );

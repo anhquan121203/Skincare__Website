@@ -21,13 +21,19 @@ export const createSkinAnswer = createAsyncThunk(
   "skinAnswer/createSkinAnswer",
   async (skinAnswer, { rejectWithValue }) => {
     try {
+      const token = localStorage("accessToken");
       const response = await axios.post(
         `${SKIN_ANSWER_API_URL}/createSkinAnswer`,
-        skinAnswer
+        skinAnswer,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("Skin Answer", skinAnswer);
       return response.data;
-      
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -38,9 +44,16 @@ export const updateSkinAnswer = createAsyncThunk(
   "skinAnswer/updateSkinAnswer",
   async (skinAnswer, { rejectWithValue }) => {
     try {
+      const token = localStorage("accessToken");
       const response = await axios.put(
         `${SKIN_ANSWER_API_URL}/updateSkinAnswer`,
-        skinAnswer
+        skinAnswer,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -53,7 +66,13 @@ export const deleteSkinAnswer = createAsyncThunk(
   "skinAnswer/deleteSkinAnswer",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${SKIN_ANSWER_API_URL}/deleteSkinAnswer/${id}`);
+      const token = localStorage("accessToken");
+      await axios.delete(`${SKIN_ANSWER_API_URL}/deleteSkinAnswer/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

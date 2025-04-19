@@ -129,19 +129,19 @@ const AddToCardPage = () => {
       dataIndex: "quantity",
       render: (quantity, record) => (
         <div className="quantity-control">
-          <Button
+          {/* <Button
             size="small"
             icon={<MinusOutlined />}
             onClick={() => updateQuantity(record.id, -1)}
             disabled={!selectedProducts.includes(record.id)}
-          />
+          /> */}
           <Text className="quantity">{quantity}</Text>
-          <Button
+          {/* <Button
             size="small"
             icon={<PlusOutlined />}
             onClick={() => updateQuantity(record.id, 1)}
             disabled={!selectedProducts.includes(record.id)}
-          />
+          /> */}
         </div>
       ),
     },

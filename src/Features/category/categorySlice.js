@@ -26,6 +26,7 @@ export const createCategory = createAsyncThunk(
   "category/createCategory",
   async ({ category }, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.post(
         `${CATEGORY_API_URL}/createCategory`,
         category,
@@ -47,6 +48,7 @@ export const updateCategory = createAsyncThunk(
   "category/updateCategory",
   async ({ category }, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.put(
         `${CATEGORY_API_URL}/updateCategory`,
         category,
@@ -68,6 +70,7 @@ export const removeCategory = createAsyncThunk(
   "category/removeCategory",
   async (id, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       await axios.delete(`${CATEGORY_API_URL}/deleteCategory/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -20,13 +20,14 @@ export const createProduct = createAsyncThunk(
   "product/createProduct",
   async (product, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.post(
         `${PRODUCT_API_URL}/createProduct`,
         product,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -41,14 +42,13 @@ export const updateProduct = createAsyncThunk(
   "product/updateProduct",
   async (product, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.put(
         `${PRODUCT_API_URL}/updateProduct`,
         product,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          Authorization: `Bearer ${token}`,
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
       return response.data;
@@ -62,7 +62,13 @@ export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${PRODUCT_API_URL}/deleteProduct/${id}`);
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`${PRODUCT_API_URL}/deleteProduct/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

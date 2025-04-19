@@ -9,7 +9,13 @@ export const dashboardOrder = createAsyncThunk(
   "dashboard/DashboardOrder",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${DASHBOARD_API_URL}/DashboardOrder`);
+      const token = localStorage.getItem('accessToken')
+      const response = await axios.get(`${DASHBOARD_API_URL}/DashboardOrder`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -21,7 +27,13 @@ export const totalDashboard = createAsyncThunk(
   "dashboard/TotalDashboard",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${DASHBOARD_API_URL}/TotalDashboard`);
+      const token = localStorage.getItem('accessToken')
+      const response = await axios.get(`${DASHBOARD_API_URL}/TotalDashboard`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);

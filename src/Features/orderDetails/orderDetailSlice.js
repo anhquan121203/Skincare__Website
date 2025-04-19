@@ -9,6 +9,7 @@ const token = localStorage.getItem("accessToken");
 export const fetchOrderDetails = createAsyncThunk(
   "orderDetails/fetchOrderDetails",
   async () => {
+    const token = localStorage.getItem("accessToken");
     const response = await axios.get(
       `${ORDER_DETAILS_API_URL}/ListOrderDetails`,
       {
